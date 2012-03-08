@@ -14,7 +14,7 @@ public class App
     public static void main( String[] args )
     {
        try {
-    	ContrastMatrix cm = ContrastMatrix.parseImage(ImageIO.read(new File("img/D.png")));
+    	ContrastMatrix cm = ContrastMatrix.parseImage(ImageIO.read(new File("img/java_word.png")));
     	
     	System.out.println(cm);
 	} catch (IOException e) {

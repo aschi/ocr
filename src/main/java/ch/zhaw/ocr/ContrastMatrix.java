@@ -11,7 +11,7 @@ public class ContrastMatrix {
 	private int[][] contrastMatrix;
 	private int width;
 	private int height;
-	
+		
 	/**
 	 * Initialise an empty ContrastMatrix using the given height + width
 	 * @param width
@@ -90,6 +90,17 @@ public class ContrastMatrix {
 	}
 	
 	/**
+	 * Invert the whole matrix (1 => 0 ; 0 => 1)
+	 */
+	public void invertMatrix(){
+		for(int x = 0;x < width;x++){
+			for(int y = 0;y < height;y++){
+				setValue(x, y, getValue(x, y) == 1 ? 0 : 1);
+			}
+		}
+	}
+	
+	/**
 	 * Get a sub matrix
 	 * @param offsetX
 	 * @param offsetY
@@ -116,12 +127,15 @@ public class ContrastMatrix {
 	}
 	
 	/**
-	 * Parses an image
+	 * Parses an image & creates a ContrastMatrix based on the picture
 	 * @param image the image to be parsed
 	 * @return ContrastMatrix representing the image
 	 */
 	public static ContrastMatrix parseImage(BufferedImage image){
 		ContrastMatrix rv = new ContrastMatrix(image.getWidth(), image.getHeight());
+		
+		int brightCount = 0;
+		int darkCount = 0;
 		
 		int rgb = 0;
 		int red = 0;
@@ -139,10 +153,17 @@ public class ContrastMatrix {
 				//average rgb value < 200 = 1
 				if((red+blue+green)/3 < 200){
 					rv.setValue(x, y, 1);
+					darkCount++;
 				}else{
 					rv.setValue(x, y, 0);
+					brightCount++;
 				}
 			}
+		}
+		
+		//invert matrix if there are more dark then bright pixels
+		if(darkCount > brightCount){
+			rv.invertMatrix();
 		}
 		
 		return rv;
