@@ -9,8 +9,6 @@ import java.awt.image.BufferedImage;
  */
 public class ContrastMatrix {
 	private int[][] contrastMatrix;
-	private int width;
-	private int height;
 		
 	/**
 	 * Initialise an empty ContrastMatrix using the given height + width
@@ -19,8 +17,6 @@ public class ContrastMatrix {
 	 */
 	public ContrastMatrix(int width, int height){
 		contrastMatrix = new int[width][height];
-		this.width = width;
-		this.height = height;
 	}
 	
 	/**
@@ -28,11 +24,11 @@ public class ContrastMatrix {
 	 */
 	public String toString(){
 		StringBuffer sb = new StringBuffer();
-		for(int y = 0;y < contrastMatrix[0].length;y++){
-			for(int x = 0;x < contrastMatrix.length;x++){
-				sb.append(contrastMatrix[x][y] + ((x!=contrastMatrix.length-1) ? " " : ""));
+		for(int y = 0;y < getHeight();y++){
+			for(int x = 0;x < getWidth();x++){
+				sb.append(contrastMatrix[x][y] + ((x!=getWidth()-1) ? " " : ""));
 			}
-			sb.append(y!=contrastMatrix[0].length ? System.getProperty("line.separator") : "");
+			sb.append(y!=getHeight() ? System.getProperty("line.separator") : "");
 		}
 		return sb.toString();
 	}
@@ -45,6 +41,14 @@ public class ContrastMatrix {
 	 */
 	public int getValue(int x, int y){
 		return contrastMatrix[x][y];
+	}
+	
+	public int getWidth(){
+		return contrastMatrix.length;
+	}
+	
+	public int getHeight(){
+		return contrastMatrix[0].length;
 	}
 	
 	/**
@@ -62,11 +66,11 @@ public class ContrastMatrix {
 	 * @param colNo column to delete
 	 */
 	public void removeCol(int colNo){
-		int[][] newMatrix = new int[width-1][height];
-		for(int x = 0;x < width;x++){
-			for(int y = 0;y < height;y++){
+		int[][] newMatrix = new int[getWidth()-1][getHeight()];
+		for(int x = 0;x < getWidth();x++){
+			for(int y = 0;y < getHeight();y++){
 				if(x != colNo){
-					newMatrix[x][y] = contrastMatrix[x][y];
+					newMatrix[(x>=colNo)?x-1:x][y] = contrastMatrix[x][y];					
 				}
 			}
 		}
@@ -78,11 +82,11 @@ public class ContrastMatrix {
 	 * @param rowNo row to delete
 	 */
 	public void removeRow(int rowNo){
-		int[][] newMatrix = new int[width][height-1];
-		for(int x = 0;x < width;x++){
-			for(int y = 0;y < height;y++){
+		int[][] newMatrix = new int[getWidth()][getHeight()-1];
+		for(int x = 0;x < getWidth();x++){
+			for(int y = 0;y < getHeight();y++){
 				if(y != rowNo){
-					newMatrix[x][y] = contrastMatrix[x][y];
+					newMatrix[x][(y>=rowNo)?y-1:y] = contrastMatrix[x][y];
 				}
 			}
 		}
@@ -93,8 +97,8 @@ public class ContrastMatrix {
 	 * Invert the whole matrix (1 => 0 ; 0 => 1)
 	 */
 	public void invertMatrix(){
-		for(int x = 0;x < width;x++){
-			for(int y = 0;y < height;y++){
+		for(int x = 0;x < getWidth();x++){
+			for(int y = 0;y < getHeight();y++){
 				setValue(x, y, getValue(x, y) == 1 ? 0 : 1);
 			}
 		}
@@ -110,15 +114,15 @@ public class ContrastMatrix {
 	 */
 	public ContrastMatrix getSubMatrix(int offsetX, int offsetY, int width, int height){
 		//avoid array erros ... TODO: exception?
-		if((offsetX+width) > this.width && (offsetY+height) > this.height){
+		if((offsetX+width) > getWidth() && (offsetY+height) > getHeight()){
 			return null;
 		}
 		
 		ContrastMatrix rv = new ContrastMatrix(width, height);
 		
 		//copy values
-		for(int x = offsetX;x < (offsetX+width);x++){
-			for(int y = offsetY;y < (offsetY+height);y++){
+		for(int x = 0;x < width;x++){
+			for(int y = 0;y < height;y++){
 				rv.setValue(x, y, getValue(offsetX+x, offsetY+y));
 			}
 		}
@@ -168,7 +172,4 @@ public class ContrastMatrix {
 		
 		return rv;
 	}
-	
-
-	
 }
