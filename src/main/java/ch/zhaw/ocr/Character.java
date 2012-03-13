@@ -31,7 +31,7 @@ public class Character {
 	 * @param wordM
 	 * @return
 	 */
-	public static List<Character> parseWord(ContrastMatrix wordM){
+	public static List<Character> parseCharacters(ContrastMatrix wordM){
 		List<Character> rv = new LinkedList<Character>();
 	
 		boolean emptyRow = true;
@@ -67,8 +67,7 @@ public class Character {
 			if(emptyCol){
 				if(characterStart != -1){
 					//column after character is empty => start -> x-1 is a character
-					Character c = new Character(wordM.getSubMatrix(characterStart, 0, x-characterStart, wordM.getHeight()));
-					rv.add(c);
+					rv.add(new Character(wordM.getSubMatrix(characterStart, 0, x-characterStart, wordM.getHeight())));
 					characterStart = -1;
 				}
 			}else{
@@ -77,6 +76,12 @@ public class Character {
 				}
 			}	
 		}
+		
+		//last charakter
+		if(characterStart != -1){
+			rv.add(new Character(wordM.getSubMatrix(characterStart, 0, wordM.getWidth()-characterStart, wordM.getHeight())));
+		}
+		
 		return rv;
 	}
 }
