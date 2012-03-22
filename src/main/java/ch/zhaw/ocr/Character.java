@@ -3,7 +3,7 @@ package ch.zhaw.ocr;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Character {
+public class Character{
 	ContrastMatrix characterM;
 		
 	/**

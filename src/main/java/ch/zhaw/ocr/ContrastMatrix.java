@@ -152,118 +152,67 @@ public class ContrastMatrix {
 	 * Remove empty leading & tailing rows / cols
 	 */
 	public void trim() {
-		boolean leadingEmptyRows = true;
-		boolean leadingEmptyCols = true;
-
-		boolean isRowEmpty;
-		boolean isColEmpty;
-
+		boolean isEmpty;
+	
 		// remove empty leading cols
-		for (int x = 0; x < getWidth(); x++) {
-			isColEmpty = true;
+		isEmpty = true;
+		while(isEmpty){
 			for (int y = 0; y < getHeight(); y++) {
-				if (getValue(x, y) != 0) {
-					isColEmpty = false;
+				if (getValue(0, y) != 0) {
+					isEmpty = false;
 				}
 			}
 
-			if (isColEmpty && leadingEmptyCols) {
+			if (isEmpty) {
 				removeCol(0);
-				x--;
-			} else {
-				leadingEmptyCols = false;
 			}
 		}
 
 		// remove empty tailing cols
-		isColEmpty = true;
-		while (isColEmpty) {
+		isEmpty = true;
+		while (isEmpty) {
 			for (int y = 0; y < getHeight(); y++) {
 				if (getValue(getWidth()-1, y) != 0) {
-					isColEmpty = false;
+					isEmpty = false;
 				}
 			}
 
-			if (isColEmpty) {
+			if (isEmpty) {
 				removeCol(getWidth()-1);
 			}
 		}
 
-		// remove empty leading cols
-		for (int y = 0; y < getHeight(); y++) {
-			isRowEmpty = true;
+		// remove empty leading rows
+		isEmpty = true;
+		while(isEmpty){
 			for (int x = 0; x < getWidth(); x++) {
-				if (getValue(x, y) != 0) {
-					isRowEmpty = false;
+				if (getValue(x, 0) != 0) {
+					isEmpty = false;
 				}
 			}
 
-			if (isRowEmpty && leadingEmptyRows) {
+			if (isEmpty) {
 				removeRow(0);
-				y--;
-			} else {
-				leadingEmptyRows = false;
 			}
 		}
+		
+		
 
 		// remove empty tailing rows
-		isRowEmpty = true;
-		while (isRowEmpty) {
+		isEmpty = true;
+		while (isEmpty) {
 			for (int x = 0; x < getWidth(); x++) {
 				if (getValue(x, getHeight()-1) != 0) {
-					isRowEmpty = false;
+					isEmpty = false;
 				}
 			}
 
-			if (isRowEmpty) {
+			if (isEmpty) {
 				removeRow(getHeight()-1);
 			}
 		}
 	}
 
-	/**
-	 * Parses an image & creates a ContrastMatrix based on the picture
-	 * 
-	 * @param image
-	 *            the image to be parsed
-	 * @return ContrastMatrix representing the image
-	 */
-	public static ContrastMatrix parseImage(BufferedImage image) {
-		ContrastMatrix rv = new ContrastMatrix(image.getWidth(),
-				image.getHeight());
 
-		int brightCount = 0;
-		int darkCount = 0;
 
-		int rgb = 0;
-		int red = 0;
-		int green = 0;
-		int blue = 0;
-
-		for (int y = 0; y < image.getHeight(); y++) {
-			for (int x = 0; x < image.getWidth(); x++) {
-				rgb = image.getRGB(x, y);
-
-				red = (rgb >> 16) & 0x000000FF;
-				green = (rgb >> 8) & 0x000000FF;
-				blue = (rgb) & 0x000000FF;
-
-				// average rgb value < 200 = 1
-				if ((red + blue + green) / 3 < 200) {
-					rv.setValue(x, y, 1);
-					darkCount++;
-				} else {
-					rv.setValue(x, y, 0);
-					brightCount++;
-				}
-			}
-		}
-
-		// invert matrix if there are more dark then bright pixels
-		if (darkCount > brightCount) {
-			rv.invertMatrix();
-		}
-
-		return rv;
-	}
 }
