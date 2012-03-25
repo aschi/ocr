@@ -4,9 +4,6 @@ import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 import java.util.List;
 
-import ch.zhaw.ocr.ContrastMatrix;
-import ch.zhaw.ocr.Word;
-
 public class WordParser extends BitmapParserDecorator {
 
 	public WordParser(BitmapParser bp) {
@@ -63,10 +60,10 @@ public class WordParser extends BitmapParserDecorator {
 				}
 			}
 
-			System.out.println("min space size: " + minSpaceSize);
-			System.out.println("max space size: " + maxSpaceSize);
+			//System.out.println("min space size: " + minSpaceSize);
+			//System.out.println("max space size: " + maxSpaceSize);
 
-			System.out.println(m);
+			//System.out.println(m);
 
 			spaceCounter = 0;
 			wordEndTmp = -1;
@@ -100,12 +97,12 @@ public class WordParser extends BitmapParserDecorator {
 						if ((maxSpaceSize - spaceCounter) < (spaceCounter - minSpaceSize)) {
 							rv.add(m.getSubMatrix(wordStart, 0,
 									wordEndTmp - wordStart, m.getHeight()));
-							System.out.println((maxSpaceSize - spaceCounter)
-									+ " - " + (spaceCounter - minSpaceSize));
+							//System.out.println((maxSpaceSize - spaceCounter)
+							//		+ " - " + (spaceCounter - minSpaceSize));
 							wordStart = x;
 						} else {
-							System.out.println((maxSpaceSize - spaceCounter)
-									+ " - " + (spaceCounter - minSpaceSize));
+							//System.out.println((maxSpaceSize - spaceCounter)
+							//		+ " - " + (spaceCounter - minSpaceSize));
 						}
 					}
 

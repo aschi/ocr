@@ -5,15 +5,10 @@ import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
-import ch.zhaw.ocr.ContrastMatrix;
 
 public class SimpleBitmapParser implements BitmapParser{
 	private List<ContrastMatrix> matrices;
-	
-	public SimpleBitmapParser() {
-		matrices = new LinkedList<ContrastMatrix>();
-	}
-	
+		
 	@Override
 	/**
 	 * Parses an image & creates a ContrastMatrix based on the picture
@@ -22,6 +17,8 @@ public class SimpleBitmapParser implements BitmapParser{
 	 * @return ContrastMatrix representing the image
 	 */
 	public void parse(BufferedImage image) {
+		matrices = new LinkedList<ContrastMatrix>();
+		
 		ContrastMatrix rv = new ContrastMatrix(image.getWidth(),
 				image.getHeight());
 
@@ -42,7 +39,7 @@ public class SimpleBitmapParser implements BitmapParser{
 				blue = (rgb) & 0x000000FF;
 
 				// average rgb value < 200 = 1
-				if ((red + blue + green) / 3 < 200) {
+				if ((red + blue + green) / 3 < 100) {
 					rv.setValue(x, y, 1);
 					darkCount++;
 				} else {

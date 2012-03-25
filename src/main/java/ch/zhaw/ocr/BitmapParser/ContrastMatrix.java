@@ -1,4 +1,4 @@
-package ch.zhaw.ocr;
+package ch.zhaw.ocr.BitmapParser;
 
 import java.awt.image.BufferedImage;
 

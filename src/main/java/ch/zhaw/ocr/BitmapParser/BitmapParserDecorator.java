@@ -3,7 +3,6 @@ package ch.zhaw.ocr.BitmapParser;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
-import ch.zhaw.ocr.ContrastMatrix;
 
 public abstract class BitmapParserDecorator implements BitmapParser {
 	private BitmapParser bp;

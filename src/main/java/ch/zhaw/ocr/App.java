@@ -2,51 +2,62 @@ package ch.zhaw.ocr;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 import javax.imageio.ImageIO;
 
 import ch.zhaw.ocr.BitmapParser.BitmapParser;
 import ch.zhaw.ocr.BitmapParser.CharacterParser;
-import ch.zhaw.ocr.BitmapParser.RowParser;
+import ch.zhaw.ocr.BitmapParser.ContrastMatrix;
 import ch.zhaw.ocr.BitmapParser.SimpleBitmapParser;
 import ch.zhaw.ocr.BitmapParser.WordParser;
+import ch.zhaw.ocr.CharacterRecognition.Character;
+import ch.zhaw.ocr.CharacterRecognition.CharacterComperator;
+import ch.zhaw.ocr.CharacterRecognition.InitialLearning;
 
 /**
  * Hello world!
- *
+ * 
  */
-public class App 
-{
-    public static void main( String[] args )
-    {
-       try {
-    	BitmapParser bp = new CharacterParser(new WordParser(new SimpleBitmapParser()));   
-    	
-    	bp.parse(ImageIO.read(new File("img/debian_line.png")));
-    	
-    	System.out.println(bp.getMatrix(0));
-    	
-    	//ContrastMatrix cm = ContrastMatrix.parseImage(ImageIO.read(new File("img/debian_line.png")));
-    	
-    	//System.out.println(cm);
-    	
-    	//List<Word> wl = Word.parseWords(cm);
-    	
-    	//List<Character> chl = Character.parseCharacters(wl.get(wl.size()-1).getMatrix());
-    	
-    	//for(Character c : chl){
-    	//	System.out.println(c.getMatrix());
-    	//}
-    	
-    	//System.out.println(wl.get(wl.size()-1).getMatrix());
-    	
-    	//for(Word m : wl){
-    		//System.out.println(m.getMatrix());
-    	//}
-	} catch (IOException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
+public class App {
+	public static void main(String[] args) {
+		CharacterComperator cc = new CharacterComperator();
+
+		InitialLearning.learn(cc);
+
+		// cc.detectCharacter()
+		try {
+			BitmapParser bp = new CharacterParser(new WordParser(
+					new SimpleBitmapParser()));
+			bp.parse(ImageIO.read(new File("img/D.png")));
+			
+			for(ContrastMatrix cm : bp.getMatrices()){
+				String c = cc.detectCharacter(new Character(bp.getMatrix(0)));
+				System.out.print(c.equals("") ? "? " : c +" ");
+			}
+			
+			
+
+			// ContrastMatrix cm = ContrastMatrix.parseImage(ImageIO.read(new
+			// File("img/debian_line.png")));
+
+			// System.out.println(cm);
+
+			// List<Word> wl = Word.parseWords(cm);
+
+			// List<Character> chl =
+			// Character.parseCharacters(wl.get(wl.size()-1).getMatrix());
+
+			// for(Character c : chl){
+			// System.out.println(c.getMatrix());
+			// }
+
+			// System.out.println(wl.get(wl.size()-1).getMatrix());
+
+			// for(Word m : wl){
+			// System.out.println(m.getMatrix());
+			// }
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
-    }
 }
