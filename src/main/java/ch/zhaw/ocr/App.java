@@ -28,14 +28,19 @@ public class App {
 		try {
 			BitmapParser bp = new CharacterParser(new WordParser(
 					new SimpleBitmapParser()));
-			bp.parse(ImageIO.read(new File("img/D.png")));
+			bp.parse(ImageIO.read(new File("img/testimg1.png")));
 			
 			for(ContrastMatrix cm : bp.getMatrices()){
-				String c = cc.detectCharacter(new Character(bp.getMatrix(0)));
+				String c = cc.detectCharacter(new Character(cm));
 				System.out.print(c.equals("") ? "? " : c +" ");
 			}
 			
+			bp.parse(ImageIO.read(new File("img/testimg2.png")));
 			
+			for(ContrastMatrix cm : bp.getMatrices()){
+				String c = cc.detectCharacter(new Character(cm));
+				System.out.print(c.equals("") ? "? " : c +" ");
+			}
 
 			// ContrastMatrix cm = ContrastMatrix.parseImage(ImageIO.read(new
 			// File("img/debian_line.png")));

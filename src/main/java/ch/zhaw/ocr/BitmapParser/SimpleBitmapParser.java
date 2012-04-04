@@ -39,7 +39,7 @@ public class SimpleBitmapParser implements BitmapParser{
 				blue = (rgb) & 0x000000FF;
 
 				// average rgb value < 200 = 1
-				if ((red + blue + green) / 3 < 100) {
+				if ((red + blue + green) / 3 < 220) {
 					rv.setValue(x, y, 1);
 					darkCount++;
 				} else {

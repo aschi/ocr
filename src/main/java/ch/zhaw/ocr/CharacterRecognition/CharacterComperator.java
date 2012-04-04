@@ -24,10 +24,9 @@ public class CharacterComperator {
 	}
 	
 	public String detectCharacter(Character c){
-		System.out.println(c.getMatrix());
-		for(int i = 0;i < c.getComparisonVector().length;i++){
-			System.out.println("["+i+"]: " + c.getComparisonVector()[i]);
-		}
+		
+		//System.out.println(c.getMatrix());
+		
 		
 		
 		
@@ -36,21 +35,29 @@ public class CharacterComperator {
 		Set<Neuron<Character, String>> subset = characterRecognitionNetwork.getNeuronsFromSource(c);
 		if (!subset.isEmpty()) {
 			for(Neuron<Character, String> n : subset){
-				System.out.println(n.getTarget() + " - " + n.getEmphasis());
+				//System.out.println(n.getTarget() + " - " + n.getEmphasis());
 				if(n.getEmphasis() > highestEmph){
 					rv = n.getTarget();
 					highestEmph = n.getEmphasis();
 				}
 			}
 		}else{
+			System.out.println(c.getMatrix());
+			for(int i = 0;i < c.getComparisonVector().length;i++){
+				System.out.println("["+i+"]: " + c.getComparisonVector()[i]);
+			}
+			
 			
 			System.out.println("not found");
-			Set<Neuron<Character, String>> nset = characterRecognitionNetwork.getNeuronsFromTarget("D");
+			Set<Neuron<Character, String>> nset = characterRecognitionNetwork.getNeuronsFromTarget("i");
 			for(Neuron<Character, String> n : nset){
 				for(int i = 0;i < n.getSource().getComparisonVector().length;i++){
 					System.out.println("["+i+"]: " + n.getSource().getComparisonVector()[i]);
 				}
+				System.out.println(n.getSource().getMatrix());
 			}
+			
+			
 			
 		}
 		return rv;

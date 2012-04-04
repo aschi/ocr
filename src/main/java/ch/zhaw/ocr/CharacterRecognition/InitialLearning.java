@@ -24,8 +24,8 @@ public class InitialLearning {
 				"q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "0", "1",
 				"2", "3", "4", "5", "6", "7", "8", "9");
 
-		BitmapParser bp = new CharacterParser(new WordParser(
-				new SimpleBitmapParser()));
+		BitmapParser bp = new CharacterParser(
+				new SimpleBitmapParser());
 
 		File folder = new File("img/LearningMaterial");
 		for (File f : folder.listFiles()) {

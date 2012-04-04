@@ -8,10 +8,10 @@ public class Character implements Comparable<Character>{
 
 	/*
 	 * comparisonVector: Split character matrix into 25 parts (5x5) 
-	 * 0-24: Number of relevant pixels in each of the 25 parts. scaled to 255 
-	 * 25: Number of relevant pixels in top half. scaled to 255 
-	 * 26: Number of relevant pixels in bottom half. scaled to 255 
-	 * 27: width / height ratio scaled to 255. again scaled to 255 
+	 * 0-24: Number of relevant pixels in each of the 10 parts. scaled to 10 
+	 * 25: Number of relevant pixels in top half. scaled to 10 
+	 * 26: Number of relevant pixels in bottom half. scaled to 10 
+	 * 27: width / height ratio scaled to 10
 	 * 28: indicator for vertically disjoint character (like i or j) (0 or 1)
 	 */
 	
@@ -62,18 +62,18 @@ public class Character implements Comparable<Character>{
 				}
 			}
 
-			// scale parts to 255
-			for (int i = 0; i < 24; i++) {
-				comparisonVector[i] = (int)Math.round(((double)255 * (double)comparisonVector[i]) / ((double)fh * (double)fw));
+			// scale parts to 10
+			for (int i = 0; i < 25; i++) {
+				comparisonVector[i] = (int)Math.round(((double)10 * (double)comparisonVector[i]) / ((double)fh * (double)fw));
 			}
 
-			// scale top / bottom to 255
-			comparisonVector[25] = (255 * comparisonVector[25])
+			// scale top / bottom to 25
+			comparisonVector[25] = (10 * comparisonVector[25])
 					/ ((characterM.getHeight() * characterM.getWidth()) / 2);
-			comparisonVector[26] = (255 * comparisonVector[25])
+			comparisonVector[26] = (10 * comparisonVector[25])
 					/ ((characterM.getHeight() * characterM.getWidth()) / 2);
 
-			comparisonVector[27] = (int)Math.round(255 * ((characterM.getHeight() > characterM
+			comparisonVector[27] = (int)Math.round(10 * ((characterM.getHeight() > characterM
 					.getWidth()) ? ((double)characterM.getWidth())
 					/ ((double)characterM.getHeight()) : ((double)characterM.getHeight())
 					/ ((double)characterM.getWidth())));
@@ -100,14 +100,20 @@ public class Character implements Comparable<Character>{
 			return false;
 		}
 		
-		boolean rv = true;
+		int diff = 0;
+		
 		for(int i = 0;i < comparisonVector.length;i++){
 			if(comparisonVector[i] != ((Character)o).getComparisonVector()[i]){
-				rv = false;
+				diff+= Math.abs(comparisonVector[i]-((Character)o).getComparisonVector()[i]);
 			}
 		}
 		
-		return rv;
+		if(diff < 10){
+			return true;
+		}else{
+			return false;
+		}
+		
 	}
 
 	@Override
