@@ -3,6 +3,10 @@ package ch.zhaw.ocr.gui.forms;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -11,6 +15,7 @@ import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -110,6 +115,31 @@ public class InputForm {
         
         saveButton = new JButton("Save as text");
         
+        saveButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				int returnVal = fc.showSaveDialog(saveButton);
+				File file = fc.getSelectedFile();
+				BufferedWriter writer = null;
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					try {
+						writer = new BufferedWriter(new FileWriter(file.getAbsolutePath()+".txt"));  
+			            writer.write(analysedText.getText());  
+			            writer.close();  
+			            JOptionPane.showMessageDialog(null, "File saved successfully!",  
+			                        "Information", JOptionPane.INFORMATION_MESSAGE);  
+			            }  
+			            catch (IOException e)  
+			            {  
+			            JOptionPane.showMessageDialog(null, "File could not be saved!",  
+			                        "Error", JOptionPane.ERROR_MESSAGE);  
+			            }  
+					}
+				}
+        	
+        });
+               
         button2Panel.setLayout(new BoxLayout(button2Panel, BoxLayout.LINE_AXIS));
         button2Panel.add(Box.createHorizontalGlue());
         button2Panel.add(saveButton);
