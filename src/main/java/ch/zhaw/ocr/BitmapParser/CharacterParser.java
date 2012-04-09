@@ -20,21 +20,7 @@ public class CharacterParser extends BitmapParserDecorator {
 		boolean emptyRow = true;
 
 		for (ContrastMatrix m : getMatrices()) {
-
-			// remove empty row
-			for (int y = 0; y < m.getHeight(); y++) {
-				emptyRow = true;
-
-				for (int x = 0; x < m.getWidth(); x++) {
-					if (m.getValue(x, y) != 0) {
-						emptyRow = false;
-					}
-				}
-				if (emptyRow) {
-					m.removeRow(y);
-					y--;
-				}
-			}
+			m.trim();
 
 			boolean emptyCol = true;
 			int characterStart = -1;

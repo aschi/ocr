@@ -42,20 +42,21 @@ public class CharacterComperator {
 				}
 			}
 		}else{
-			System.out.println(c.getMatrix());
-			for(int i = 0;i < c.getComparisonVector().length;i++){
-				System.out.println("["+i+"]: " + c.getComparisonVector()[i]);
-			}
-			
-			
-			System.out.println("not found");
-			Set<Neuron<Character, String>> nset = characterRecognitionNetwork.getNeuronsFromTarget("i");
-			for(Neuron<Character, String> n : nset){
-				for(int i = 0;i < n.getSource().getComparisonVector().length;i++){
-					System.out.println("["+i+"]: " + n.getSource().getComparisonVector()[i]);
-				}
-				System.out.println(n.getSource().getMatrix());
-			}
+//			System.out.println("---");
+//			System.out.println(c.getMatrix());
+//			for(int i = 0;i < c.getComparisonVector().length;i++){
+//				System.out.println("["+i+"]: " + c.getComparisonVector()[i]);
+//			}
+//			
+//			
+//			System.out.println("not found");
+//			Set<Neuron<Character, String>> nset = characterRecognitionNetwork.getNeuronsFromTarget("i");
+//			for(Neuron<Character, String> n : nset){
+//				for(int i = 0;i < n.getSource().getComparisonVector().length;i++){
+//					System.out.println("["+i+"]: " + n.getSource().getComparisonVector()[i]);
+//				}
+//				System.out.println(n.getSource().getMatrix());
+//			}
 			
 			
 			

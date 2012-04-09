@@ -28,7 +28,7 @@ public class App {
 		try {
 			BitmapParser bp = new CharacterParser(new WordParser(
 					new SimpleBitmapParser()));
-			bp.parse(ImageIO.read(new File("img/testimg.png")));
+			bp.parse(ImageIO.read(new File("img/text.PNG")));
 			
 			for(ContrastMatrix cm : bp.getMatrices()){
 				String c = cc.detectCharacter(new Character(cm));

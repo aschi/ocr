@@ -64,18 +64,18 @@ public class Character implements Comparable<Character>{
 				}
 			}
 
-			// scale parts to 10
+			// scale parts to 255
 			for (int i = 0; i < 25; i++) {
-				comparisonVector[i] = (int)Math.round(((double)10 * (double)comparisonVector[i]) / ((double)fh * (double)fw));
+				comparisonVector[i] = (int)Math.round(((double)255 * (double)comparisonVector[i]) / ((double)fh * (double)fw));
 			}
 
 			// scale top / bottom to 25
-			comparisonVector[25] = (10 * comparisonVector[25])
+			comparisonVector[25] = (255 * comparisonVector[25])
 					/ ((characterM.getHeight() * characterM.getWidth()) / 2);
-			comparisonVector[26] = (10 * comparisonVector[25])
+			comparisonVector[26] = (255 * comparisonVector[25])
 					/ ((characterM.getHeight() * characterM.getWidth()) / 2);
 
-			comparisonVector[27] = (int)Math.round(10 * ((characterM.getHeight() > characterM
+			comparisonVector[27] = (int)Math.round(255 * ((characterM.getHeight() > characterM
 					.getWidth()) ? ((double)characterM.getWidth())
 					/ ((double)characterM.getHeight()) : ((double)characterM.getHeight())
 					/ ((double)characterM.getWidth())));
@@ -100,12 +100,12 @@ public class Character implements Comparable<Character>{
 			emphasisVector[i] = 1;
 		}
 		//25/26: should have a larger emphasis than fields 0-24
-		emphasisVector[25] = 12;
+		emphasisVector[25] = 10;
 		emphasisVector[26] = emphasisVector[25];
 		//27: should have nearly the same emphasis like field 25/26
 		emphasisVector[27] = 15;
 		//28: should have the highest emphasis, because there can't be f.e. an "a" with a disjointed character
-		emphasisVector[28] = 50;
+		emphasisVector[28] = 1000;
 	}
 
 	public ContrastMatrix getMatrix() {
@@ -134,7 +134,7 @@ public class Character implements Comparable<Character>{
 			}
 		}
 		
-		if(diff < 50){
+		if(diff < 1300){
 			return true;
 		}else{
 			return false;
