@@ -8,4 +8,5 @@ nbproject
 .classpath
 *.db
 .project
+.metadata/
 .settings/
