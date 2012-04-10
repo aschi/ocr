@@ -56,6 +56,9 @@ public class CharacterParser extends BitmapParserDecorator {
 					rv.add(m.getSubMatrix(characterStart, 0, m.getWidth()
 							- characterStart, m.getHeight()));
 				}
+			}else{
+				//functional character => keep it
+				rv.add(m);
 			}
 			//ovverride matrix list
 			setMatrices(rv);

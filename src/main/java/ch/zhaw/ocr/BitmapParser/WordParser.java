@@ -97,6 +97,7 @@ public class WordParser extends BitmapParserDecorator {
 							if ((maxSpaceSize - spaceCounter) < (spaceCounter - minSpaceSize)) {
 								rv.add(m.getSubMatrix(wordStart, 0,
 										wordEndTmp - wordStart, m.getHeight()));
+								rv.add(new ContrastMatrix(FunctionalCharacter.space));
 								//System.out.println((maxSpaceSize - spaceCounter)
 								//		+ " - " + (spaceCounter - minSpaceSize));
 								wordStart = x;
@@ -118,6 +119,9 @@ public class WordParser extends BitmapParserDecorator {
 					rv.add(m.getSubMatrix(wordStart, 0, m.getWidth()
 							- wordStart, m.getHeight()));
 				}
+			}else{
+				//functional character => keep it
+				rv.add(m);
 			}
 		}
 		setMatrices(rv);

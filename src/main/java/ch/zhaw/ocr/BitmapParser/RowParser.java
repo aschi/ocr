@@ -53,6 +53,9 @@ public class RowParser extends BitmapParserDecorator {
 						}
 					}
 				}
+			}else{
+				//functional character => keep it
+				rv.add(m);
 			}
 		}
 		//ovverride matrix list
