@@ -1,7 +1,5 @@
 package ch.zhaw.ocr.BitmapParser;
 
-import java.awt.image.BufferedImage;
-
 /**
  * ContrastMatrix
  * 
@@ -10,7 +8,8 @@ import java.awt.image.BufferedImage;
  */
 public class ContrastMatrix {
 	private int[][] contrastMatrix;
-
+	private FunctionalCharacter functionalChar = null;
+	
 	/**
 	 * Initialise an empty ContrastMatrix using the given height + width
 	 * 
@@ -22,19 +21,32 @@ public class ContrastMatrix {
 	}
 
 	/**
+	 * Allows to represent a functional character
+	 * 
+	 */
+	public ContrastMatrix(FunctionalCharacter functionalChar){
+		contrastMatrix = new int[1][1];
+		this.functionalChar = functionalChar;
+	}
+	
+	/**
 	 * Return the string representative of the current object
 	 */
 	public String toString() {
-		StringBuffer sb = new StringBuffer();
-		for (int y = 0; y < getHeight(); y++) {
-			for (int x = 0; x < getWidth(); x++) {
-				sb.append(contrastMatrix[x][y]
-						+ ((x != getWidth() - 1) ? " " : ""));
+		if(functionalChar != null){
+			return functionalChar.toString();
+		}else{
+			StringBuffer sb = new StringBuffer();
+			for (int y = 0; y < getHeight(); y++) {
+				for (int x = 0; x < getWidth(); x++) {
+					sb.append(contrastMatrix[x][y]
+							+ ((x != getWidth() - 1) ? " " : ""));
+				}
+				sb.append(y != getHeight() ? System.getProperty("line.separator")
+						: "");
 			}
-			sb.append(y != getHeight() ? System.getProperty("line.separator")
-					: "");
+			return sb.toString();
 		}
-		return sb.toString();
 	}
 
 	/**
@@ -56,6 +68,10 @@ public class ContrastMatrix {
 
 	public int getHeight() {
 		return contrastMatrix[0].length;
+	}
+	
+	public FunctionalCharacter getFunctionalChar(){
+		return functionalChar;
 	}
 
 	/**

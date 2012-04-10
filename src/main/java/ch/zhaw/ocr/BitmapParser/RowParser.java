@@ -29,26 +29,28 @@ public class RowParser extends BitmapParserDecorator {
 		int rowStart = -1;
 		
 		for(ContrastMatrix m : getMatrices()){
-			//trim
-			m.trim();
-			
-			for(int y = 0;y < m.getHeight();y++){
-				isEmpty = true;
+			if(m.getFunctionalChar() == null){
+				//trim
+				m.trim();
 				
-				for(int x = 0;x < m.getHeight();x++){
-					if(m.getValue(x, y) == 1){
-						isEmpty = false;
+				for(int y = 0;y < m.getHeight();y++){
+					isEmpty = true;
+					
+					for(int x = 0;x < m.getHeight();x++){
+						if(m.getValue(x, y) == 1){
+							isEmpty = false;
+						}
 					}
-				}
-				
-				if(isEmpty){
-					if(rowStart != -1){
-						rv.add(m.getSubMatrix(0, rowStart, m.getWidth()-1, y-rowStart));
-						rowStart = -1;
-					}
-				}else{
-					if(rowStart == -1){
-						rowStart = y;
+					
+					if(isEmpty){
+						if(rowStart != -1){
+							rv.add(m.getSubMatrix(0, rowStart, m.getWidth()-1, y-rowStart));
+							rowStart = -1;
+						}
+					}else{
+						if(rowStart == -1){
+							rowStart = y;
+						}
 					}
 				}
 			}

@@ -31,94 +31,94 @@ public class WordParser extends BitmapParserDecorator {
 		int y = 0;
 
 		for (ContrastMatrix m : getMatrices()) {
-
-			/**
-			 * Step 1: find min / max space sizes
-			 */
-			for (x = 0; x < m.getWidth(); x++) {
-				isEmpty = true;
-				for (y = 0; y < m.getHeight(); y++) {
-					if (m.getValue(x, y) == 1) {
-						isEmpty = false;
-					}
-				}
-
-				if (isEmpty) {
-					spaceCounter++;
-				} else {
-					// min / max space detection
-					if (spaceCounter > 0) {
-						if (minSpaceSize == 0 || minSpaceSize > spaceCounter) {
-							minSpaceSize = spaceCounter;
-						}
-
-						if (maxSpaceSize < spaceCounter) {
-							maxSpaceSize = spaceCounter;
+			if(m.getFunctionalChar() == null){
+				/**
+				 * Step 1: find min / max space sizes
+				 */
+				for (x = 0; x < m.getWidth(); x++) {
+					isEmpty = true;
+					for (y = 0; y < m.getHeight(); y++) {
+						if (m.getValue(x, y) == 1) {
+							isEmpty = false;
 						}
 					}
-					spaceCounter = 0;
-				}
-			}
-
-			//System.out.println("min space size: " + minSpaceSize);
-			//System.out.println("max space size: " + maxSpaceSize);
-
-			//System.out.println(m);
-
-			spaceCounter = 0;
-			wordEndTmp = -1;
-			wordStart = -1;
-
-			for (x = 0; x < m.getWidth(); x++) {
-				isEmpty = true;
-				for (y = 0; y < m.getHeight(); y++) {
-					if (m.getValue(x, y) == 1) {
-						isEmpty = false;
+	
+					if (isEmpty) {
+						spaceCounter++;
+					} else {
+						// min / max space detection
+						if (spaceCounter > 0) {
+							if (minSpaceSize == 0 || minSpaceSize > spaceCounter) {
+								minSpaceSize = spaceCounter;
+							}
+	
+							if (maxSpaceSize < spaceCounter) {
+								maxSpaceSize = spaceCounter;
+							}
+						}
+						spaceCounter = 0;
 					}
 				}
-
-				if (isEmpty) {
-					spaceCounter++;
-
-					if (wordStart != -1) {
-						if (wordEndTmp == -1) {
-							wordEndTmp = x;
+	
+				//System.out.println("min space size: " + minSpaceSize);
+				//System.out.println("max space size: " + maxSpaceSize);
+	
+				//System.out.println(m);
+	
+				spaceCounter = 0;
+				wordEndTmp = -1;
+				wordStart = -1;
+	
+				for (x = 0; x < m.getWidth(); x++) {
+					isEmpty = true;
+					for (y = 0; y < m.getHeight(); y++) {
+						if (m.getValue(x, y) == 1) {
+							isEmpty = false;
 						}
 					}
-				} else {
-					// word start
-					if (wordStart == -1) {
-						wordStart = x;
-					}
-
-					if (spaceCounter != 0) {
-						// last space was a "word space" (space size closer to
-						// max then to min)
-						if ((maxSpaceSize - spaceCounter) < (spaceCounter - minSpaceSize)) {
-							rv.add(m.getSubMatrix(wordStart, 0,
-									wordEndTmp - wordStart, m.getHeight()));
-							//System.out.println((maxSpaceSize - spaceCounter)
-							//		+ " - " + (spaceCounter - minSpaceSize));
+	
+					if (isEmpty) {
+						spaceCounter++;
+	
+						if (wordStart != -1) {
+							if (wordEndTmp == -1) {
+								wordEndTmp = x;
+							}
+						}
+					} else {
+						// word start
+						if (wordStart == -1) {
 							wordStart = x;
-						} else {
-							//System.out.println((maxSpaceSize - spaceCounter)
-							//		+ " - " + (spaceCounter - minSpaceSize));
 						}
+	
+						if (spaceCounter != 0) {
+							// last space was a "word space" (space size closer to
+							// max then to min)
+							if ((maxSpaceSize - spaceCounter) < (spaceCounter - minSpaceSize)) {
+								rv.add(m.getSubMatrix(wordStart, 0,
+										wordEndTmp - wordStart, m.getHeight()));
+								//System.out.println((maxSpaceSize - spaceCounter)
+								//		+ " - " + (spaceCounter - minSpaceSize));
+								wordStart = x;
+							} else {
+								//System.out.println((maxSpaceSize - spaceCounter)
+								//		+ " - " + (spaceCounter - minSpaceSize));
+							}
+						}
+	
+						// reset counters
+						wordEndTmp = -1;
+						spaceCounter = 0;
 					}
-
-					// reset counters
-					wordEndTmp = -1;
-					spaceCounter = 0;
+	
 				}
-
+	
+				// get last word
+				if (wordStart != -1) {
+					rv.add(m.getSubMatrix(wordStart, 0, m.getWidth()
+							- wordStart, m.getHeight()));
+				}
 			}
-
-			// get last word
-			if (wordStart != -1) {
-				rv.add(m.getSubMatrix(wordStart, 0, m.getWidth()
-						- wordStart, m.getHeight()));
-			}
-
 		}
 		setMatrices(rv);
 	}
