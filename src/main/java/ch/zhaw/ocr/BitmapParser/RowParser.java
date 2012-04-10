@@ -45,6 +45,7 @@ public class RowParser extends BitmapParserDecorator {
 					if(isEmpty){
 						if(rowStart != -1){
 							rv.add(m.getSubMatrix(0, rowStart, m.getWidth()-1, y-rowStart));
+							rv.add(new ContrastMatrix(FunctionalCharacter.carriageReturn));
 							rowStart = -1;
 						}
 					}else{
