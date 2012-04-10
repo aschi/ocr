@@ -22,6 +22,10 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
+import ch.zhaw.ocr.GuiHelper.ImageFileFilter;
+import ch.zhaw.ocr.GuiHelper.TextFileFilter;
+
+
 public class InputForm {
 	
 	final JFileChooser fc = new JFileChooser();
@@ -76,17 +80,17 @@ public class InputForm {
         analyseButton = new JButton("Analyse");
         
         browseButton.addActionListener(new ActionListener() {
-			@Override
+			
 			public void actionPerformed(ActionEvent e) {
+				ImageFileFilter filter = new ImageFileFilter();
+				fc.setFileFilter(filter);
+				
 				if (e.getSource() == browseButton) {
-					
-					fc.addChoosableFileFilter(new ImageFilter());
-					fc.setAcceptAllFileFilterUsed(false);				
 					
 					int returnVal = fc.showOpenDialog(browseButton);
 					
-			        if (returnVal == JFileChooser.APPROVE_OPTION) {
-			            java.io.File file = fc.getSelectedFile();
+			        if (returnVal == JFileChooser.APPROVE_OPTION ) {
+			        	java.io.File file = fc.getSelectedFile();
 			            imagePath.setText(file.getPath());
 			        } 
 				}
@@ -119,12 +123,20 @@ public class InputForm {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				TextFileFilter filter = new TextFileFilter();
+				fc.setFileFilter(filter);
 				int returnVal = fc.showSaveDialog(saveButton);
-				File file = fc.getSelectedFile();
 				BufferedWriter writer = null;
+				
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					try {
-						writer = new BufferedWriter(new FileWriter(file.getAbsolutePath()+".txt"));  
+						File file = fc.getSelectedFile();
+						String filepath = file.getAbsolutePath();
+						if (!filepath.endsWith(".txt"))
+						{
+							filepath += ".txt";
+						}
+						writer = new BufferedWriter(new FileWriter(filepath));  
 			            writer.write(analysedText.getText());  
 			            writer.close();  
 			            JOptionPane.showMessageDialog(null, "File saved successfully!",  
@@ -137,7 +149,7 @@ public class InputForm {
 			            }  
 					}
 				}
-        	
+
         });
                
         button2Panel.setLayout(new BoxLayout(button2Panel, BoxLayout.LINE_AXIS));
