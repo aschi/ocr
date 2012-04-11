@@ -32,6 +32,7 @@ public class WordParser extends BitmapParserDecorator {
 
 		for (ContrastMatrix m : getMatrices()) {
 			if(m.getFunctionalChar() == null){
+				m.trim();
 				/**
 				 * Step 1: find min / max space sizes
 				 */
@@ -118,6 +119,8 @@ public class WordParser extends BitmapParserDecorator {
 				if (wordStart != -1) {
 					rv.add(m.getSubMatrix(wordStart, 0, m.getWidth()
 							- wordStart, m.getHeight()));
+					wordStart = -1;
+					wordEndTmp = -1;
 				}
 			}else{
 				//functional character => keep it

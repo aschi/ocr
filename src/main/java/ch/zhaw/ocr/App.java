@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 import ch.zhaw.ocr.BitmapParser.BitmapParser;
 import ch.zhaw.ocr.BitmapParser.CharacterParser;
 import ch.zhaw.ocr.BitmapParser.ContrastMatrix;
+import ch.zhaw.ocr.BitmapParser.RowParser;
 import ch.zhaw.ocr.BitmapParser.SimpleBitmapParser;
 import ch.zhaw.ocr.BitmapParser.WordParser;
 import ch.zhaw.ocr.CharacterRecognition.Character;
@@ -26,13 +27,13 @@ public class App {
 
 		// cc.detectCharacter()
 		try {
-			BitmapParser bp = new CharacterParser(new WordParser(
-					new SimpleBitmapParser()));
+			BitmapParser bp = new CharacterParser(new WordParser(new RowParser(
+					new SimpleBitmapParser())));
 			bp.parse(ImageIO.read(new File("img/text.PNG")));
 			
 			for(ContrastMatrix cm : bp.getMatrices()){
 				String c = cc.detectCharacter(new Character(cm));
-				System.out.print(c.equals("") ? "? " : c +" ");
+				System.out.print(c.equals("") ? "?" : c);
 			}
 			
 			// ContrastMatrix cm = ContrastMatrix.parseImage(ImageIO.read(new

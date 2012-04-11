@@ -13,4 +13,7 @@ public enum FunctionalCharacter {
 	public String toString(){
 		return Character.toString(character);
 	}
+	public char getCharacter(){
+		return character;
+	}
 }
