@@ -12,8 +12,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class CharacterParserTest {
-	private ContrastMatrix exampleMatrix;
-	private List<ContrastMatrix> resultList;
+	private ContrastMatrix inputMatrix;
+	private List<ContrastMatrix> expectedResultList;
 	
 	private Mockery context;
 	
@@ -22,36 +22,36 @@ public class CharacterParserTest {
 	public void setUp() throws Exception {
 		context = new JUnit4Mockery();
 				
-		exampleMatrix = new ContrastMatrix(20, 5);
+		inputMatrix = new ContrastMatrix(20, 5);
 		
-		fillCol(exampleMatrix, 0);
-		fillCol(exampleMatrix, 1);
-		fillCol(exampleMatrix, 2);
-		fillCol(exampleMatrix, 3);
+		fillCol(inputMatrix, 0);
+		fillCol(inputMatrix, 1);
+		fillCol(inputMatrix, 2);
+		fillCol(inputMatrix, 3);
 		
-		fillCol(exampleMatrix, 6);
-		fillCol(exampleMatrix, 7);
-		fillCol(exampleMatrix, 8);
-		fillCol(exampleMatrix, 9);
-		fillCol(exampleMatrix, 10);
+		fillCol(inputMatrix, 6);
+		fillCol(inputMatrix, 7);
+		fillCol(inputMatrix, 8);
+		fillCol(inputMatrix, 9);
+		fillCol(inputMatrix, 10);
 	
-		fillCol(exampleMatrix, 17);
-		fillCol(exampleMatrix, 18);
-		fillCol(exampleMatrix, 19);
+		fillCol(inputMatrix, 17);
+		fillCol(inputMatrix, 18);
+		fillCol(inputMatrix, 19);
 		
 		//set up desired result		
-		resultList= new LinkedList<ContrastMatrix>();
+		expectedResultList= new LinkedList<ContrastMatrix>();
 		ContrastMatrix cm = new ContrastMatrix(4, 5);
 		cm.invertMatrix();
-		resultList.add(cm);
+		expectedResultList.add(cm);
 		
 		cm = new ContrastMatrix(5, 5);
 		cm.invertMatrix();
-		resultList.add(cm);
+		expectedResultList.add(cm);
 		
 		cm = new ContrastMatrix(3, 5);
 		cm.invertMatrix();
-		resultList.add(cm);
+		expectedResultList.add(cm);
 	}
 
 	private void fillCol(ContrastMatrix cm, int colNo){
@@ -63,21 +63,21 @@ public class CharacterParserTest {
 	@Test
 	public void testParse() {
 		//input matrices
-		final List<ContrastMatrix> matrices = new LinkedList<ContrastMatrix>();
-		matrices.add(exampleMatrix);
+		final List<ContrastMatrix> inputList = new LinkedList<ContrastMatrix>();
+		inputList.add(inputMatrix);
 		
 		
 		final BitmapParser bp = context.mock(BitmapParser.class);
 		
 		context.checking(new Expectations() {{
-			oneOf (bp).parse(null); will(returnValue(matrices));
+			oneOf (bp).parse(null); will(returnValue(inputList));
 	    }});
 
 		
 		BitmapParser instance = new CharacterParser(bp);
 		List<ContrastMatrix> parsedList = instance.parse(null);
 		
-		assertTrue(parsedList.equals(resultList));
+		assertTrue(parsedList.equals(expectedResultList));
 	}
 
 }

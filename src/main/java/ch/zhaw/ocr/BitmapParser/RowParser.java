@@ -36,7 +36,7 @@ public class RowParser extends BitmapParserDecorator {
 				for(int y = 0;y < m.getHeight();y++){
 					isEmpty = true;
 					
-					for(int x = 0;x < m.getHeight();x++){
+					for(int x = 0;x < m.getWidth();x++){
 						if(m.getValue(x, y) == 1){
 							isEmpty = false;
 						}

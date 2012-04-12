@@ -12,8 +12,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class WordParserTest {
-	private ContrastMatrix exampleMatrix;
-	private List<ContrastMatrix> resultList;
+	private ContrastMatrix inputMatrix;
+	private List<ContrastMatrix> expectedResultList;
 	
 	private Mockery context;
 	
@@ -22,54 +22,76 @@ public class WordParserTest {
 	public void setUp() throws Exception {
 		context = new JUnit4Mockery();
 				
-		exampleMatrix = new ContrastMatrix(40, 5);
+		inputMatrix = new ContrastMatrix(40, 5);
 		
-		fillCol(exampleMatrix, 0);
-		fillCol(exampleMatrix, 1);
-		fillCol(exampleMatrix, 2);
-		fillCol(exampleMatrix, 3);
+		//word 1
+		fillCol(inputMatrix, 0);
+		fillCol(inputMatrix, 1);
+		fillCol(inputMatrix, 2);
+		fillCol(inputMatrix, 3);
 		
-		fillCol(exampleMatrix, 6);
-		fillCol(exampleMatrix, 7);
-		fillCol(exampleMatrix, 8);
-		fillCol(exampleMatrix, 9);
-		fillCol(exampleMatrix, 10);
+		fillCol(inputMatrix, 6);
+		fillCol(inputMatrix, 7);
+		fillCol(inputMatrix, 8);
+		fillCol(inputMatrix, 9);
+		fillCol(inputMatrix, 10);
 	
-		fillCol(exampleMatrix, 13);
-		fillCol(exampleMatrix, 14);
-		fillCol(exampleMatrix, 15);
-		fillCol(exampleMatrix, 16);
-		fillCol(exampleMatrix, 17);
+		fillCol(inputMatrix, 13);
+		fillCol(inputMatrix, 14);
+		fillCol(inputMatrix, 15);
+		fillCol(inputMatrix, 16);
+		fillCol(inputMatrix, 17);
 		
+		//word 2
+		fillCol(inputMatrix, 27);
+		fillCol(inputMatrix, 28);
+		fillCol(inputMatrix, 29);
+		fillCol(inputMatrix, 30);
 		
-		fillCol(exampleMatrix, 27);
-		fillCol(exampleMatrix, 28);
-		fillCol(exampleMatrix, 29);
-		fillCol(exampleMatrix, 30);
+		fillCol(inputMatrix, 33);
+		fillCol(inputMatrix, 34);
 		
-		fillCol(exampleMatrix, 33);
-		fillCol(exampleMatrix, 34);
-		
-		fillCol(exampleMatrix, 35);
-		fillCol(exampleMatrix, 36);
-		fillCol(exampleMatrix, 37);
-		fillCol(exampleMatrix, 38);
-		fillCol(exampleMatrix, 39);
+		fillCol(inputMatrix, 37);
+		fillCol(inputMatrix, 38);
+		fillCol(inputMatrix, 39);
 		
 		
 		//set up desired result		
-		resultList= new LinkedList<ContrastMatrix>();
-		ContrastMatrix cm = new ContrastMatrix(4, 5);
-		cm.invertMatrix();
-		resultList.add(cm);
+		expectedResultList= new LinkedList<ContrastMatrix>();
+		ContrastMatrix cm = new ContrastMatrix(18, 5);
+		fillCol(cm, 0);
+		fillCol(cm, 1);
+		fillCol(cm, 2);
+		fillCol(cm, 3);
 		
-		cm = new ContrastMatrix(5, 5);
-		cm.invertMatrix();
-		resultList.add(cm);
+		fillCol(cm, 6);
+		fillCol(cm, 7);
+		fillCol(cm, 8);
+		fillCol(cm, 9);
+		fillCol(cm, 10);
+	
+		fillCol(cm, 13);
+		fillCol(cm, 14);
+		fillCol(cm, 15);
+		fillCol(cm, 16);
+		fillCol(cm, 17);
+		expectedResultList.add(cm);
 		
-		cm = new ContrastMatrix(3, 5);
-		cm.invertMatrix();
-		resultList.add(cm);
+		expectedResultList.add(new ContrastMatrix(FunctionalCharacter.space));
+		
+		cm = new ContrastMatrix(13, 5);
+		fillCol(cm, 0);
+		fillCol(cm, 1);
+		fillCol(cm, 2);
+		fillCol(cm, 3);
+		
+		fillCol(cm, 6);
+		fillCol(cm, 7);
+		
+		fillCol(cm, 10);
+		fillCol(cm, 11);
+		fillCol(cm, 12);
+		expectedResultList.add(cm);
 	}
 
 	private void fillCol(ContrastMatrix cm, int colNo){
@@ -81,20 +103,20 @@ public class WordParserTest {
 	@Test
 	public void testParse() {
 		//input matrices
-		final List<ContrastMatrix> matrices = new LinkedList<ContrastMatrix>();
-		matrices.add(exampleMatrix);
+		final List<ContrastMatrix> inputList = new LinkedList<ContrastMatrix>();
+		inputList.add(inputMatrix);
 		
 		
 		final BitmapParser bp = context.mock(BitmapParser.class);
 		
 		context.checking(new Expectations() {{
-			oneOf (bp).parse(null); will(returnValue(matrices));
+			oneOf (bp).parse(null); will(returnValue(inputList));
 	    }});
 
 		
 		BitmapParser instance = new WordParser(bp);
 		List<ContrastMatrix> parsedList = instance.parse(null);
 		
-		assertTrue(parsedList.equals(resultList));
+		assertTrue(parsedList.equals(expectedResultList));
 	}
 }
