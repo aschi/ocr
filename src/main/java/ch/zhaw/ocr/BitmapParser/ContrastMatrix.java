@@ -233,6 +233,42 @@ public class ContrastMatrix {
 		}
 	}
 
-
-
+	/**
+	 * Equals
+	 * If this object represents a functional char: Compare the stored functional char
+	 * If not compare all elements of the contrastMatrix
+	 */
+	public boolean equals(Object o){
+		if(o instanceof ContrastMatrix){
+			ContrastMatrix co = (ContrastMatrix)o;
+			if(getFunctionalChar() != null){
+				//functional char. just check functional char
+				if(getFunctionalChar().equals(co.getFunctionalChar())){
+					return true;
+				}else{
+					return false;
+				}
+			}else{
+				//default contrast matrix
+				//check all values
+				boolean equals = true;
+				if (getContrastMatrix().length == co.getContrastMatrix().length
+						&& getContrastMatrix()[0].length == co.getContrastMatrix()[0].length) {
+					for (int x = 0; x < getContrastMatrix().length; x++) {
+						for (int y = 0; y < getContrastMatrix()[0].length; y++) {
+							if (getContrastMatrix()[x][y] != co.getContrastMatrix()[x][y]) {
+								equals = false;
+							}
+						}
+					}
+				} else {
+					equals = false;
+				}
+				return equals;			
+			}
+		}else{
+			//no contrast matrix
+			return false;
+		}
+	}
 }

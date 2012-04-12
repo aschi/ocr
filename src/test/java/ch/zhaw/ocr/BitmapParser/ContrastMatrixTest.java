@@ -90,27 +90,94 @@ public class ContrastMatrixTest {
 
 	@Test
 	public void testRemoveCol() {
-		fail("Not yet implemented");
+		ContrastMatrix cm = new ContrastMatrix(4, 4);
+		cm.setValue(0, 0, 1);
+		cm.setValue(1, 1, 1);
+		cm.setValue(2, 2, 1);
+		cm.setValue(3, 3, 1);
+		
+		ContrastMatrix cm2 = new ContrastMatrix(3, 4);
+		cm2.setValue(0, 0, 1);
+		cm2.setValue(1, 1, 1);
+		cm2.setValue(2, 2, 1);
+		
+		cm.removeCol(3);
+		
+		assertTrue(cm.equals(cm2));
 	}
 
 	@Test
 	public void testRemoveRow() {
-		fail("Not yet implemented");
+		ContrastMatrix cm = new ContrastMatrix(4, 4);
+		cm.setValue(0, 0, 1);
+		cm.setValue(1, 1, 1);
+		cm.setValue(2, 2, 1);
+		cm.setValue(3, 3, 1);
+		
+		ContrastMatrix cm2 = new ContrastMatrix(4, 3);
+		cm2.setValue(0, 0, 1);
+		cm2.setValue(1, 1, 1);
+		cm2.setValue(3, 2, 1);
+		
+		cm.removeRow(2);
+		
+		assertTrue(cm.equals(cm2));
 	}
 
 	@Test
 	public void testInvertMatrix() {
-		fail("Not yet implemented");
+		ContrastMatrix cm = new ContrastMatrix(4, 4);
+		cm.setValue(0, 0, 1);
+		cm.setValue(1, 1, 1);
+		cm.setValue(2, 2, 1);
+		cm.setValue(3, 3, 1);
+		
+		ContrastMatrix cm2 = new ContrastMatrix(4, 4);
+		cm2.setValue(1, 0, 1);
+		cm2.setValue(2, 0, 1);
+		cm2.setValue(3, 0, 1);
+		
+		cm2.setValue(0, 1, 1);
+		cm2.setValue(2, 1, 1);
+		cm2.setValue(3, 1, 1);
+		
+		cm2.setValue(0, 2, 1);
+		cm2.setValue(1, 2, 1);
+		cm2.setValue(3, 2, 1);
+		
+		cm2.setValue(0, 3, 1);
+		cm2.setValue(1, 3, 1);
+		cm2.setValue(2, 3, 1);
+		
+		cm.invertMatrix();
+		
+		assertTrue(cm.equals(cm2));
 	}
 
 	@Test
 	public void testGetSubMatrix() {
-		fail("Not yet implemented");
+		ContrastMatrix cm = new ContrastMatrix(2, 2);
+		cm.setValue(0, 0, 1);
+		cm.setValue(1, 1, 1);
+		
+		ContrastMatrix cm2 = exampleMatrix.getSubMatrix(1, 1, 2, 2);
+		
+		assertTrue(cm2.equals(cm));
 	}
 
 	@Test
 	public void testTrim() {
-		fail("Not yet implemented");
+		ContrastMatrix cm2 = new ContrastMatrix(2, 2);
+		cm2.setValue(0, 0, 1);
+		cm2.setValue(1, 1, 1);
+		
+		ContrastMatrix cm = new ContrastMatrix(4, 4);
+		cm.setValue(1, 1, 1);
+		cm.setValue(2, 2, 1);
+		
+		cm.trim();
+		
+		assertTrue(cm.equals(cm2));
 	}
 
 }
