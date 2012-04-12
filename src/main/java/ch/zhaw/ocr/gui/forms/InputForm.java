@@ -22,8 +22,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
-import ch.zhaw.ocr.GuiHelper.ImageFileFilter;
-import ch.zhaw.ocr.GuiHelper.TextFileFilter;
+import ch.zhaw.ocr.gui.helper.ImageFileFilter;
+import ch.zhaw.ocr.gui.helper.TextFileFilter;
 
 
 public class InputForm {

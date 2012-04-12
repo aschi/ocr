@@ -70,6 +70,10 @@ public class ContrastMatrix {
 		return contrastMatrix[0].length;
 	}
 	
+	public int[][] getContrastMatrix(){
+		return contrastMatrix;
+	}
+	
 	public FunctionalCharacter getFunctionalChar(){
 		return functionalChar;
 	}

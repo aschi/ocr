@@ -1,4 +1,4 @@
-package ch.zhaw.ocr.GuiHelper;
+package ch.zhaw.ocr.gui.helper;
 
 import java.io.File;
 
