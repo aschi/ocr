@@ -36,14 +36,13 @@ public class InitialLearning {
 							.equals("png")) {
 				try {
 					System.out.println("parsing file: "+ f.getName());
-					bp.parse(ImageIO.read(f));
+					List<ContrastMatrix> matrices = bp.parse(ImageIO.read(f));
 
 					
 					
 					// convert into character list
 					List<Character> chars = new LinkedList<Character>();
-					for (ContrastMatrix cm : bp.getMatrices()) {
-						//System.out.println(cm);
+					for (ContrastMatrix cm : matrices) {
 						chars.add(new Character(cm));
 					}
 

@@ -13,13 +13,13 @@ public class CharacterParser extends BitmapParserDecorator {
 	}
 
 	@Override
-	public void parse(BufferedImage image) {
-		super.parse(image);
+	public List<ContrastMatrix> parse(BufferedImage image) {
+		List<ContrastMatrix> matrices = super.parse(image);
 		List<ContrastMatrix> rv = new LinkedList<ContrastMatrix>();
 
 		boolean emptyRow = true;
 
-		for (ContrastMatrix m : getMatrices()) {
+		for (ContrastMatrix m : matrices) {
 			if(m.getFunctionalChar() == null){
 				m.trim();
 	
@@ -60,9 +60,8 @@ public class CharacterParser extends BitmapParserDecorator {
 				//functional character => keep it
 				rv.add(m);
 			}
-			//ovverride matrix list
-			setMatrices(rv);
 		}
+		return rv;
 	}
 
 }

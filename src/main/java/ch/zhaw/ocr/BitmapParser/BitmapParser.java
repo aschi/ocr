@@ -4,8 +4,5 @@ import java.awt.image.BufferedImage;
 import java.util.List;
 
 public interface BitmapParser {
-	public void parse(BufferedImage image);
-	public List<ContrastMatrix> getMatrices();
-	public ContrastMatrix getMatrix(int i);
-	public void setMatrices(List<ContrastMatrix> matrices);
+	public List<ContrastMatrix> parse(BufferedImage image);
 }

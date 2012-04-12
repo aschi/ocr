@@ -16,7 +16,7 @@ public class SimpleBitmapParser implements BitmapParser{
 	 * @param image the image to be parsed
 	 * @return ContrastMatrix representing the image
 	 */
-	public void parse(BufferedImage image) {
+	public List<ContrastMatrix> parse(BufferedImage image) {
 		matrices = new LinkedList<ContrastMatrix>();
 		
 		ContrastMatrix rv = new ContrastMatrix(image.getWidth(),
@@ -55,21 +55,6 @@ public class SimpleBitmapParser implements BitmapParser{
 		}
 
 		matrices.add(rv);
-	}
-
-	@Override
-	public List<ContrastMatrix> getMatrices() {
 		return matrices;
 	}
-
-	@Override
-	public ContrastMatrix getMatrix(int i) {
-		return matrices.get(i);
-	}
-
-	@Override
-	public void setMatrices(List<ContrastMatrix> matrices) {
-		this.matrices = matrices;
-	}
-	
 }

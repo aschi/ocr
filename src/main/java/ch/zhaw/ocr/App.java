@@ -2,6 +2,7 @@ package ch.zhaw.ocr;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 
@@ -29,9 +30,9 @@ public class App {
 		try {
 			BitmapParser bp = new CharacterParser(new WordParser(new RowParser(
 					new SimpleBitmapParser())));
-			bp.parse(ImageIO.read(new File("img/text.PNG")));
 			
-			for(ContrastMatrix cm : bp.getMatrices()){
+			List<ContrastMatrix> matrices = bp.parse(ImageIO.read(new File("img/text.PNG")));
+			for(ContrastMatrix cm : matrices){
 				String c = cc.detectCharacter(new Character(cm));
 				System.out.print(c.equals("") ? "?" : c);
 			}

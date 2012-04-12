@@ -20,15 +20,15 @@ public class RowParser extends BitmapParserDecorator {
 	}
 
 	@Override
-	public void parse(BufferedImage image){
-		super.parse(image);
+	public List<ContrastMatrix> parse(BufferedImage image){
+		List<ContrastMatrix> matrices = super.parse(image);
 		
 		List<ContrastMatrix> rv = new LinkedList<ContrastMatrix>();
 		
 		boolean isEmpty = true;
 		int rowStart = -1;
 		
-		for(ContrastMatrix m : getMatrices()){
+		for(ContrastMatrix m : matrices){
 			if(m.getFunctionalChar() == null){
 				//trim
 				m.trim();
@@ -59,8 +59,7 @@ public class RowParser extends BitmapParserDecorator {
 				rv.add(m);
 			}
 		}
-		//ovverride matrix list
-		setMatrices(rv);
+		return rv;
 	}
 
 	

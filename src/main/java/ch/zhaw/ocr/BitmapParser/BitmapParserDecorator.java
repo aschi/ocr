@@ -12,23 +12,7 @@ public abstract class BitmapParserDecorator implements BitmapParser {
 	}
 	
 	@Override
-	public void parse(BufferedImage image){
-		bp.parse(image);
+	public List<ContrastMatrix> parse(BufferedImage image){
+		return bp.parse(image);
 	}
-
-	@Override
-	public List<ContrastMatrix> getMatrices(){
-		return bp.getMatrices();
-	}
-
-	@Override
-	public ContrastMatrix getMatrix(int i){
-		return bp.getMatrix(i);
-	}
-
-	@Override
-	public void setMatrices(List<ContrastMatrix> matrices) {
-		bp.setMatrices(matrices);
-	}
-
 }
