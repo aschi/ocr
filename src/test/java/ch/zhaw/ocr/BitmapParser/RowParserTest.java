@@ -57,12 +57,11 @@ public class RowParserTest {
 		cm = new ContrastMatrix(10, 4);
 		cm.invertMatrix();
 		expectedResultList.add(cm);
-		expectedResultList.add(new ContrastMatrix(FunctionalCharacter.carriageReturn));
 		
 	}
 	
 	private void fillRow(ContrastMatrix cm, int rowNo){
-		for(int x = 0;x < cm.getContrastMatrix().length;x++){
+		for(int x = 0;x < cm.getWidth();x++){
 				cm.setValue(x, rowNo, 1);
 		}
 	}
@@ -83,7 +82,13 @@ public class RowParserTest {
 		
 		BitmapParser instance = new RowParser(bp);
 		List<ContrastMatrix> parsedList = instance.parse(null);
-		
+		for (ContrastMatrix m : expectedResultList) {
+			System.out.println(m);
+		}
+		System.out.println("----------- result --------");
+		for (ContrastMatrix m : parsedList) {
+			System.out.println(m);
+		}
 		assertTrue(parsedList.equals(expectedResultList));
 	}
 	

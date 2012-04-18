@@ -44,7 +44,7 @@ public class RowParser extends BitmapParserDecorator {
 					
 					if(isEmpty){
 						if(rowStart != -1){
-							rv.add(m.getSubMatrix(0, rowStart, m.getWidth()-1, y-rowStart));
+							rv.add(m.getSubMatrix(0, rowStart, m.getWidth(), y-rowStart));
 							rv.add(new ContrastMatrix(FunctionalCharacter.carriageReturn));
 							rowStart = -1;
 						}
@@ -53,6 +53,9 @@ public class RowParser extends BitmapParserDecorator {
 							rowStart = y;
 						}
 					}
+				}
+				if(rowStart != -1){
+					rv.add(m.getSubMatrix(0, rowStart, m.getWidth(), m.getHeight() - rowStart));
 				}
 			}else{
 				//functional character => keep it
