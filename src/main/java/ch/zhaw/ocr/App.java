@@ -11,6 +11,7 @@ import ch.zhaw.ocr.BitmapParser.CharacterParser;
 import ch.zhaw.ocr.BitmapParser.ContrastMatrix;
 import ch.zhaw.ocr.BitmapParser.RowParser;
 import ch.zhaw.ocr.BitmapParser.SimpleBitmapParser;
+import ch.zhaw.ocr.BitmapParser.UnderlineRemover;
 import ch.zhaw.ocr.BitmapParser.WordParser;
 import ch.zhaw.ocr.CharacterRecognition.Character;
 import ch.zhaw.ocr.CharacterRecognition.CharacterComperator;
@@ -28,10 +29,10 @@ public class App {
 
 		// cc.detectCharacter()
 		try {
-			BitmapParser bp = new CharacterParser(new WordParser(new RowParser(
-					new SimpleBitmapParser())));
+			BitmapParser bp = new CharacterParser(new WordParser(new UnderlineRemover(new RowParser(
+					new SimpleBitmapParser()))));
 			
-			List<ContrastMatrix> matrices = bp.parse(ImageIO.read(new File("img/text.PNG")));
+			List<ContrastMatrix> matrices = bp.parse(ImageIO.read(new File("img/Underline.PNG")));
 			for(ContrastMatrix cm : matrices){
 				String c = cc.detectCharacter(new Character(cm));
 				System.out.print(c.equals("") ? "?" : c);
