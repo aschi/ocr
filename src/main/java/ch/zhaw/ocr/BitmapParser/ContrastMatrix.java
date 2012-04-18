@@ -199,6 +199,18 @@ public class ContrastMatrix {
 		return true;
 	}
 
+	
+	public boolean isFull(int startX, int endX, int startY, int endY){
+		for(int x = startX; x <= endX;x++){
+			for(int y = startY; y <= endY;y++){
+				if(getValue(x, y) != 1){
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
 	/**
 	 * Check if the given column is full
 	 * 
