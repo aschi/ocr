@@ -167,6 +167,61 @@ public class ContrastMatrix {
 		return rv;
 	}
 
+	/**
+	 * Check if the given row is full
+	 * @param y row number
+	 * @return indicates wheter the column is full or not
+	 */
+	public boolean isFullRow(int y){
+		for(int x = 0; x < getWidth();x++){
+			if(getValue(x, y) != 1){
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	/**
+	 * Check if the given row is empty
+	 * @param y row number
+	 * @return indicates wheter the column is empty or not
+	 */
+	public boolean isEmptyRow(int y){
+		for(int x = 0; x < getWidth();x++){
+			if(getValue(x, y) != 0){
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	/**
+	 * Check if the given column is full
+	 * @param x column number
+	 * @return indicates wheter the column is full or not
+	 */
+	public boolean isFullCol(int x){
+		for(int y = 0; y < getHeight();y++){
+			if(getValue(x, y) != 1){
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	/**
+	 * Check if the given column is empty
+	 * @param x column number
+	 * @return indicates wheter the column is empty or not
+	 */
+	public boolean isEmptyCol(int x){
+		for(int y = 0; y < getHeight();y++){
+			if(getValue(x, y) != 0){
+				return false;
+			}
+		}
+		return true;
+	}
 
 	/**
 	 * Remove empty leading & tailing rows / cols
