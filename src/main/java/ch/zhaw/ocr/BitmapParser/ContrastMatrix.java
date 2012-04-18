@@ -9,7 +9,7 @@ package ch.zhaw.ocr.BitmapParser;
 public class ContrastMatrix {
 	private int[][] contrastMatrix;
 	private FunctionalCharacter functionalChar = null;
-	
+
 	/**
 	 * Initialise an empty ContrastMatrix using the given height + width
 	 * 
@@ -24,26 +24,26 @@ public class ContrastMatrix {
 	 * Allows to represent a functional character
 	 * 
 	 */
-	public ContrastMatrix(FunctionalCharacter functionalChar){
+	public ContrastMatrix(FunctionalCharacter functionalChar) {
 		contrastMatrix = new int[1][1];
 		this.functionalChar = functionalChar;
 	}
-	
+
 	/**
 	 * Return the string representative of the current object
 	 */
 	public String toString() {
-		if(functionalChar != null){
+		if (functionalChar != null) {
 			return functionalChar.toString();
-		}else{
+		} else {
 			StringBuffer sb = new StringBuffer();
 			for (int y = 0; y < getHeight(); y++) {
 				for (int x = 0; x < getWidth(); x++) {
 					sb.append(contrastMatrix[x][y]
 							+ ((x != getWidth() - 1) ? " " : ""));
 				}
-				sb.append(y != getHeight() ? System.getProperty("line.separator")
-						: "");
+				sb.append(y != getHeight() ? System
+						.getProperty("line.separator") : "");
 			}
 			return sb.toString();
 		}
@@ -69,12 +69,12 @@ public class ContrastMatrix {
 	public int getHeight() {
 		return contrastMatrix[0].length;
 	}
-	
-	public int[][] getContrastMatrix(){
+
+	public int[][] getContrastMatrix() {
 		return contrastMatrix;
 	}
-	
-	public FunctionalCharacter getFunctionalChar(){
+
+	public FunctionalCharacter getFunctionalChar() {
 		return functionalChar;
 	}
 
@@ -169,54 +169,62 @@ public class ContrastMatrix {
 
 	/**
 	 * Check if the given row is full
-	 * @param y row number
-	 * @return indicates wheter the column is full or not
+	 * 
+	 * @param y
+	 *            row number
+	 * @return indicates whether the column is full or not
 	 */
-	public boolean isFullRow(int y){
-		for(int x = 0; x < getWidth();x++){
-			if(getValue(x, y) != 1){
+	public boolean isFullRow(int y) {
+		for (int x = 0; x < getWidth(); x++) {
+			if (getValue(x, y) != 1) {
 				return false;
 			}
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Check if the given row is empty
-	 * @param y row number
-	 * @return indicates wheter the column is empty or not
+	 * 
+	 * @param y
+	 *            row number
+	 * @return indicates whether the column is empty or not
 	 */
-	public boolean isEmptyRow(int y){
-		for(int x = 0; x < getWidth();x++){
-			if(getValue(x, y) != 0){
+	public boolean isEmptyRow(int y) {
+		for (int x = 0; x < getWidth(); x++) {
+			if (getValue(x, y) != 0) {
 				return false;
 			}
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Check if the given column is full
-	 * @param x column number
-	 * @return indicates wheter the column is full or not
+	 * 
+	 * @param x
+	 *            column number
+	 * @return indicates whether the column is full or not
 	 */
-	public boolean isFullCol(int x){
-		for(int y = 0; y < getHeight();y++){
-			if(getValue(x, y) != 1){
+	public boolean isFullCol(int x) {
+		for (int y = 0; y < getHeight(); y++) {
+			if (getValue(x, y) != 1) {
 				return false;
 			}
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Check if the given column is empty
-	 * @param x column number
-	 * @return indicates wheter the column is empty or not
+	 * 
+	 * @param x
+	 *            column number
+	 * @return indicates whether the column is empty or not
 	 */
-	public boolean isEmptyCol(int x){
-		for(int y = 0; y < getHeight();y++){
-			if(getValue(x, y) != 0){
+	public boolean isEmptyCol(int x) {
+		for (int y = 0; y < getHeight(); y++) {
+			if (getValue(x, y) != 0) {
 				return false;
 			}
 		}
@@ -227,91 +235,92 @@ public class ContrastMatrix {
 	 * Remove empty leading & tailing rows / cols
 	 */
 	public void trim() {
-		boolean isEmpty;
-	
-		// remove empty leading cols
-		isEmpty = true;
-		while(isEmpty){
-			for (int y = 0; y < getHeight(); y++) {
-				if (getValue(0, y) != 0) {
-					isEmpty = false;
+		if (getFunctionalChar() == null) {
+			boolean isEmpty;
+
+			// remove empty leading cols
+			isEmpty = true;
+			while (isEmpty) {
+				for (int y = 0; y < getHeight(); y++) {
+					if (getValue(0, y) != 0) {
+						isEmpty = false;
+					}
+				}
+
+				if (isEmpty) {
+					removeCol(0);
 				}
 			}
 
-			if (isEmpty) {
-				removeCol(0);
-			}
-		}
+			// remove empty tailing cols
+			isEmpty = true;
+			while (isEmpty) {
+				for (int y = 0; y < getHeight(); y++) {
+					if (getValue(getWidth() - 1, y) != 0) {
+						isEmpty = false;
+					}
+				}
 
-		// remove empty tailing cols
-		isEmpty = true;
-		while (isEmpty) {
-			for (int y = 0; y < getHeight(); y++) {
-				if (getValue(getWidth()-1, y) != 0) {
-					isEmpty = false;
+				if (isEmpty) {
+					removeCol(getWidth() - 1);
 				}
 			}
 
-			if (isEmpty) {
-				removeCol(getWidth()-1);
-			}
-		}
+			// remove empty leading rows
+			isEmpty = true;
+			while (isEmpty) {
+				for (int x = 0; x < getWidth(); x++) {
+					if (getValue(x, 0) != 0) {
+						isEmpty = false;
+					}
+				}
 
-		// remove empty leading rows
-		isEmpty = true;
-		while(isEmpty){
-			for (int x = 0; x < getWidth(); x++) {
-				if (getValue(x, 0) != 0) {
-					isEmpty = false;
+				if (isEmpty) {
+					removeRow(0);
 				}
 			}
 
-			if (isEmpty) {
-				removeRow(0);
-			}
-		}
-		
-		
-
-		// remove empty tailing rows
-		isEmpty = true;
-		while (isEmpty) {
-			for (int x = 0; x < getWidth(); x++) {
-				if (getValue(x, getHeight()-1) != 0) {
-					isEmpty = false;
+			// remove empty tailing rows
+			isEmpty = true;
+			while (isEmpty) {
+				for (int x = 0; x < getWidth(); x++) {
+					if (getValue(x, getHeight() - 1) != 0) {
+						isEmpty = false;
+					}
 				}
-			}
 
-			if (isEmpty) {
-				removeRow(getHeight()-1);
+				if (isEmpty) {
+					removeRow(getHeight() - 1);
+				}
 			}
 		}
 	}
 
 	/**
-	 * Equals
-	 * If this object represents a functional char: Compare the stored functional char
-	 * If not compare all elements of the contrastMatrix
+	 * Equals If this object represents a functional char: Compare the stored
+	 * functional char If not compare all elements of the contrastMatrix
 	 */
-	public boolean equals(Object o){
-		if(o instanceof ContrastMatrix){
-			ContrastMatrix co = (ContrastMatrix)o;
-			if(getFunctionalChar() != null){
-				//functional char. just check functional char
-				if(getFunctionalChar().equals(co.getFunctionalChar())){
+	public boolean equals(Object o) {
+		if (o instanceof ContrastMatrix) {
+			ContrastMatrix co = (ContrastMatrix) o;
+			if (getFunctionalChar() != null) {
+				// functional char. just check functional char
+				if (getFunctionalChar().equals(co.getFunctionalChar())) {
 					return true;
-				}else{
+				} else {
 					return false;
 				}
-			}else{
-				//default contrast matrix
-				//check all values
+			} else {
+				// default contrast matrix
+				// check all values
 				boolean equals = true;
 				if (getContrastMatrix().length == co.getContrastMatrix().length
-						&& getContrastMatrix()[0].length == co.getContrastMatrix()[0].length) {
+						&& getContrastMatrix()[0].length == co
+								.getContrastMatrix()[0].length) {
 					for (int x = 0; x < getContrastMatrix().length; x++) {
 						for (int y = 0; y < getContrastMatrix()[0].length; y++) {
-							if (getContrastMatrix()[x][y] != co.getContrastMatrix()[x][y]) {
+							if (getContrastMatrix()[x][y] != co
+									.getContrastMatrix()[x][y]) {
 								equals = false;
 							}
 						}
@@ -319,10 +328,10 @@ public class ContrastMatrix {
 				} else {
 					equals = false;
 				}
-				return equals;			
+				return equals;
 			}
-		}else{
-			//no contrast matrix
+		} else {
+			// no contrast matrix
 			return false;
 		}
 	}

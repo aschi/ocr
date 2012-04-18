@@ -166,6 +166,42 @@ public class ContrastMatrixTest {
 	}
 
 	@Test
+	public void testIsFullRow(){
+		ContrastMatrix cm = new ContrastMatrix(2, 2);
+		cm.setValue(0, 0, 1);
+		cm.setValue(1, 0, 1);
+		
+		assertTrue(cm.isFullRow(0));
+	}
+	
+	@Test
+	public void testIsEmptyRow(){
+		ContrastMatrix cm = new ContrastMatrix(2, 2);
+		cm.setValue(0, 0, 1);
+		cm.setValue(1, 0, 1);
+		
+		assertTrue(cm.isEmptyRow(1));
+	}
+	
+	@Test
+	public void testIsFullCol(){
+		ContrastMatrix cm = new ContrastMatrix(2, 2);
+		cm.setValue(0, 0, 1);
+		cm.setValue(0, 1, 1);
+		
+		assertTrue(cm.isFullCol(0));
+	}
+	
+	@Test
+	public void testIsEmptyCol(){
+		ContrastMatrix cm = new ContrastMatrix(2, 2);
+		cm.setValue(0, 0, 1);
+		cm.setValue(0, 1, 1);
+		
+		assertTrue(cm.isEmptyCol(1));
+	}
+	
+	@Test
 	public void testTrim() {
 		ContrastMatrix cm2 = new ContrastMatrix(2, 2);
 		cm2.setValue(0, 0, 1);
@@ -180,4 +216,6 @@ public class ContrastMatrixTest {
 		assertTrue(cm.equals(cm2));
 	}
 
+	
+	
 }

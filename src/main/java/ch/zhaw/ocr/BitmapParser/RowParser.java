@@ -25,7 +25,6 @@ public class RowParser extends BitmapParserDecorator {
 		
 		List<ContrastMatrix> rv = new LinkedList<ContrastMatrix>();
 		
-		boolean isEmpty = true;
 		int rowStart = -1;
 		
 		for(ContrastMatrix m : matrices){
@@ -34,15 +33,7 @@ public class RowParser extends BitmapParserDecorator {
 				m.trim();
 				
 				for(int y = 0;y < m.getHeight();y++){
-					isEmpty = true;
-					
-					for(int x = 0;x < m.getWidth();x++){
-						if(m.getValue(x, y) == 1){
-							isEmpty = false;
-						}
-					}
-					
-					if(isEmpty){
+					if(m.isEmptyRow(y)){
 						if(rowStart != -1){
 							rv.add(m.getSubMatrix(0, rowStart, m.getWidth(), y-rowStart));
 							rv.add(new ContrastMatrix(FunctionalCharacter.carriageReturn));
