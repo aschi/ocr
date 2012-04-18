@@ -32,7 +32,7 @@ public class App {
 			BitmapParser bp = new CharacterParser(new WordParser(new UnderlineRemover(new RowParser(
 					new SimpleBitmapParser()))));
 			
-			List<ContrastMatrix> matrices = bp.parse(ImageIO.read(new File("img/Underline.PNG")));
+			List<ContrastMatrix> matrices = bp.parse(ImageIO.read(new File("img/underline2.PNG")));
 			for(ContrastMatrix cm : matrices){
 				String c = cc.detectCharacter(new Character(cm));
 				System.out.print(c.equals("") ? "?" : c);

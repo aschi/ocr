@@ -22,15 +22,15 @@ public class UnderlineRemover extends BitmapParserDecorator {
 				m.trim();
 				
 				
-				//If a full Line is an Underline
-				boolean isFull = true;
+				//If a full Line is an Underline we can remove the whole line
+				boolean isFullLine = true;
 				for (int yFull = 0; yFull < m.getHeight(); yFull++)  {
 					if (!m.isFullRow(yFull)) {
-						isFull = false;
+						isFullLine = false;
 					}
 				}
 				
-				if (!isFull) {
+				if (!isFullLine) {
 					
 					if (functionalChar != null) {
 						returnMatrices.add(functionalChar);
@@ -54,7 +54,46 @@ public class UnderlineRemover extends BitmapParserDecorator {
 						removeUnderline(m, 0, m.getWidth(), start, end);
 					}
 					
-					//Check if the row only was an underline
+					//Now we have to check if only single Signs are underlined
+					//therefore we check the row with the rowhight
+					int yStart = -1;
+					int yEnd = -1;
+					int height = m.getHeight();
+					for (int y = 0; y < m.getHeight(); y++) {
+						for (int x = 0; x <= m.getWidth() - height; x++) {
+							
+							int xEnd = x + height;
+							
+							if (m.isFull(x, xEnd, y, y)) {
+								yStart = y;
+								yEnd = y;
+								//Check how long the underline is
+								boolean isStillUnderlined = true;
+								for (int xUnderline = xEnd; isStillUnderlined; xUnderline ++) {
+									if (m.getValue(xUnderline, y) != 1) {
+										isStillUnderlined = false;
+									} else {
+										xEnd = xUnderline;
+									}
+								}
+								//check how many y's is underline
+								boolean isUnderline = true;
+								for (int yUnderline = yStart + 1; isUnderline; yUnderline ++) {
+									if (yUnderline > m.getHeight()) {
+										break;
+									}
+									isUnderline = m.isFull(x, xEnd, yUnderline, yUnderline);
+									if (isUnderline) {
+										yEnd = yUnderline;
+									}
+								}
+								
+								removeUnderline(m, x, xEnd, yStart, yEnd);
+							}
+						}
+					}
+					
+					//Check if the row only was an underline that is removed now
 					boolean isEmpty = true;
 					for (int yEmpty = 0; yEmpty < m.getHeight(); yEmpty++) {
 						if (!m.isEmptyRow(yEmpty)) {
