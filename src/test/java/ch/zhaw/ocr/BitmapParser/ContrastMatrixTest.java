@@ -202,6 +202,18 @@ public class ContrastMatrixTest {
 	}
 	
 	@Test
+	public void testIsFull(){
+		ContrastMatrix cm = new ContrastMatrix(4, 4);
+		cm.setValue(1, 1, 1);
+		cm.setValue(1, 2, 1);
+		cm.setValue(2, 1, 1);
+		cm.setValue(2, 2, 1);
+		
+		
+		assertTrue(cm.isFull(1,2,1,2));
+	}
+	
+	@Test
 	public void testTrim() {
 		ContrastMatrix cm2 = new ContrastMatrix(2, 2);
 		cm2.setValue(0, 0, 1);

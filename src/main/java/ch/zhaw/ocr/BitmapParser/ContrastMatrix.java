@@ -199,7 +199,14 @@ public class ContrastMatrix {
 		return true;
 	}
 
-	
+	/**
+	 * Checks if any given part of the matrix is full
+	 * @param startX start x coordinate of the part
+	 * @param endX end x coordinate of the part
+	 * @param startY start y coordinate of the part
+	 * @param endY end y coordinate of the part
+	 * @return indicates whether the given part is full or not
+	 */
 	public boolean isFull(int startX, int endX, int startY, int endY){
 		for(int x = startX; x <= endX;x++){
 			for(int y = startY; y <= endY;y++){
