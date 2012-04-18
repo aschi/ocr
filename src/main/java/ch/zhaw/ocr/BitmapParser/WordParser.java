@@ -17,8 +17,6 @@ public class WordParser extends BitmapParserDecorator {
 
 		List<ContrastMatrix> rv = new LinkedList<ContrastMatrix>();
 
-		boolean isEmpty;
-
 		int minSpaceSize = 0;
 		int maxSpaceSize = 0;
 
@@ -28,7 +26,6 @@ public class WordParser extends BitmapParserDecorator {
 		int wordEndTmp = -1;
 
 		int x = 0;
-		int y = 0;
 
 		for (ContrastMatrix m : matrices) {
 			if(m.getFunctionalChar() == null){
@@ -37,14 +34,7 @@ public class WordParser extends BitmapParserDecorator {
 				 * Step 1: find min / max space sizes
 				 */
 				for (x = 0; x < m.getWidth(); x++) {
-					isEmpty = true;
-					for (y = 0; y < m.getHeight(); y++) {
-						if (m.getValue(x, y) == 1) {
-							isEmpty = false;
-						}
-					}
-	
-					if (isEmpty) {
+					if (m.isEmptyCol(x)) {
 						spaceCounter++;
 					} else {
 						// min / max space detection
@@ -71,14 +61,7 @@ public class WordParser extends BitmapParserDecorator {
 				wordStart = -1;
 	
 				for (x = 0; x < m.getWidth(); x++) {
-					isEmpty = true;
-					for (y = 0; y < m.getHeight(); y++) {
-						if (m.getValue(x, y) == 1) {
-							isEmpty = false;
-						}
-					}
-	
-					if (isEmpty) {
+					if (m.isEmptyCol(x)) {
 						spaceCounter++;
 	
 						if (wordStart != -1) {
