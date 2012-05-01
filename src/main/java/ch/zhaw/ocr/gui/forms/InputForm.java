@@ -36,12 +36,19 @@ public class InputForm {
     private JButton saveButton;
     private JButton browseButton;
     private JButton analyseButton;
+    private MainGui gui;
     
     public static void main(String [ ] args) {
     	
     	new InputForm();
 
     }
+    
+    public InputForm(MainGui gui) {
+        this.gui = gui;
+        openWindow();
+    }
+    
     
     public InputForm() {
     	

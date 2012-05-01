@@ -8,25 +8,23 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
 
-
-public class InputNavigation {
+public class NeuronList {
 	
 	private JFrame frame;
 	private MainGui gui;
 	
     public static void main(String [ ] args) {
     	
-    	new InputNavigation();
+    	new NeuronList();
 
     }
     
-    public InputNavigation(MainGui gui) {
+    public NeuronList(MainGui gui) {
         this.gui = gui;
         openWindow();
     }
-
 	
-	public InputNavigation() {
+	public NeuronList() {
 		openWindow();
 	}
 	
@@ -41,7 +39,7 @@ public class InputNavigation {
         
         frame.getContentPane().add(contentPane);
        
-        contentPane.add(loadLists(), BorderLayout.CENTER);
+        contentPane.add(loadLists(), BorderLayout.WEST);
         
         frame.setVisible(true);
         frame.pack();
@@ -51,13 +49,11 @@ public class InputNavigation {
 		
 		JPanel areaPanel = new JPanel(new SpringLayout());
 		
-		JLabel listImg = new JLabel("List of used Images:");
-		JLabel listTxt = new JLabel("List of used Texts:");
+		JLabel listNeuron = new JLabel("List of existing Neurons:");
 		
-		areaPanel.add(listImg);
-		areaPanel.add(listTxt);
+		areaPanel.add(listNeuron);
 		
-        SpringUtilities.makeCompactGrid(areaPanel, 2, 1, 10, 10, 10, 20);
+        SpringUtilities.makeCompactGrid(areaPanel, 1, 1, 10, 10, 10, 20);
     	
         return areaPanel;
 		
