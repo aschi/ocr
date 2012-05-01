@@ -1,8 +1,19 @@
 package ch.zhaw.ocr.CharacterRecognition;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
+import javax.imageio.ImageIO;
+
+import ch.zhaw.ocr.BitmapParser.BitmapParser;
+import ch.zhaw.ocr.BitmapParser.CharacterParser;
+import ch.zhaw.ocr.BitmapParser.ContrastMatrix;
+import ch.zhaw.ocr.BitmapParser.RowParser;
+import ch.zhaw.ocr.BitmapParser.SimpleBitmapParser;
+import ch.zhaw.ocr.BitmapParser.UnderlineRemover;
+import ch.zhaw.ocr.BitmapParser.WordParser;
 import ch.zhaw.ocr.NeuronalNetwork.Neuron;
 import ch.zhaw.ocr.NeuronalNetwork.NeuronalNetwork;
 
@@ -23,6 +34,28 @@ public class CharacterComperator {
 		for (int i = 0; i < input.size(); i++) {
 			characterRecognitionNetwork.addNeuron(input.get(i), chars.get(i),
 					emphasis);
+		}
+	}
+
+	public String parseImage(File f) {
+		StringBuffer sb = new StringBuffer();
+
+		// parse bitmap
+		BitmapParser bp = new CharacterParser(new WordParser(
+				new UnderlineRemover(new RowParser(new SimpleBitmapParser()))));
+
+		try {
+			List<ContrastMatrix> matrices = bp.parse(ImageIO.read(f));
+
+			// character output
+			for (ContrastMatrix cm : matrices) {
+				sb.append(detectCharacter(new Character(cm)));
+			}
+			return sb.toString();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
 		}
 	}
 

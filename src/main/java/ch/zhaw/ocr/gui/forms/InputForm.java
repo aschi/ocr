@@ -13,7 +13,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -22,6 +21,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
+import ch.zhaw.ocr.gui.MainGui;
 import ch.zhaw.ocr.gui.helper.ImageFileFilter;
 import ch.zhaw.ocr.gui.helper.TextFileFilter;
 
@@ -30,49 +30,31 @@ public class InputForm {
 	
 	final JFileChooser fc = new JFileChooser();
 	
-    private JFrame frame;
     private JTextField imagePath;
     private JTextArea analysedText;
     private JButton saveButton;
     private JButton browseButton;
     private JButton analyseButton;
     private MainGui gui;
-    
-    public static void main(String [ ] args) {
-    	
-    	new InputForm();
-
-    }
+    private JPanel panel;
+ 
     
     public InputForm(MainGui gui) {
         this.gui = gui;
-        openWindow();
+        createPanel();
     }
     
     
     public InputForm() {
     	
-    	openWindow();
+    	createPanel();
     	
     }
     
-    private void openWindow() {
-    	
-        frame = new JFrame("");
-        frame.setLocation(400, 300);
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setLayout(new BorderLayout());
-        
-        JPanel contentPane = new JPanel(new BorderLayout());
-        
-        frame.getContentPane().add(contentPane);
-       
-        contentPane.add(loadTextArea(), BorderLayout.CENTER);
-        contentPane.add(loadButtons(), BorderLayout.SOUTH);
-        
-        frame.setVisible(true);
-        frame.pack();
-
+    private void createPanel() {
+    	panel = new JPanel(new BorderLayout());
+        panel.add(loadTextArea(), BorderLayout.CENTER);
+        panel.add(loadButtons(), BorderLayout.SOUTH);
     }
     
     private JComponent loadButtons() {
@@ -97,8 +79,10 @@ public class InputForm {
 					int returnVal = fc.showOpenDialog(browseButton);
 					
 			        if (returnVal == JFileChooser.APPROVE_OPTION ) {
-			        	java.io.File file = fc.getSelectedFile();
+			        	File file = fc.getSelectedFile();
 			            imagePath.setText(file.getPath());
+			            
+			            analysedText.setText(gui.getCC().parseImage(file));
 			        } 
 				}
 				
@@ -114,6 +98,10 @@ public class InputForm {
         
         return buttonPanel;
     	
+    }
+    
+    public JPanel getPanel(){
+    	return panel;
     }
     
     private JComponent loadTextArea() {
