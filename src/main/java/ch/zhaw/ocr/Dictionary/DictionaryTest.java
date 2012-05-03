@@ -10,7 +10,7 @@ public class DictionaryTest {
 			Dictionary dict = new Dictionary(new File("res/german.dic"));
 			System.out.println("dictionary loaded...(" + (System.currentTimeMillis()-t1) +"ms)");
 			long t2 = System.currentTimeMillis();
-			System.out.println(dict.correctWord("qute") + " ("+ (System.currentTimeMillis()-t2) +"ms)");
+			System.out.println(dict.correctWord("hallc") + " ("+ (System.currentTimeMillis()-t2) +"ms)");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

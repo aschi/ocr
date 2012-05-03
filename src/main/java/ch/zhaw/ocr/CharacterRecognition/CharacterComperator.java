@@ -14,13 +14,16 @@ import ch.zhaw.ocr.BitmapParser.RowParser;
 import ch.zhaw.ocr.BitmapParser.SimpleBitmapParser;
 import ch.zhaw.ocr.BitmapParser.UnderlineRemover;
 import ch.zhaw.ocr.BitmapParser.WordParser;
+import ch.zhaw.ocr.Dictionary.Dictionary;
 import ch.zhaw.ocr.NeuronalNetwork.Neuron;
 import ch.zhaw.ocr.NeuronalNetwork.NeuronalNetwork;
 
 public class CharacterComperator {
 	private NeuronalNetwork<Character, String> characterRecognitionNetwork;
-
-	public CharacterComperator() {
+	private Dictionary dict;
+	
+	public CharacterComperator(Dictionary dict) {
+		this.dict = dict;
 		characterRecognitionNetwork = new NeuronalNetwork<Character, String>();
 	}
 
@@ -49,7 +52,8 @@ public class CharacterComperator {
 
 			// character output
 			for (ContrastMatrix cm : matrices) {
-				sb.append(detectCharacter(new Character(cm)));
+				String c = detectCharacter(new Character(cm));
+				sb.append(c.equals("") ? "?" : c);
 			}
 			return sb.toString();
 		} catch (IOException e) {

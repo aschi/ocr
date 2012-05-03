@@ -23,8 +23,11 @@ import ch.zhaw.ocr.CharacterRecognition.InitialLearning;
  */
 public class App {
 	public static void main(String[] args) {
-		CharacterComperator cc = new CharacterComperator();
-
+		/*
+		 * 
+		 
+		CharacterComperator cc = new CharacterComperator();	
+		
 		InitialLearning.learn(cc);
 
 		// cc.detectCharacter()
@@ -60,5 +63,6 @@ public class App {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		*/
 	}
 }

@@ -20,8 +20,8 @@ public class Dictionary {
 	 * @param dictFile
 	 * @throws IOException
 	 */
-	public Dictionary(File dictFile) throws IOException{
-		buildDictionaryFromFile(dictFile);
+	public Dictionary(File dictFolder) throws IOException{
+		buildDictionaryFromFile(dictFolder);
 	}
 	
 	/**
@@ -40,6 +40,10 @@ public class Dictionary {
 			return word;
 		}
 		
+		boolean hasCapitalLetter = Character.isUpperCase(word.charAt(0));
+		word = word.toLowerCase();
+		
+		
 		//build a list of all words with distance 1
 		//search these words
 		Set<String> distance1 = editDistance1(word);
@@ -47,6 +51,9 @@ public class Dictionary {
 		
 		rv = getBestWord(distance1InDict);
 		if(rv!=null){
+			if(hasCapitalLetter){
+				rv = Character.toUpperCase(rv.charAt(0)) + rv.substring(1);
+			}
 			return rv;
 		}
 		
@@ -57,6 +64,9 @@ public class Dictionary {
 		
 		rv = getBestWord(distance2InDict);
 		if(rv!=null){
+			if(hasCapitalLetter){
+				rv = Character.toUpperCase(rv.charAt(0)) + rv.substring(1);
+			}
 			return rv;
 		}
 		
@@ -134,20 +144,26 @@ public class Dictionary {
 	 * @param f File containing a list of words separated by linebreaks
 	 * @throws IOException
 	 */
-	private void buildDictionaryFromFile(File f) throws IOException{
-		BufferedReader br = new BufferedReader(new FileReader(f));
-		
+	private void buildDictionaryFromFile(File folder) throws IOException{
+		TextFileParser tfp = new TextFileParser();
 		dictionary = new HashMap<String, Integer>();
 		
-		String word;
-		while ((word = br.readLine()) != null) {
-			//word = word.toLowerCase();
-			if(dictionary.containsKey(word)){
-				dictionary.put(word, dictionary.get(word)+1);
-			}else{
-				dictionary.put(word, 1);
+		String textfileContent = "";
+		
+		for (File f : folder.listFiles()) {
+			textfileContent = tfp.parseFile(f);
+			
+			for(String word : textfileContent.split(" ") ){
+				word = word.toLowerCase();
+				//word = word.toLowerCase();
+				if(dictionary.containsKey(word)){
+					dictionary.put(word, dictionary.get(word)+1);
+				}else{
+					dictionary.put(word, 1);
+				}
 			}
 		}
+		
 	}
 	
 }
