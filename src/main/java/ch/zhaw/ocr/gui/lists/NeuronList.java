@@ -1,5 +1,8 @@
 package ch.zhaw.ocr.gui.lists;
 
+import java.awt.BorderLayout;
+
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
@@ -10,35 +13,33 @@ import ch.zhaw.ocr.gui.forms.SpringUtilities;
 public class NeuronList{
 	private JPanel panel;
 	private MainGui gui;
-	
-    public static void main(String [ ] args) {
-    	
-    	new NeuronList();
-
-    }
     
     public NeuronList(MainGui gui) {
         this.gui = gui;
-        openWindow();
+        createPanel();
     }
 	
 	public NeuronList() {
-		openWindow();
+		createPanel();
 	}
 	
-	private void openWindow() {
-		loadLists();
-	}
-	
-	private void loadLists() {
+	private void createPanel() {
+		panel = new JPanel(new BorderLayout());
+        panel.add(loadLists(), BorderLayout.CENTER);
 		
-		panel = new JPanel(new SpringLayout());
+	}
+	
+	private JComponent loadLists() {
+		
+		JPanel nPanel = new JPanel(new SpringLayout());
 		
 		JLabel listNeuron = new JLabel("List of existing Neurons:");
 		
-		panel.add(listNeuron);
+		nPanel.add(listNeuron);
 		
-        SpringUtilities.makeCompactGrid(panel, 1, 1, 10, 10, 10, 20);
+        SpringUtilities.makeCompactGrid(nPanel, 1, 1, 10, 10, 10, 20);
+        
+        return nPanel;
 	}
 	
 	public JPanel getPanel(){

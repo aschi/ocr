@@ -1,5 +1,8 @@
 package ch.zhaw.ocr.gui.forms;
 
+import java.awt.BorderLayout;
+
+import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -16,29 +19,32 @@ public class NeuronDetail {
         
     public NeuronDetail(MainGui gui) {
         this.gui = gui;
-        openWindow();
+        createPanel();
     }
 	
 	public NeuronDetail() {
-		openWindow();
+		createPanel();
 	}
 	
-	private void openWindow() {
-		loadTextArea();
-        
-	}
 	
-	private void loadTextArea() {
+	private void createPanel() {
+		panel = new JPanel(new BorderLayout());
+        panel.add(loadTextArea(), BorderLayout.CENTER);
 		
-        panel = new JPanel(new SpringLayout());
+	}
+	
+	private JComponent loadTextArea() {
+		
+        JPanel nPanel = new JPanel(new SpringLayout());
         
         neuronText = new JTextArea(20,70);
         JScrollPane scrollAnalysed = new JScrollPane (neuronText);
         
-        
-        panel.add(scrollAnalysed);
+        nPanel.add(scrollAnalysed);
                 
-        SpringUtilities.makeCompactGrid(panel, 1, 1, 10, 10, 10, 20);
+        SpringUtilities.makeCompactGrid(nPanel, 1, 1, 10, 10, 10, 20);
+        
+        return nPanel;
 	}	
 	
 	public JPanel getPanel(){
