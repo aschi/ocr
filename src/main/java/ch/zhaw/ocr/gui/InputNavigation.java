@@ -18,7 +18,6 @@ public class InputNavigation {
         this.gui = gui;
         createPanel();
     }
-
 	
 	public InputNavigation() {
 		createPanel();
