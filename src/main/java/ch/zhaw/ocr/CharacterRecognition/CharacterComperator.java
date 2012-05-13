@@ -40,29 +40,6 @@ public class CharacterComperator {
 		}
 	}
 
-	public String parseImage(File f) {
-		StringBuffer sb = new StringBuffer();
-
-		// parse bitmap
-		BitmapParser bp = new CharacterParser(new WordParser(
-				new UnderlineRemover(new RowParser(new SimpleBitmapParser()))));
-
-		try {
-			List<ContrastMatrix> matrices = bp.parse(ImageIO.read(f));
-
-			// character output
-			for (ContrastMatrix cm : matrices) {
-				String c = detectCharacter(new Character(cm));
-				sb.append(c.equals("") ? "?" : c);
-			}
-			return sb.toString();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
-	}
-
 	public String detectCharacter(Character c) {
 		if (c.getMatrix().getFunctionalChar() != null) {
 			return c.getMatrix().getFunctionalChar().toString();

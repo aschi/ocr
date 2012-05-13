@@ -6,24 +6,48 @@ import java.io.IOException;
 import ch.zhaw.ocr.CharacterRecognition.CharacterComperator;
 import ch.zhaw.ocr.CharacterRecognition.InitialLearning;
 import ch.zhaw.ocr.Dictionary.Dictionary;
+import ch.zhaw.ocr.TextRecognation.Ocr;
 import ch.zhaw.ocr.gui.MainGui;
 
 public class Starter {
 
+	private static Dictionary dict = null;
+
 	public static void main(String[] args) {
-		Dictionary dict = null;
+		Thread t = new Thread(new Runnable() {
+			public void run() {
+				if (new File(Property.dictionaryMapSerializiationPath).exists()) {
+					dict = new Dictionary();
+				} else {
+					try {
+						dict = new Dictionary(
+								new File("res/dictionaryMaterial"));
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		});
+		
 
-		try {
-			dict = new Dictionary(new File("res/dictionaryMaterial"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		Thread t2 = new Thread(new Runnable() {
+			public void run() {
+				CharacterComperator cc = new CharacterComperator(dict);
+				InitialLearning.learn(cc);
+				Ocr ocr = new Ocr(cc, dict);
 
-		CharacterComperator cc = new CharacterComperator(dict);
+				new MainGui(ocr);
+			}
+		});
+		t2.run();
+		t.run();
 
-		InitialLearning.learn(cc);
-		new MainGui(cc);
-
+		Runtime.getRuntime().addShutdownHook(new Thread() {
+			public void run() {
+				dict.serializeMap();
+				System.out.println("ocr is shutting down!");
+			}
+		});
 	}
 }

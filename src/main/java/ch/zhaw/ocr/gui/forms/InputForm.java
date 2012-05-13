@@ -82,7 +82,7 @@ public class InputForm {
 			        	File file = fc.getSelectedFile();
 			            imagePath.setText(file.getPath());
 			            
-			            analysedText.setText(gui.getCC().parseImage(file));
+			            analysedText.setText(gui.getOcr().parseImage(file));
 			        } 
 				}
 				

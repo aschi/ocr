@@ -9,9 +9,9 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
 import ch.zhaw.ocr.CharacterRecognition.CharacterComperator;
+import ch.zhaw.ocr.TextRecognation.Ocr;
 import ch.zhaw.ocr.gui.forms.InputForm;
 import ch.zhaw.ocr.gui.forms.NeuronDetail;
 import ch.zhaw.ocr.gui.lists.NeuronList;
@@ -23,10 +23,10 @@ public class MainGui {
 	private JPanel inputPanel;
 	private JPanel neuronPanel;
 	private JPanel cards;
-	private CharacterComperator cc;
+	private Ocr ocr;
 	
-    public MainGui(CharacterComperator cc){
-        this.cc = cc;
+    public MainGui(Ocr ocr){
+        this.ocr = ocr;
         createFrame();
     }
 
@@ -66,8 +66,8 @@ public class MainGui {
     }
 
 	
-	public CharacterComperator getCC(){
-		return cc;
+	public Ocr getOcr(){
+		return ocr;
 	}
 	
 	private JComponent createInputPanel(){
