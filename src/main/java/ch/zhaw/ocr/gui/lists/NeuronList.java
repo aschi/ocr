@@ -29,6 +29,10 @@ public class NeuronList{
 		
 	}
 	
+	public JPanel getPanel(){
+		return panel;
+	}
+	
 	private JComponent loadLists() {
 		
 		JPanel nPanel = new JPanel(new SpringLayout());
@@ -40,10 +44,6 @@ public class NeuronList{
         SpringUtilities.makeCompactGrid(nPanel, 1, 1, 10, 10, 10, 20);
         
         return nPanel;
-	}
-	
-	public JPanel getPanel(){
-		return panel;
 	}
 
 }
