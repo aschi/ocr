@@ -3,7 +3,7 @@ package ch.zhaw.ocr.Dictionary;
 import java.io.File;
 import java.io.IOException;
 
-public class DictionaryTest {
+public class DictionaryTester {
 	public static void main(String[] args) {
 		try {
 			long t1 = System.currentTimeMillis();

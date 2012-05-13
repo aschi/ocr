@@ -1,11 +1,11 @@
 package ch.zhaw.ocr.Dictionary;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class Dictionary {
@@ -21,7 +21,12 @@ public class Dictionary {
 	 * @throws IOException
 	 */
 	public Dictionary(File dictFolder) throws IOException{
+		this();
 		buildDictionaryFromFile(dictFolder);
+	}
+	
+	public Dictionary(){
+		dictionary = new HashMap<String, Integer>();
 	}
 	
 	/**
@@ -140,28 +145,34 @@ public class Dictionary {
 	}
 	
 	/**
-	 * Builds a dictionary tree set
-	 * @param f File containing a list of words separated by linebreaks
+	 * Adds a given list of words to the dictionary
+	 * @param input list of words to be added
+	 */
+	public void addToDicitionary(List<String> input){
+		for(String word :  input){
+			word = word.toLowerCase();
+			//word = word.toLowerCase();
+			if(dictionary.containsKey(word)){
+				dictionary.put(word, dictionary.get(word)+1);
+			}else{
+				dictionary.put(word, 1);
+			}
+		}
+	}
+	
+	/**
+	 * Builds a dictionary using all textfiles in a directory
+	 * @param folder a "file" representing a folder which contains textfiles to add
 	 * @throws IOException
 	 */
 	private void buildDictionaryFromFile(File folder) throws IOException{
 		TextFileParser tfp = new TextFileParser();
-		dictionary = new HashMap<String, Integer>();
 		
 		String textfileContent = "";
 		
 		for (File f : folder.listFiles()) {
 			textfileContent = tfp.parseFile(f);
-			
-			for(String word : textfileContent.split(" ") ){
-				word = word.toLowerCase();
-				//word = word.toLowerCase();
-				if(dictionary.containsKey(word)){
-					dictionary.put(word, dictionary.get(word)+1);
-				}else{
-					dictionary.put(word, 1);
-				}
-			}
+			addToDicitionary(Arrays.asList(textfileContent.split(" ")));
 		}
 		
 	}
