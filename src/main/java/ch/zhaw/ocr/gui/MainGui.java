@@ -2,7 +2,10 @@ package ch.zhaw.ocr.gui;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -10,7 +13,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
-import ch.zhaw.ocr.CharacterRecognition.CharacterComperator;
 import ch.zhaw.ocr.TextRecognation.Ocr;
 import ch.zhaw.ocr.gui.forms.InputForm;
 import ch.zhaw.ocr.gui.forms.NeuronDetail;
@@ -18,8 +20,10 @@ import ch.zhaw.ocr.gui.lists.NeuronList;
 
 public class MainGui {
 	
+	final static String KNNPANEL = "Card with KNN Panel";
+	final static String TEXTPANEL = "Card with Text Panel";
+	
 	private JFrame frame;
-	//private JPanel mainPanel;
 	private JPanel inputPanel;
 	private JPanel neuronPanel;
 	private JPanel cards;
@@ -36,19 +40,12 @@ public class MainGui {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);  //Fullscreen
         
-        //mainPanel = new JPanel(new BorderLayout());
+        neuronPanel = new JPanel(new BorderLayout());
         inputPanel = new JPanel(new BorderLayout());
-        //frame.getContentPane().add(new JScrollPane(new Navigation(this).getTree()), BorderLayout.WEST);
-       
-        //frame.setContentPane(inputPanel);
-
-        //loadKNN();
-        //createInputPanel();
-        //createNeuronPanel();
         
         cards = new JPanel(new CardLayout());
-        cards.add(createInputPanel());
-        //cards.add(createNeuronPanel());
+        cards.add(createInputPanel(), TEXTPANEL);
+        cards.add(createNeuronPanel(), KNNPANEL);
         
         frame.setContentPane(cards);
         //frame.getContentPane().add(cards);
@@ -90,23 +87,6 @@ public class MainGui {
 		
 	}
 	
-/*	private void loadKNN() {
-		
-		//JPanel areaPanel = new JPanel(new BorderLayout());
-		
-		NeuronList nl = new NeuronList(this);
-		NeuronDetail nd = new NeuronDetail(this);	
-		
-		mainPanel.add(nl.getPanel(), BorderLayout.WEST);
-		mainPanel.add(nd.getPanel(), BorderLayout.CENTER);
-		
-	}
-	
-	private void loadNeuron() {
-		
-		
-		
-	}*/
 	
     private void createMenuBar(){
     	
@@ -120,8 +100,33 @@ public class MainGui {
         JMenuItem knn = new JMenuItem("Switch to KNN");
         JMenuItem text = new JMenuItem("Switch to Text");
         
+        final JButton switchView = new JButton("Switch to KNN");  
+        
+        switchView.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				
+				if (switchView.getText() == "Switch to KNN") {
+				
+                CardLayout cardLayout = (CardLayout) cards.getLayout();
+                cardLayout.next(cards);
+                switchView.setText("Switch to Text");
+			}
+				else if (switchView.getText() == "Switch to Text") {
+					CardLayout cardLayout = (CardLayout) cards.getLayout();
+					cardLayout.previous(cards);
+					switchView.setText("Switch to KNN");
+				}
+			}
+        	
+        } 
+        )
+        ;
+        
+        
+        
         menuBar.add(file);
-        menuBar.add(view);
+        menuBar.add(switchView);
         
         view.add(knn);
         view.add(text);

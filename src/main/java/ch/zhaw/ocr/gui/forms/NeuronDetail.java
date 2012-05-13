@@ -33,6 +33,10 @@ public class NeuronDetail {
 		
 	}
 	
+	public JPanel getPanel(){
+		return panel;
+	}
+	
 	private JComponent loadTextArea() {
 		
         JPanel nPanel = new JPanel(new SpringLayout());
@@ -46,10 +50,6 @@ public class NeuronDetail {
         
         return nPanel;
 	}	
-	
-	public JPanel getPanel(){
-		return panel;
-	}
 	
 	public JTextArea getNeuronText(){
 		return neuronText;
