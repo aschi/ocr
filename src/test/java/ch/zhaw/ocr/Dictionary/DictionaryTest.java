@@ -1,19 +1,82 @@
 package ch.zhaw.ocr.Dictionary;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
+
+import java.util.LinkedList;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 
-public class DictionaryTest extends Dictionary {
+import ch.zhaw.ocr.Property;
 
+public class DictionaryTest {
+
+	Dictionary dict;
+	
 	@Before
 	public void setUp() throws Exception {
+		dict = new Dictionary("debug");
+		
+		List<String> testList = new LinkedList<String>();
+		testList.add("hallo");
+		testList.add("hallo");
+		testList.add("halle");
+		testList.add("guter");
+		
+		dict.addToDicitionary(testList);
 	}
 
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void correctWordTest(){
+		String testInput = "quter";
+		String expectedOutput = "guter";
+		String output = dict.correctWord(testInput);
+		
+		assertTrue(expectedOutput.equals(output));
 	}
-
+	
+	@Test
+	public void dontCorrectWordTest(){
+		String testInput = "halle";
+		String output = dict.correctWord(testInput);
+		
+		assertTrue(testInput.equals(output));
+	}
+	
+	@Test
+	public void unknownCharTest(){
+		String testInput = Property.unknownChar+"alle";
+		String expectedOutput = "halle";
+		String output = dict.correctWord(testInput);
+		
+		assertTrue(expectedOutput.equals(output));
+	}
+	
+	@Test
+	public void capitalLetterTest(){
+		String testInput = "Hallc";
+		String expectedOutput = "Hallo";
+		String output = dict.correctWord(testInput);
+		
+		assertTrue(expectedOutput.equals(output));
+	}
+	
+	@Test
+	public void firstSignNonAlphanumericTest(){
+		String testInput = "«Hallc";
+		String expectedOutput = "«Hallo";
+		String output = dict.correctWord(testInput);
+		
+		assertTrue(expectedOutput.equals(output));
+	}
+	
+	@Test
+	public void lastSignNonAlphanumericTest(){
+		String testInput = "quter.";
+		String expectedOutput = "guter.";
+		String output = dict.correctWord(testInput);
+				
+		assertTrue(expectedOutput.equals(output));
+	}
 }

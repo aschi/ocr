@@ -7,7 +7,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -25,30 +24,28 @@ public class Dictionary {
 			.toCharArray();
 
 	/**
-	 * 
-	 * @param dictFile
+	 * Constructor for dictionary.
+	 * @param mode defines the creation mode. 
+	 * Implemented Modes:
+	 * - production: Tries to deserialize the dictionary. If not possible, create it from the defined resource folder
+	 * - rebuild: Create the dictionary from resource folder
+	 * - debug: Create an empty dictionary
 	 * @throws IOException
 	 */
-	public Dictionary(File dictFolder) throws IOException {
+	public Dictionary(String mode) throws IOException {
 		dictionary = new HashMap<String, Integer>();
-		buildDictionaryFromFile(dictFolder);
-	}
 
-	/**
-	 * Try to deserialize the map from our configured filepath. If no serialized
-	 * map is available, create an empty one
-	 */
-	public Dictionary() {
-		File f = new File(Property.dictionaryMapSerializiationPath);
-		if (f.exists()) {
-			try {
-				buildDictionaryFromSerializedMap(f);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		if (mode.equals("production")) {
+			File f = new File(Property.dictionaryMapSerializiationPath);
+			if (f.exists()) {
+					buildDictionaryFromSerializedMap(f);
+			} else {
+				buildDictionaryFromFile(new File(Property.dictionaryResourceFolder));
 			}
-		} else {
-			dictionary = new HashMap<String, Integer>();
+		}else if(mode.equals("rebuild")){
+			buildDictionaryFromFile(new File(Property.dictionaryResourceFolder));
+		}else if(mode.equals("debug")){
+			//create an empty dictionary
 		}
 	}
 
@@ -81,7 +78,7 @@ public class Dictionary {
 		if (!Character.isLetterOrDigit(word.charAt(word.length() - 1))
 				&& word.charAt(word.length() - 1) != Property.unknownChar) {
 			lastSignChar = word.charAt(word.length() - 1);
-			word = word.substring(word.length() - 2);
+			word = word.substring(0, word.length() - 1);
 		}
 
 		// Check if word has a capital letter. If => write a flag and remove
@@ -294,18 +291,20 @@ public class Dictionary {
 	}
 
 	public void serializeMap() {
-		System.out.println("Serialize map ("+dictionary.size()+" entries...");
-		
+		System.out.println("Serialize map (" + dictionary.size()
+				+ " entries...");
+
 		long t1 = System.currentTimeMillis();
 		File f = new File(Property.dictionaryMapSerializiationPath);
 
 		try {
-			BufferedWriter bw = new BufferedWriter(new FileWriter(f), 100*1024);
+			BufferedWriter bw = new BufferedWriter(new FileWriter(f),
+					100 * 1024);
 
 			for (String key : dictionary.keySet()) {
 				bw.write(key + "," + dictionary.get(key) + ";");
 			}
-			
+
 			bw.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -318,12 +317,10 @@ public class Dictionary {
 				+ (System.currentTimeMillis() - t1) + "ms)");
 	}
 
-	@SuppressWarnings("unchecked")
 	public void buildDictionaryFromSerializedMap(File serializedMap)
 			throws IOException {
 		System.out.println("Build dictionary from serialized map...");
-		dictionary = new HashMap<String, Integer>();
-
+		
 		long t1 = System.currentTimeMillis();
 
 		BufferedReader input = null;
@@ -352,7 +349,8 @@ public class Dictionary {
 		}
 
 		System.out.println("Dictionary built... ("
-				+ (System.currentTimeMillis() - t1) + "ms; "+dictionary.size()+" entries)");
+				+ (System.currentTimeMillis() - t1) + "ms; "
+				+ dictionary.size() + " entries)");
 	}
 
 }

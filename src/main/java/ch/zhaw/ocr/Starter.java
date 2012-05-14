@@ -1,6 +1,5 @@
 package ch.zhaw.ocr;
 
-import java.io.File;
 import java.io.IOException;
 
 import ch.zhaw.ocr.CharacterRecognition.CharacterComperator;
@@ -16,16 +15,11 @@ public class Starter {
 	public static void main(String[] args) {
 		Thread t = new Thread(new Runnable() {
 			public void run() {
-				if (new File(Property.dictionaryMapSerializiationPath).exists()) {
-					dict = new Dictionary();
-				} else {
-					try {
-						dict = new Dictionary(
-								new File("res/dictionaryMaterial"));
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+				try {
+					dict = new Dictionary("production");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 			}
 		});
