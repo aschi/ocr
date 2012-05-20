@@ -1,11 +1,15 @@
 package ch.zhaw.ocr.gui;
 
 import java.awt.BorderLayout;
+import java.io.File;
 
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTree;
 import javax.swing.SpringLayout;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreePath;
 
 import ch.zhaw.ocr.gui.forms.SpringUtilities;
 
@@ -13,9 +17,11 @@ import ch.zhaw.ocr.gui.forms.SpringUtilities;
 public class InputNavigation {
 	private JPanel panel;
 	private MainGui gui;
+	private JTree tree;
+	private DefaultMutableTreeNode top;
 	
     public InputNavigation(MainGui gui) {
-        this.gui = gui;
+        this.gui = gui;        
         createPanel();
     }
 	
@@ -25,7 +31,8 @@ public class InputNavigation {
 	
 	private void createPanel() {
 		panel = new JPanel(new BorderLayout());
-        panel.add(loadLists(), BorderLayout.CENTER);
+        //panel.add(loadLists(), BorderLayout.CENTER);
+        panel.add(loadImageTree(), BorderLayout.CENTER);
 	}
 	
 	public JPanel getPanel(){
@@ -46,6 +53,25 @@ public class InputNavigation {
     	
         return areaPanel;
 		
+	}
+	
+	private JTree loadImageTree() {
+		
+	    top = new DefaultMutableTreeNode("List of used Images:");
+	    tree = new JTree(top);
+	    getFileFromDir();
+	    
+	    tree.scrollPathToVisible(new TreePath(top.getLastLeaf().getPath()));
+	    
+	    return tree;
+	}
+	
+	private void getFileFromDir() {
+        File actual = new File("/home/ildril");
+        for( File f : actual.listFiles()){
+            top.add(new DefaultMutableTreeNode(f.getName()));
+            System.out.println(f.getName());
+        }
 	}
 
 }
