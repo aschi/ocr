@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -14,6 +15,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 import ch.zhaw.ocr.TextRecognation.Ocr;
+import ch.zhaw.ocr.gui.forms.HistoryForm;
 import ch.zhaw.ocr.gui.forms.InputForm;
 import ch.zhaw.ocr.gui.forms.NeuronDetail;
 import ch.zhaw.ocr.gui.lists.NeuronList;
@@ -22,11 +24,14 @@ public class MainGui {
 	
 	final static String KNNPANEL = "Card with KNN Panel";
 	final static String TEXTPANEL = "Card with Text Panel";
+	final static String HISTORYPANEL = "Card with History Panel";
 	
 	private JFrame frame;
 	private JPanel inputPanel;
 	private JPanel neuronPanel;
+	private JPanel historyPanel;
 	private JPanel cards;
+	private MainGui gui;
 	private Ocr ocr;
 	
     public MainGui(Ocr ocr){
@@ -42,14 +47,14 @@ public class MainGui {
         
         neuronPanel = new JPanel(new BorderLayout());
         inputPanel = new JPanel(new BorderLayout());
+        historyPanel = new JPanel(new BorderLayout());
         
         cards = new JPanel(new CardLayout());
         cards.add(createInputPanel(), TEXTPANEL);
         cards.add(createNeuronPanel(), KNNPANEL);
+        //cards.add(createHistoryPanel(), HISTORYPANEL);
         
         frame.setContentPane(cards);
-        //frame.getContentPane().add(cards);
-        //frame.getContentPane().add(new JScrollPane(cards), BorderLayout.CENTER);
         createMenuBar();
         
         frame.setVisible(true);
@@ -87,6 +92,15 @@ public class MainGui {
 		
 	}
 	
+	private JComponent createHistoryPanel() {
+		
+		HistoryForm hform = new HistoryForm(this);
+		historyPanel.add(hform.getPanel());
+		
+		return historyPanel;
+		
+	}
+	
 	
     private void createMenuBar(){
     	
@@ -108,13 +122,13 @@ public class MainGui {
 				
 				if (switchView.getText() == "Switch to KNN") {
 				
-                CardLayout cardLayout = (CardLayout) cards.getLayout();
-                cardLayout.next(cards);
+                CardLayout cl = (CardLayout) cards.getLayout();
+                cl.next(cards);
                 switchView.setText("Switch to Text");
 			}
 				else if (switchView.getText() == "Switch to Text") {
-					CardLayout cardLayout = (CardLayout) cards.getLayout();
-					cardLayout.previous(cards);
+					CardLayout cl = (CardLayout) cards.getLayout();
+					cl.previous(cards);
 					switchView.setText("Switch to KNN");
 				}
 			}

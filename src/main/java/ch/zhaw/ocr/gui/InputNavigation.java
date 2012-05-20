@@ -1,6 +1,9 @@
 package ch.zhaw.ocr.gui;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 
 import javax.swing.JComponent;
@@ -9,16 +12,22 @@ import javax.swing.JPanel;
 import javax.swing.JTree;
 import javax.swing.SpringLayout;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
+import ch.zhaw.ocr.gui.forms.HistoryForm;
 import ch.zhaw.ocr.gui.forms.SpringUtilities;
 
 
 public class InputNavigation {
+	
+	protected static final String HISTORYPANEL = null;
+	
 	private JPanel panel;
-	private MainGui gui;
 	private JTree tree;
 	private DefaultMutableTreeNode top;
+	private MainGui gui;
+	private HistoryForm form;
 	
     public InputNavigation(MainGui gui) {
         this.gui = gui;        
@@ -62,8 +71,32 @@ public class InputNavigation {
 	    getFileFromDir();
 	    
 	    tree.scrollPathToVisible(new TreePath(top.getLastLeaf().getPath()));
-	    
+	    addListener();
 	    return tree;
+	}
+	
+	private void addListener() {
+		tree.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2) {
+					TreePath p = tree.getPathForLocation(e.getX(), e.getY());
+					if (p != null ) {
+						TreeNode node = (TreeNode) p.getLastPathComponent();
+						System.out.println(node.toString());
+						File files = new File("/home/ildril");
+						for (File s : files.listFiles()) {
+							String st = s.getAbsolutePath();
+							if (node.toString().equals(st)) {
+								form.setText(st);
+								//Methode fehlt um View zu ändern im Gui (HistoryPanel)
+							}
+						}
+					}
+					
+				}
+			}
+			
+		});
 	}
 	
 	private void getFileFromDir() {
