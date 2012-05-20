@@ -69,8 +69,9 @@ public class InputNavigation {
 	private void getFileFromDir() {
         File actual = new File("/home/ildril");
         for( File f : actual.listFiles()){
+        	if (f.getAbsolutePath().toLowerCase().endsWith(".jpg")) {
             top.add(new DefaultMutableTreeNode(f.getName()));
-            System.out.println(f.getName());
+        	}
         }
 	}
 
