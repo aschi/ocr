@@ -31,7 +31,6 @@ public class MainGui {
 	private JPanel neuronPanel;
 	private JPanel historyPanel;
 	private JPanel cards;
-	private MainGui gui;
 	private Ocr ocr;
 	
     public MainGui(Ocr ocr){
@@ -63,7 +62,7 @@ public class MainGui {
 	}
 	
     public void selectOverview(String panelSelection){
-        CardLayout cl = (CardLayout)(cards.getLayout());
+        CardLayout cl = (CardLayout) cards.getLayout();
         cl.show(cards, panelSelection);
     }
 
@@ -121,14 +120,13 @@ public class MainGui {
 			public void actionPerformed(ActionEvent e) {
 				
 				if (switchView.getText() == "Switch to KNN") {
-				
-                CardLayout cl = (CardLayout) cards.getLayout();
-                cl.next(cards);
+			
+				selectOverview(KNNPANEL);
                 switchView.setText("Switch to Text");
+                
 			}
 				else if (switchView.getText() == "Switch to Text") {
-					CardLayout cl = (CardLayout) cards.getLayout();
-					cl.previous(cards);
+					selectOverview(TEXTPANEL);
 					switchView.setText("Switch to KNN");
 				}
 			}

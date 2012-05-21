@@ -1,10 +1,10 @@
 package ch.zhaw.ocr.gui;
 
 import java.awt.BorderLayout;
-import java.awt.CardLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.io.FilenameFilter;
 
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -17,6 +17,7 @@ import javax.swing.tree.TreePath;
 
 import ch.zhaw.ocr.gui.forms.HistoryForm;
 import ch.zhaw.ocr.gui.forms.SpringUtilities;
+import ch.zhaw.ocr.gui.helper.TextFileFilter;
 
 
 public class InputNavigation {
@@ -82,15 +83,26 @@ public class InputNavigation {
 					TreePath p = tree.getPathForLocation(e.getX(), e.getY());
 					if (p != null ) {
 						TreeNode node = (TreeNode) p.getLastPathComponent();
-						System.out.println(node.toString());
 						File files = new File("/home/ildril");
 						for (File s : files.listFiles()) {
+							if (s.isFile() == true) {
+							String k = node.toString();
 							String st = s.getAbsolutePath();
-							if (node.toString().equals(st)) {
+							System.out.println("k: " + k.substring(k.lastIndexOf(0)+1, k.lastIndexOf('.')));
+							System.out.println("st: " + st.substring(st.lastIndexOf('/')+1, st.lastIndexOf('.')));
+							if (k.substring(k.lastIndexOf(0)+1, k.lastIndexOf('.')) == st.substring(st.lastIndexOf('/')+1, st.lastIndexOf('.'))) {
+								gui.selectOverview(HISTORYPANEL);
 								form.setText(st);
-								//Methode fehlt um View zu ändern im Gui (HistoryPanel)
+							}
+							else {
+								System.out.println("historypanel kann nicht geöffnet werden");
 							}
 						}
+							else {
+								System.out.println("no file in directory");
+							}
+						}
+
 					}
 					
 				}
