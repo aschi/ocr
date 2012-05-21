@@ -10,7 +10,6 @@ import ch.zhaw.ocr.Property;
 import ch.zhaw.ocr.BitmapParser.BitmapParser;
 import ch.zhaw.ocr.BitmapParser.CharacterParser;
 import ch.zhaw.ocr.BitmapParser.ContrastMatrix;
-import ch.zhaw.ocr.BitmapParser.FunctionalCharacter;
 import ch.zhaw.ocr.BitmapParser.RowParser;
 import ch.zhaw.ocr.BitmapParser.SimpleBitmapParser;
 import ch.zhaw.ocr.BitmapParser.UnderlineRemover;

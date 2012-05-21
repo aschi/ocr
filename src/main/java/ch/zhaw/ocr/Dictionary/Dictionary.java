@@ -290,12 +290,11 @@ public class Dictionary {
 				+ (System.currentTimeMillis() - t1) + "ms)");
 	}
 
-	public void serializeMap() {
+	public void serializeMap(File f) {
 		System.out.println("Serialize map (" + dictionary.size()
 				+ " entries...");
 
 		long t1 = System.currentTimeMillis();
-		File f = new File(Property.dictionaryMapSerializiationPath);
 
 		try {
 			BufferedWriter bw = new BufferedWriter(new FileWriter(f),
@@ -317,7 +316,7 @@ public class Dictionary {
 				+ (System.currentTimeMillis() - t1) + "ms)");
 	}
 
-	public void buildDictionaryFromSerializedMap(File serializedMap)
+	public void buildDictionaryFromSerializedMap(File f)
 			throws IOException {
 		System.out.println("Build dictionary from serialized map...");
 		
@@ -325,7 +324,7 @@ public class Dictionary {
 
 		BufferedReader input = null;
 		try {
-			input = new BufferedReader(new FileReader(serializedMap));
+			input = new BufferedReader(new FileReader(f));
 			String line = null; // not declared within while loop
 			while ((line = input.readLine()) != null) {
 				for (String entry : line.split(";")) {

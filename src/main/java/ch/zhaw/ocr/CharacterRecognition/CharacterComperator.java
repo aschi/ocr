@@ -1,30 +1,35 @@
 package ch.zhaw.ocr.CharacterRecognition;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
-import javax.imageio.ImageIO;
-
-import ch.zhaw.ocr.BitmapParser.BitmapParser;
-import ch.zhaw.ocr.BitmapParser.CharacterParser;
+import ch.zhaw.ocr.Property;
 import ch.zhaw.ocr.BitmapParser.ContrastMatrix;
-import ch.zhaw.ocr.BitmapParser.RowParser;
-import ch.zhaw.ocr.BitmapParser.SimpleBitmapParser;
-import ch.zhaw.ocr.BitmapParser.UnderlineRemover;
-import ch.zhaw.ocr.BitmapParser.WordParser;
-import ch.zhaw.ocr.Dictionary.Dictionary;
 import ch.zhaw.ocr.NeuronalNetwork.Neuron;
 import ch.zhaw.ocr.NeuronalNetwork.NeuronalNetwork;
 
 public class CharacterComperator {
 	private NeuronalNetwork<Character, String> characterRecognitionNetwork;
-	private Dictionary dict;
-	
-	public CharacterComperator(Dictionary dict) {
-		this.dict = dict;
+
+	public CharacterComperator() throws IOException {
 		characterRecognitionNetwork = new NeuronalNetwork<Character, String>();
+		
+		File f = new File(Property.knnSerializationPath);
+		if(f.exists()){
+				System.out.println("deserialize knn...");
+				deserializeKNN(f);
+		}else{
+			System.out.println("create knn...");
+			InitialLearning.learn(this);
+		}
+		
 	}
 
 	public void learn(List<Character> input, List<String> chars, double emphasis) {
@@ -84,4 +89,84 @@ public class CharacterComperator {
 			return rv;
 		}
 	}
+
+	public void deserializeKNN(File f) throws IOException {
+		BufferedReader input = null;
+		try {
+			input = new BufferedReader(new FileReader(f));
+			String line = null; // not declared within while loop
+			while ((line = input.readLine()) != null) {
+				for (String entry : line.split("###")) {
+					if (!entry.trim().isEmpty()) {
+						String[] eArray = entry.split("##");
+
+						
+						// load contrast matrix
+						String[] cmArr = eArray[0].split(",");
+						ContrastMatrix cm = new ContrastMatrix(
+								cmArr[0].length(), cmArr.length);
+						
+						int x = 0;
+						int y = 0;
+						
+						for (String row : cmArr) {
+							x = 0;
+							for (char c : row.toCharArray()) {
+								cm.setValue(x, y,
+										Integer.parseInt(String.valueOf(c)));
+								x++;
+							}
+							y++;
+						}
+
+						// add neuron
+						characterRecognitionNetwork.addNeuron(
+								new Character(cm), eArray[1],
+								Double.parseDouble(eArray[2]));
+					}
+				}
+			}
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			input.close();
+		}
+
+	}
+
+	public void serializeKNN(File f) {
+		try {
+			BufferedWriter bw = new BufferedWriter(new FileWriter(f),
+					100 * 1024);
+
+			for (Neuron<Character, String> n : characterRecognitionNetwork
+					.getNeuronSet()) {
+				ContrastMatrix cm = n.getSource().getMatrix();
+				for (int y = 0; y < cm.getHeight(); y++) {
+					for (int x = 0; x < cm.getWidth(); x++) {
+						bw.write(cm.getValue(x, y));
+					}
+					if (y + 1 < cm.getHeight()) {
+						bw.write(',');
+					}
+				}
+				bw.write("##");
+				bw.write(n.getTarget());
+				bw.write("##");
+				bw.write(Double.toString(n.getEmphasis()));
+				bw.write("###");
+				bw.flush();
+			}
+			bw.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
 }
