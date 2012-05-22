@@ -29,6 +29,8 @@ public class Ocr {
 	}
 	
 	public String parseImage(File f) {
+		long t1 = System.currentTimeMillis();
+		
 		StringBuffer textBuffer = new StringBuffer();
 		StringBuffer wordBuffer = new StringBuffer();
 
@@ -62,7 +64,7 @@ public class Ocr {
 			if (wordBuffer.length() > 0) {
 				textBuffer.append(dic.correctWord(wordBuffer.toString()));
 			}
-			System.out.println("Einlesen des Textes abgeschlossen...");
+			System.out.println("Einlesen des Textes abgeschlossen...("+ (System.currentTimeMillis()-t1) +"ms)");
 			return textBuffer.toString();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
