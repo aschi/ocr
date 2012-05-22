@@ -24,6 +24,7 @@ import javax.swing.SpringLayout;
 import ch.zhaw.ocr.gui.MainGui;
 import ch.zhaw.ocr.gui.helper.ImageFileFilter;
 import ch.zhaw.ocr.gui.helper.TextFileFilter;
+import ch.zhaw.ocr.gui.helper.TextFileHandler;
 
 
 public class InputForm {
@@ -121,19 +122,11 @@ public class InputForm {
 				TextFileFilter filter = new TextFileFilter();
 				fc.setFileFilter(filter);
 				int returnVal = fc.showSaveDialog(saveButton);
-				BufferedWriter writer = null;
 				
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					try {
 						File file = fc.getSelectedFile();
-						String filepath = file.getAbsolutePath();
-						if (!filepath.endsWith(".txt"))
-						{
-							filepath += ".txt";
-						}
-						writer = new BufferedWriter(new FileWriter(filepath));  
-			            writer.write(analysedText.getText());  
-			            writer.close();  
+						TextFileHandler.saveTextFile(file, analysedText.getText()); 
 			            JOptionPane.showMessageDialog(null, "File saved successfully!",  
 			                        "Information", JOptionPane.INFORMATION_MESSAGE);  
 			            }  

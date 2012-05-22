@@ -32,6 +32,7 @@ public class MainGui {
 	private JPanel historyPanel;
 	private JPanel cards;
 	private Ocr ocr;
+	private HistoryForm hform;
 	
     public MainGui(Ocr ocr){
         this.ocr = ocr;
@@ -93,12 +94,17 @@ public class MainGui {
 	
 	public JComponent createHistoryPanel() {
 		
-		HistoryForm hform = new HistoryForm(this);
+		hform = new HistoryForm(this);
 		InputNavigation inavi = new InputNavigation(this);
 		historyPanel.add(inavi.getPanel(), BorderLayout.WEST);
 		historyPanel.add(hform.getPanel(), BorderLayout.CENTER);
 		
 		return historyPanel;
+		
+	}
+	
+	public HistoryForm getHistoryForm() {
+		return hform;
 		
 	}
 	

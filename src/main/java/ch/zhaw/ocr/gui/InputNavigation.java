@@ -8,6 +8,7 @@ import java.io.FilenameFilter;
 
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTree;
 import javax.swing.SpringLayout;
@@ -84,13 +85,16 @@ public class InputNavigation {
 					TreePath p = tree.getPathForLocation(e.getX(), e.getY());
 					if (p != null ) {
 						TreeNode node = (TreeNode) p.getLastPathComponent();
-						File files = new File("/home/ildril");
+						File files = new File(Property.historyResourcefoler);
 						for (File s : files.listFiles()) {
 							if (s.isFile() == true) {
 							String k = node.toString();
 							String st = s.getAbsolutePath();
-							if (k.substring(k.lastIndexOf(0)+1, k.lastIndexOf('.')).equals(st.substring(st.lastIndexOf('/')+1, st.lastIndexOf('.')))) {
+							
+							if ((k.substring(k.lastIndexOf(0)+1, k.lastIndexOf('.'))+".txt").equals(st.substring(st.lastIndexOf('/')+1))) {
 								gui.selectOverview(gui.HISTORYPANEL);
+								gui.getHistoryForm().setText(st);
+								
 								//form.setText(st);
 								
 							}
@@ -99,7 +103,8 @@ public class InputNavigation {
 							}
 						}
 							else {
-								System.out.println("no file in directory");
+								JOptionPane.showMessageDialog(null, "no corresponding file found in the directory!",  
+			                        "Error", JOptionPane.ERROR_MESSAGE);
 							}
 						}
 
