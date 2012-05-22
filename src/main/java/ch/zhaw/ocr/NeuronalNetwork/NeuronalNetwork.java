@@ -42,10 +42,14 @@ public class NeuronalNetwork<S extends Comparable<S>, T extends Comparable<T>> {
 		Neuron<S, T> n = new Neuron<S, T>(source, target, emphasis);
 
 		// add neuron to the set if its a new one
-		neuronSet.add(n);
-
-		searchNeuron(n).addToNetwork(emphasis);
-
+		
+		if(searchNeuron(n) != null){
+			searchNeuron(n).addToNetwork(emphasis);
+		}else{
+			neuronSet.add(n);
+			n.addToNetwork(emphasis);
+		}
+		
 		// Recalculate emphasis on all related neurons
 		Set<Neuron<S, T>> subset = getNeuronsFromSource(source);
 		for (Neuron<S, T> o : subset) {

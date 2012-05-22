@@ -20,16 +20,16 @@ public class CharacterComperator {
 
 	public CharacterComperator() throws IOException {
 		characterRecognitionNetwork = new NeuronalNetwork<Character, String>();
-		
+
 		File f = new File(Property.knnSerializationPath);
-		if(f.exists()){
-				System.out.println("deserialize knn...");
-				deserializeKNN(f);
-		}else{
+		if (f.exists()) {
+			System.out.println("deserialize knn...");
+			deserializeKNN(f);
+		} else {
 			System.out.println("create knn...");
 			InitialLearning.learn(this);
 		}
-		
+
 	}
 
 	public void learn(List<Character> input, List<String> chars, double emphasis) {
@@ -40,8 +40,10 @@ public class CharacterComperator {
 		}
 
 		for (int i = 0; i < input.size(); i++) {
-			characterRecognitionNetwork.addNeuron(input.get(i), chars.get(i),
-					emphasis);
+			if (input.get(i) != null && chars.get(i) != null) {
+				characterRecognitionNetwork.addNeuron(input.get(i),
+						chars.get(i), emphasis);
+			}
 		}
 	}
 
@@ -100,15 +102,14 @@ public class CharacterComperator {
 					if (!entry.trim().isEmpty()) {
 						String[] eArray = entry.split("##");
 
-						
 						// load contrast matrix
 						String[] cmArr = eArray[0].split(",");
 						ContrastMatrix cm = new ContrastMatrix(
 								cmArr[0].length(), cmArr.length);
-						
+
 						int x = 0;
 						int y = 0;
-						
+
 						for (String row : cmArr) {
 							x = 0;
 							for (char c : row.toCharArray()) {
