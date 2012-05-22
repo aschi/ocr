@@ -22,9 +22,9 @@ import ch.zhaw.ocr.gui.lists.NeuronList;
 
 public class MainGui {
 	
-	final static String KNNPANEL = "Card with KNN Panel";
-	final static String TEXTPANEL = "Card with Text Panel";
-	final static String HISTORYPANEL = "Card with History Panel";
+	public final static String KNNPANEL = "Card with KNN Panel";
+	public final static String TEXTPANEL = "Card with Text Panel";
+	public final static String HISTORYPANEL = "Card with History Panel";
 	
 	private JFrame frame;
 	private JPanel inputPanel;
@@ -51,7 +51,7 @@ public class MainGui {
         cards = new JPanel(new CardLayout());
         cards.add(createInputPanel(), TEXTPANEL);
         cards.add(createNeuronPanel(), KNNPANEL);
-        //cards.add(createHistoryPanel(), HISTORYPANEL);
+        cards.add(createHistoryPanel(), HISTORYPANEL);
         
         frame.setContentPane(cards);
         createMenuBar();
@@ -91,10 +91,12 @@ public class MainGui {
 		
 	}
 	
-	private JComponent createHistoryPanel() {
+	public JComponent createHistoryPanel() {
 		
 		HistoryForm hform = new HistoryForm(this);
-		historyPanel.add(hform.getPanel());
+		InputNavigation inavi = new InputNavigation(this);
+		historyPanel.add(inavi.getPanel(), BorderLayout.WEST);
+		historyPanel.add(hform.getPanel(), BorderLayout.CENTER);
 		
 		return historyPanel;
 		

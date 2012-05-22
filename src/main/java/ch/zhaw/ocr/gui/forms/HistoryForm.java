@@ -67,13 +67,12 @@ public class HistoryForm {
             while ((c = fr.read()) != -1) {
                 buff.append((char) c);
             }
+            historyText.setText((buff.toString()));
             fr.close();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        historyText.setText((buff.toString()));
+        
     } 
     
     private JComponent loadTextArea() {

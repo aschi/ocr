@@ -22,7 +22,7 @@ import ch.zhaw.ocr.gui.helper.TextFileFilter;
 
 public class InputNavigation {
 	
-	protected static final String HISTORYPANEL = null;
+	//protected static final String HISTORYPANEL = null;
 	
 	private JPanel panel;
 	private JTree tree;
@@ -88,11 +88,10 @@ public class InputNavigation {
 							if (s.isFile() == true) {
 							String k = node.toString();
 							String st = s.getAbsolutePath();
-							System.out.println("k: " + k.substring(k.lastIndexOf(0)+1, k.lastIndexOf('.')));
-							System.out.println("st: " + st.substring(st.lastIndexOf('/')+1, st.lastIndexOf('.')));
-							if (k.substring(k.lastIndexOf(0)+1, k.lastIndexOf('.')) == st.substring(st.lastIndexOf('/')+1, st.lastIndexOf('.'))) {
-								gui.selectOverview(HISTORYPANEL);
-								form.setText(st);
+							if (k.substring(k.lastIndexOf(0)+1, k.lastIndexOf('.')).equals(st.substring(st.lastIndexOf('/')+1, st.lastIndexOf('.')))) {
+								gui.selectOverview(gui.HISTORYPANEL);
+								//form.setText(st);
+								
 							}
 							else {
 								System.out.println("historypanel kann nicht geöffnet werden");
