@@ -62,6 +62,7 @@ public class Ocr {
 			if (wordBuffer.length() > 0) {
 				textBuffer.append(dic.correctWord(wordBuffer.toString()));
 			}
+			System.out.println("Einlesen des Textes abgeschlossen...");
 			return textBuffer.toString();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
