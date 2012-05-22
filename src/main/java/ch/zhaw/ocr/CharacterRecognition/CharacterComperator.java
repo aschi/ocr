@@ -145,7 +145,7 @@ public class CharacterComperator {
 				ContrastMatrix cm = n.getSource().getMatrix();
 				for (int y = 0; y < cm.getHeight(); y++) {
 					for (int x = 0; x < cm.getWidth(); x++) {
-						bw.write(cm.getValue(x, y));
+						bw.write(String.valueOf(cm.getValue(x, y)));
 					}
 					if (y + 1 < cm.getHeight()) {
 						bw.write(',');

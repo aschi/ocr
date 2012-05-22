@@ -58,6 +58,18 @@ public class Dictionary {
 	public String correctWord(String word) {
 		String rv = null;
 
+		//cancel dictionary lookup if more then 2 chars are unknown
+		int unknownCounter = 0;
+		for(char c : word.toCharArray()){
+			if(c == Property.unknownChar){
+				unknownCounter++;
+			}
+		}
+		if(unknownCounter>2){
+			return word;
+		}
+		
+		//dictionary lookup
 		char firstSignChar = 0;
 		char lastSignChar = 0;
 
