@@ -154,7 +154,7 @@ public class Character implements Comparable<Character> {
 			}
 		}
 
-		if (diff < 1300) {
+		if (diff < 1500) {
 			return true;
 		} else {
 			return false;

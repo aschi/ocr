@@ -208,6 +208,16 @@ public class ContrastMatrix {
 	 * @return indicates whether the given part is full or not
 	 */
 	public boolean isFull(int startX, int endX, int startY, int endY){
+		startX = (startX < getWidth()) ? startX : (getWidth()-1);
+		startX = (startX >= 0) ? startX : 0;
+		endX = (endX < getWidth()) ? endX : (getWidth()-1);
+		endX = (endX >= 0) ? endX : 0;
+		
+		startY = (startY < getHeight()) ? startY : (getHeight()-1);
+		startY = (startY >= 0) ? startY : 0;
+		endY = (endY < getHeight()) ? endY : (getHeight()-1);
+		endY = (endY >= 0) ? endY : 0;
+		
 		for(int x = startX; x <= endX;x++){
 			for(int y = startY; y <= endY;y++){
 				if(getValue(x, y) != 1){

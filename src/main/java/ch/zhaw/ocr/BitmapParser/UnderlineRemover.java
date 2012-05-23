@@ -116,10 +116,11 @@ public class UnderlineRemover extends BitmapParserDecorator {
 	}
 	
 	private void removeUnderline(ContrastMatrix m, int xStart, int xEnd, int yStart, int yEnd) {
+		
 		for (int x = xStart; x < xEnd; x++) {
 			
 			//in case the Underline is the last line, we just have to check the line yStart-1
-			if (m.getHeight() < yEnd + 1) {
+			if (m.getHeight() < (yEnd + 1)) {
 				if (m.getValue(x, yStart -1) != 1) {
 					for (int y = yStart; y <= yEnd; y++) {
 						m.setValue(x, y, 0);
