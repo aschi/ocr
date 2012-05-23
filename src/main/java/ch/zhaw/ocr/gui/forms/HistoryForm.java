@@ -13,6 +13,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import ch.zhaw.ocr.gui.MainGui;
+import ch.zhaw.ocr.gui.helper.TextFileHandler;
 
 public class HistoryForm {
 	
@@ -53,25 +54,9 @@ public class HistoryForm {
     	this.img = img;
     }
     
-    public void setText(String datei) {
-    	File file = new File(datei);
+    public void setText(String datei) throws IOException {
     	
-    	if (!file.canRead() || !file.isFile())
-            System.exit(0);
-
-        FileReader fr = null;
-        int c;
-        StringBuffer buff = new StringBuffer();
-        try {
-            fr = new FileReader(file);
-            while ((c = fr.read()) != -1) {
-                buff.append((char) c);
-            }
-            historyText.setText((buff.toString()));
-            fr.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    	historyText.setText(TextFileHandler.readTextFile(datei));
         
     } 
     

@@ -6,9 +6,13 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import ch.zhaw.ocr.Property;
+
 public class TextFileHandler {
 
 	public static void saveTextFile(File datei, String text) throws IOException {
+		
+		String fileName = datei.getName();
 
 		String filepath = datei.getAbsolutePath();
 		if (!filepath.endsWith(".txt"))
@@ -16,8 +20,11 @@ public class TextFileHandler {
 			filepath += ".txt";
 		}
 		BufferedWriter writer = new BufferedWriter(new FileWriter(filepath));
+		BufferedWriter writer2 = new BufferedWriter(new FileWriter(Property.historyResourcefoler + "/" + fileName));
 		writer.write(text);
+		writer2.write(text);
 		writer.close();
+		writer2.close();
 
 	}
 

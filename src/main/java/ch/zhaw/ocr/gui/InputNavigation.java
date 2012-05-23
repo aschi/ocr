@@ -5,6 +5,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FilenameFilter;
+import java.io.IOException;
 
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -93,10 +94,12 @@ public class InputNavigation {
 							
 							if ((k.substring(k.lastIndexOf(0)+1, k.lastIndexOf('.'))+".txt").equals(st.substring(st.lastIndexOf('/')+1))) {
 								gui.selectOverview(gui.HISTORYPANEL);
-								gui.getHistoryForm().setText(st);
-								
-								//form.setText(st);
-								
+								try {
+									gui.getHistoryForm().setText(st);
+								} catch (IOException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
 							}
 							else {
 								System.out.println("historypanel kann nicht geöffnet werden");
