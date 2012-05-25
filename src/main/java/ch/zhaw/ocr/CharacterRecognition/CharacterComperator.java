@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
-import ch.zhaw.ocr.Property;
+import ch.zhaw.ocr.Properties;
 import ch.zhaw.ocr.BitmapParser.ContrastMatrix;
 import ch.zhaw.ocr.NeuronalNetwork.Neuron;
 import ch.zhaw.ocr.NeuronalNetwork.NeuronalNetwork;
@@ -21,7 +21,7 @@ public class CharacterComperator {
 	public CharacterComperator() throws IOException {
 		characterRecognitionNetwork = new NeuronalNetwork<Character, String>();
 
-		File f = new File(Property.knnSerializationPath);
+		File f = new File(Properties.knnSerializationPath);
 		if (f.exists()) {
 			System.out.println("deserialize knn...");
 			deserializeKNN(f);

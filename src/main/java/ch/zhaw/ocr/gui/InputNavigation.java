@@ -17,7 +17,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
-import ch.zhaw.ocr.Property;
+import ch.zhaw.ocr.Properties;
 import ch.zhaw.ocr.gui.forms.HistoryForm;
 import ch.zhaw.ocr.gui.forms.SpringUtilities;
 import ch.zhaw.ocr.gui.helper.TextFileFilter;
@@ -86,7 +86,7 @@ public class InputNavigation {
 					TreePath p = tree.getPathForLocation(e.getX(), e.getY());
 					if (p != null ) {
 						TreeNode node = (TreeNode) p.getLastPathComponent();
-						File files = new File(Property.historyResourcefoler);
+						File files = new File(Properties.historyResourcefoler);
 						for (File s : files.listFiles()) {
 							if (s.isFile() == true) {
 							String k = node.toString();
@@ -120,7 +120,7 @@ public class InputNavigation {
 	}
 	
 	private void getFileFromDir() {
-        File actual = new File(Property.historyResourcefoler);
+        File actual = new File(Properties.historyResourcefoler);
         if(actual.exists()){
         	for( File f : actual.listFiles()){
             	if (f.getAbsolutePath().toLowerCase().endsWith(".jpg") || f.getAbsolutePath().toLowerCase().endsWith(".png")) {

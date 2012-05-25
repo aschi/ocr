@@ -6,7 +6,7 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
-import ch.zhaw.ocr.Property;
+import ch.zhaw.ocr.Properties;
 import ch.zhaw.ocr.BitmapParser.BitmapParser;
 import ch.zhaw.ocr.BitmapParser.CharacterParser;
 import ch.zhaw.ocr.BitmapParser.ContrastMatrix;
@@ -56,7 +56,7 @@ public class Ocr {
 					textBuffer.append(c);
 					wordBuffer.delete(0, wordBuffer.length());
 				} else {
-					wordBuffer.append(c.equals("") ? Property.unknownChar : c);
+					wordBuffer.append(c.equals("") ? Properties.unknownChar : c);
 				}
 				
 			}

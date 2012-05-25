@@ -46,8 +46,8 @@ public class Starter {
 
 		Runtime.getRuntime().addShutdownHook(new Thread() {
 			public void run() {
-				dict.serializeMap(new File(Property.dictionaryMapSerializiationPath));
-				cc.serializeKNN(new File(Property.knnSerializationPath));
+				dict.serializeMap(new File(Properties.dictionaryMapSerializiationPath));
+				cc.serializeKNN(new File(Properties.knnSerializationPath));
 				System.out.println("ocr is shutting down!");
 			}
 		});

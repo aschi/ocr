@@ -13,7 +13,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import ch.zhaw.ocr.Property;
+import ch.zhaw.ocr.Properties;
 
 public class Dictionary {
 	// HashMap representing the dictionary
@@ -36,14 +36,14 @@ public class Dictionary {
 		dictionary = new HashMap<String, Integer>();
 
 		if (mode.equals("production")) {
-			File f = new File(Property.dictionaryMapSerializiationPath);
+			File f = new File(Properties.dictionaryMapSerializiationPath);
 			if (f.exists()) {
 					buildDictionaryFromSerializedMap(f);
 			} else {
-				buildDictionaryFromFile(new File(Property.dictionaryResourceFolder));
+				buildDictionaryFromFile(new File(Properties.dictionaryResourceFolder));
 			}
 		}else if(mode.equals("rebuild")){
-			buildDictionaryFromFile(new File(Property.dictionaryResourceFolder));
+			buildDictionaryFromFile(new File(Properties.dictionaryResourceFolder));
 		}else if(mode.equals("debug")){
 			//create an empty dictionary
 		}
@@ -61,7 +61,7 @@ public class Dictionary {
 		//cancel dictionary lookup if more then 2 chars are unknown
 		int unknownCounter = 0;
 		for(char c : word.toCharArray()){
-			if(c == Property.unknownChar){
+			if(c == Properties.unknownChar){
 				unknownCounter++;
 			}
 		}
@@ -80,7 +80,7 @@ public class Dictionary {
 		// Check if first character is != digit or letter. If first char !=
 		// digit or letter => remove character and store it
 		if (!Character.isLetterOrDigit(word.charAt(0))
-				&& word.charAt(0) != Property.unknownChar) {
+				&& word.charAt(0) != Properties.unknownChar) {
 			firstSignChar = word.charAt(0);
 			word = word.substring(1);
 		}
@@ -88,7 +88,7 @@ public class Dictionary {
 		// Check if last character is != digit or letter. If last char != digit
 		// or letter => remove character and store it
 		if (!Character.isLetterOrDigit(word.charAt(word.length() - 1))
-				&& word.charAt(word.length() - 1) != Property.unknownChar) {
+				&& word.charAt(word.length() - 1) != Properties.unknownChar) {
 			lastSignChar = word.charAt(word.length() - 1);
 			word = word.substring(0, word.length() - 1);
 		}
@@ -195,7 +195,7 @@ public class Dictionary {
 		// replace each character of the word with each character of our given
 		// alphabet
 		for (int i = 0; i < wArray.length; i++) {
-			if (wArray[i] == Property.unknownChar) {
+			if (wArray[i] == Properties.unknownChar) {
 				for (char c : alphabet) {
 					char[] copy = wArray.clone();
 					copy[i] = c;

@@ -34,6 +34,7 @@ public class MatrixHelper {
 	 * @return transformed matrix
 	 */
 	public static Matrix sigmoid(Matrix m){
+		m = MatrixFactory.copy(m);
 		for(int col = 0; col < m.getColumnCount();col++){
 			for(int row = 0;row < m.getRowCount();row++){
 				m.set(row, col, 1/(1+Math.exp(-1 * m.get(row, col))));
@@ -55,6 +56,7 @@ public class MatrixHelper {
 	
 	
 	public static Matrix add1ToVector(Matrix vector, String horizontalVertical){
+		vector = MatrixFactory.copy(vector);
 		if(horizontalVertical.equals("horizontal")){
 			Matrix rv = MatrixFactory.createMatrix(1, vector.getColumnCount()+1);
 			rv.set(0, 0, 1);
@@ -73,6 +75,7 @@ public class MatrixHelper {
 	}
 	
 	public static Matrix log(Matrix m){
+		m = MatrixFactory.copy(m);
 		for(int col = 0; col < m.getColumnCount();col++){
 			for(int row = 0;row < m.getRowCount();row++){
 				m.set(row, col, Math.log(m.get(row, col)));
@@ -82,6 +85,7 @@ public class MatrixHelper {
 	}
 	
 	public static Matrix addScalar(Matrix m, double scalar){
+		m = MatrixFactory.copy(m);
 		for(int col = 0; col < m.getColumnCount();col++){
 			for(int row = 0;row < m.getRowCount();row++){
 				m.set(row, col, m.get(row, col)+scalar);
@@ -90,4 +94,19 @@ public class MatrixHelper {
 		return m;
 	}
  	
+	/**
+	 * Add up all elements of a given matrix
+	 * @param m
+	 * @return
+	 */
+	public static double sum(Matrix m){
+		double rv = 0;
+		for(int col = 0; col < m.getColumnCount();col++){
+			for(int row = 0;row < m.getRowCount();row++){
+				rv+=m.get(row, col);
+			}
+		}
+		return rv;
+	}
+	
 }

@@ -8,7 +8,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import ch.zhaw.ocr.Property;
+import ch.zhaw.ocr.Properties;
 
 public class DictionaryTest {
 
@@ -46,7 +46,7 @@ public class DictionaryTest {
 	
 	@Test
 	public void unknownCharTest(){
-		String testInput = Property.unknownChar+"alle";
+		String testInput = Properties.unknownChar+"alle";
 		String expectedOutput = "halle";
 		String output = dict.correctWord(testInput);
 		

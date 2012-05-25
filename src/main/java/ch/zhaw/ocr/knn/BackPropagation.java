@@ -1,13 +1,23 @@
-package ch.zhaw.ocr.knn.helper;
+package ch.zhaw.ocr.knn;
 
 import hu.kazocsaba.math.matrix.Matrix;
 import hu.kazocsaba.math.matrix.MatrixFactory;
 
 import java.util.List;
 
-public class TrainingNN {
+import ch.zhaw.ocr.knn.helper.CostFunctionResult;
+import ch.zhaw.ocr.knn.helper.MatrixHelper;
 
-	private Matrix nnCostFunction(Matrix theta1, Matrix theta2,
+public class BackPropagation {
+
+	private Matrix randInitializeWeights(int lOutSize, int lInSize){
+		double epsilonInit = 0.12;
+		Matrix rv = MatrixFactory.random(lOutSize, lInSize+1);
+		rv.scale(2*epsilonInit);
+		return MatrixHelper.addScalar(rv, -1*epsilonInit);	
+	}
+	
+	private CostFunctionResult nnCostFunction(Matrix theta1, Matrix theta2,
 			int inputLayerSize, int hiddenLayerSize, int outputLayerSize,
 			List<Matrix> trainingVectors, List<Integer> expectedResults,
 			double lambda) {
@@ -16,7 +26,7 @@ public class TrainingNN {
 
 		Matrix idMat = MatrixFactory.identity(outputLayerSize);
 
-		Matrix s = null;
+		double s = 0;
 
 		for (int i = 0; i < trainingVectors.size(); i++) {
 
@@ -41,15 +51,11 @@ public class TrainingNN {
 					h.getColumnCount());
 
 			// (-yk * log(h)) - ((1 - yk) * log(1-h) )
-			Matrix costTerm = yk.times(-1).mul(MatrixHelper.log(h)).minus(
-					ykOnes.minus(yk).mul(MatrixHelper.log(hOnes.minus(h))));
+			double costTerm = MatrixHelper.sum(yk.times(-1).mul(MatrixHelper.log(h)).minus(
+					ykOnes.minus(yk).mul(MatrixHelper.log(hOnes.minus(h)))));
 
-			if (s == null) {
-				s = MatrixFactory.createLike(costTerm);
-			}
-
-			s.add(costTerm);
-
+			s += costTerm;
+			
 			Matrix delta3 = a3.minus(yk.transpose());
 
 			Matrix a2Ones = MatrixFactory.ones(a2.getRowCount(),
@@ -68,7 +74,7 @@ public class TrainingNN {
 			
 		}
 
-		Matrix J = s.times(1/trainingVectors.size());
+		double J = s/trainingVectors.size();
 		
 		
 		//Theta1_grad = Theta1_grad ./ m;
@@ -81,25 +87,28 @@ public class TrainingNN {
 		
 		
 		//Theta1_grad(:,2:end) = Theta1_grad(:,2:end) + ((lambda/m) * Theta1(:,2:end) );		
-		tmp1 = theta1Grad.getSubmatrix(1, theta1Grad.getRowCount(), 0, theta1Grad.getColumnCount());
-		tmp2 = theta1.getSubmatrix(1, theta1.getRowCount(), 0, theta1.getColumnCount());		
+		tmp1 = theta1Grad.getSubmatrix(0, theta1Grad.getRowCount(), 1, theta1Grad.getColumnCount());
+		tmp2 = theta1.getSubmatrix(0, theta1.getRowCount(), 1, theta1.getColumnCount());		
 		tmp1.add(tmp2.times(lambda/trainingVectors.size()));
 		
 		theta1Grad.setSubmatrix(tmp1, 1, theta1Grad.getRowCount());
 		
 
 		//Theta2_grad(:,2:end) = Theta2_grad(:,2:end) + ((lambda/m) * Theta2(:,2:end) );
-		tmp1 = theta2Grad.getSubmatrix(1, theta2Grad.getRowCount(), 0, theta2Grad.getColumnCount());
-		tmp2 = theta2.getSubmatrix(1, theta2.getRowCount(), 0, theta2.getColumnCount());		
+		tmp1 = theta2Grad.getSubmatrix(0, theta2Grad.getRowCount(), 1, theta2Grad.getColumnCount());
+		tmp2 = theta2.getSubmatrix(1, theta2.getRowCount(), 1, theta2.getColumnCount());		
 		tmp1.add(tmp2.times(lambda/trainingVectors.size()));
 		
 		theta2Grad.setSubmatrix(tmp1, 1, theta2Grad.getRowCount());
 		
 		
 		//drop bias terms
-		tmp1 = theta1.getSubmatrix(1, theta1.getRowCount(), 0, theta1.getColumnCount());	
-		tmp2 = theta2.getSubmatrix(1, theta2.getRowCount(), 0, theta2.getColumnCount());		
-		return null;
+		tmp1 = theta1.getSubmatrix(0, theta1.getRowCount(), 1, theta1.getColumnCount());	
+		tmp2 = theta2.getSubmatrix(0, theta2.getRowCount(), 1, theta2.getColumnCount());	
+		
+		double reg = lambda/(2*trainingVectors.size()) * (MatrixHelper.sum(tmp1) + MatrixHelper.sum(tmp2));
+		J += reg;
+		
+		return new CostFunctionResult(J, theta1Grad, theta2Grad);		
 	}
-
 }

@@ -6,7 +6,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import ch.zhaw.ocr.Property;
+import ch.zhaw.ocr.Properties;
 
 public class TextFileHandler {
 
@@ -20,7 +20,7 @@ public class TextFileHandler {
 			filepath += ".txt";
 		}
 		BufferedWriter writer = new BufferedWriter(new FileWriter(filepath));
-		BufferedWriter writer2 = new BufferedWriter(new FileWriter(Property.historyResourcefoler + "/" + fileName));
+		BufferedWriter writer2 = new BufferedWriter(new FileWriter(Properties.historyResourcefoler + "/" + fileName));
 		writer.write(text);
 		writer2.write(text);
 		writer.close();

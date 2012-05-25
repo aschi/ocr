@@ -7,8 +7,6 @@ import hu.kazocsaba.math.matrix.MatrixFactory;
 
 import org.junit.Test;
 
-import ch.zhaw.ocr.knn.LinearRegression;
-
 public class MatrixHelperTest {
 
 	@Test
