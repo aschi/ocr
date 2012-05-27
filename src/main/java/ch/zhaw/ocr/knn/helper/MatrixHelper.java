@@ -109,4 +109,20 @@ public class MatrixHelper {
 		return rv;
 	}
 	
+	/**
+	 * Get the max element of a matrix
+	 * @param m
+	 * @return
+	 */
+	public static double max(Matrix m){
+		double max = 0;
+		for(int col = 0; col < m.getColumnCount();col++){
+			for(int row = 0;row < m.getRowCount();row++){
+				if(m.get(row, col) > max){
+					max = m.get(row, col);
+				}
+			}
+		}
+		return max;
+	}
 }

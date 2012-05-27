@@ -30,4 +30,12 @@ public class CostFunctionResult {
 		this.theta1Grad = theta1Grad;
 		this.theta2Grad = theta2Grad;
 	}
+	
+	@Override
+	public String toString() {
+		return "CostFunctionResult [J=" + J + ", theta1Grad=" + theta1Grad
+				+ ", theta2Grad=" + theta2Grad + "]";
+	}
+	
+	
 }

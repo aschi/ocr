@@ -10,14 +10,14 @@ import ch.zhaw.ocr.knn.helper.MatrixHelper;
 
 public class BackPropagation {
 
-	private Matrix randInitializeWeights(int lOutSize, int lInSize){
+	public Matrix randInitializeWeights(int lOutSize, int lInSize){
 		double epsilonInit = 0.12;
 		Matrix rv = MatrixFactory.random(lOutSize, lInSize+1);
 		rv.scale(2*epsilonInit);
 		return MatrixHelper.addScalar(rv, -1*epsilonInit);	
 	}
 	
-	private CostFunctionResult nnCostFunction(Matrix theta1, Matrix theta2,
+	public CostFunctionResult nnCostFunction(Matrix theta1, Matrix theta2,
 			int inputLayerSize, int hiddenLayerSize, int outputLayerSize,
 			List<Matrix> trainingVectors, List<Integer> expectedResults,
 			double lambda) {
@@ -67,46 +67,47 @@ public class BackPropagation {
 					(MatrixHelper.elementMultiplication(a2, a2Ones.minus(a2))));
 
 			//to be tested
-			delta2 = delta2.getSubmatrix(1, delta2.getRowCount(), 0, delta2.getColumnCount());
+			delta2 = delta2.getSubmatrix(1, delta2.getRowCount()-1, 0, delta2.getColumnCount()-1);
 			
 			theta1Grad.add(delta2.mul(a1));
 			theta2Grad.add(delta3.mul(a2.transpose())); 
 			
 		}
 
-		double J = s/trainingVectors.size();
+		double J = ((double)s/trainingVectors.size());
 		
 		
 		//Theta1_grad = Theta1_grad ./ m;
 		//Theta2_grad = Theta2_grad ./ m;
-		theta1Grad = theta1Grad.times(1/trainingVectors.size());
-		theta2Grad = theta2Grad.times(1/trainingVectors.size());
+		double factor = ((double)1/trainingVectors.size());
+		theta1Grad = theta1Grad.times(factor);
+		theta2Grad = theta2Grad.times(factor);
 
 		Matrix tmp1;
 		Matrix tmp2;
 		
 		
 		//Theta1_grad(:,2:end) = Theta1_grad(:,2:end) + ((lambda/m) * Theta1(:,2:end) );		
-		tmp1 = theta1Grad.getSubmatrix(0, theta1Grad.getRowCount(), 1, theta1Grad.getColumnCount());
-		tmp2 = theta1.getSubmatrix(0, theta1.getRowCount(), 1, theta1.getColumnCount());		
-		tmp1.add(tmp2.times(lambda/trainingVectors.size()));
+		tmp1 = theta1Grad.getSubmatrix(1, theta1Grad.getRowCount()-1, 0, theta1Grad.getColumnCount()-1);
+		tmp2 = theta1.getSubmatrix(1, theta1.getRowCount()-1, 0, theta1.getColumnCount()-1);		
+		tmp1.add(tmp2.times(((double)lambda/trainingVectors.size())));
 		
-		theta1Grad.setSubmatrix(tmp1, 1, theta1Grad.getRowCount());
+		theta1Grad.setSubmatrix(tmp1, 1, 0);
 		
 
 		//Theta2_grad(:,2:end) = Theta2_grad(:,2:end) + ((lambda/m) * Theta2(:,2:end) );
-		tmp1 = theta2Grad.getSubmatrix(0, theta2Grad.getRowCount(), 1, theta2Grad.getColumnCount());
-		tmp2 = theta2.getSubmatrix(1, theta2.getRowCount(), 1, theta2.getColumnCount());		
-		tmp1.add(tmp2.times(lambda/trainingVectors.size()));
+		tmp1 = theta2Grad.getSubmatrix(1, theta2Grad.getRowCount()-1, 0, theta2Grad.getColumnCount()-1);
+		tmp2 = theta2.getSubmatrix(1, theta2.getRowCount()-1, 0, theta2.getColumnCount()-1);		
+		tmp1.add(tmp2.times(((double)lambda/trainingVectors.size())));
 		
-		theta2Grad.setSubmatrix(tmp1, 1, theta2Grad.getRowCount());
+		theta2Grad.setSubmatrix(tmp1, 1, 0);
 		
 		
 		//drop bias terms
-		tmp1 = theta1.getSubmatrix(0, theta1.getRowCount(), 1, theta1.getColumnCount());	
-		tmp2 = theta2.getSubmatrix(0, theta2.getRowCount(), 1, theta2.getColumnCount());	
+		tmp1 = theta1.getSubmatrix(0, theta1.getRowCount()-1, 1, theta1.getColumnCount()-1);	
+		tmp2 = theta2.getSubmatrix(0, theta2.getRowCount()-1, 1, theta2.getColumnCount()-1);	
 		
-		double reg = lambda/(2*trainingVectors.size()) * (MatrixHelper.sum(tmp1) + MatrixHelper.sum(tmp2));
+		double reg = ((double)lambda/(2*trainingVectors.size())) * (MatrixHelper.sum(tmp1) + MatrixHelper.sum(tmp2));
 		J += reg;
 		
 		return new CostFunctionResult(J, theta1Grad, theta2Grad);		

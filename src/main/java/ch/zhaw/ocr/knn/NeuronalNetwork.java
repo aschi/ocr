@@ -8,8 +8,13 @@ import ch.zhaw.ocr.knn.helper.MatrixHelper;
 public class NeuronalNetwork {
 	private Matrix theta1;
 	private Matrix theta2;
+
 	
-	
+	public NeuronalNetwork(Matrix theta1, Matrix theta2) {
+		super();
+		this.theta1 = theta1;
+		this.theta2 = theta2;
+	}
 	
 	/**
 	 * Use the trained neuronal network to align an input vector with a character
