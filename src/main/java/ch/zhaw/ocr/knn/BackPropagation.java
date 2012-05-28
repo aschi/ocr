@@ -10,13 +10,13 @@ import ch.zhaw.ocr.knn.helper.MatrixHelper;
 
 public class BackPropagation {
 
-	public Matrix randInitializeWeights(int lOutSize, int lInSize){
+	public Matrix randInitializeWeights(int lOutSize, int lInSize) {
 		double epsilonInit = 0.12;
-		Matrix rv = MatrixFactory.random(lOutSize, lInSize+1);
-		rv.scale(2*epsilonInit);
-		return MatrixHelper.addScalar(rv, -1*epsilonInit);	
+		Matrix rv = MatrixFactory.random(lOutSize, lInSize + 1);
+		rv.scale(2 * epsilonInit);
+		return MatrixHelper.addScalar(rv, -1 * epsilonInit);
 	}
-	
+
 	public CostFunctionResult nnCostFunction(Matrix theta1, Matrix theta2,
 			int inputLayerSize, int hiddenLayerSize, int outputLayerSize,
 			List<Matrix> trainingVectors, List<Integer> expectedResults,
@@ -107,7 +107,7 @@ public class BackPropagation {
 		tmp1 = theta1.getSubmatrix(0, theta1.getRowCount()-1, 1, theta1.getColumnCount()-1);	
 		tmp2 = theta2.getSubmatrix(0, theta2.getRowCount()-1, 1, theta2.getColumnCount()-1);	
 		
-		double reg = ((double)lambda/(2*trainingVectors.size())) * (MatrixHelper.sum(tmp1) + MatrixHelper.sum(tmp2));
+		double reg = ((double)lambda/(2*trainingVectors.size())) * (MatrixHelper.sum(MatrixHelper.elementMultiplication(tmp1,tmp1)) + MatrixHelper.sum(MatrixHelper.elementMultiplication(tmp2,tmp2)));
 		J += reg;
 		
 		return new CostFunctionResult(J, theta1Grad, theta2Grad);		
