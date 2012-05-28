@@ -1,8 +1,6 @@
 package ch.zhaw.ocr.gui.forms;
 
 import java.awt.BorderLayout;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 
 import javax.swing.ImageIcon;

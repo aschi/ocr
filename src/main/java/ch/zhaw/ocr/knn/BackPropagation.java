@@ -110,6 +110,7 @@ public class BackPropagation {
 		double reg = ((double)lambda/(2*trainingVectors.size())) * (MatrixHelper.sum(MatrixHelper.elementMultiplication(tmp1,tmp1)) + MatrixHelper.sum(MatrixHelper.elementMultiplication(tmp2,tmp2)));
 		J += reg;
 		
+		
 		return new CostFunctionResult(J, theta1Grad, theta2Grad);		
 	}
 }
