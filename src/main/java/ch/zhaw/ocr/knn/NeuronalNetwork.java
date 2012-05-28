@@ -44,11 +44,12 @@ public class NeuronalNetwork {
 		}
 		
 		//return char if something is found with emphasis > 0.5
-		if(bigest > 0.2){
+		//if(bigest > 0.2){
+			System.out.println("Pos: " + bigestPos + " Char: " + Properties.knnOutputLayer.get(bigestPos) + " Emphasis: "+ bigest);
 			return Properties.knnOutputLayer.get(bigestPos);
-		}else{
-			return Properties.unknownChar;
-		}
+		//}else{
+		//	return Properties.unknownChar;
+		//}
 	}
 
 	
