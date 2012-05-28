@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import ch.zhaw.ocr.gui.InputNavigation;
 import ch.zhaw.ocr.gui.MainGui;
 import ch.zhaw.ocr.gui.helper.TextFileHandler;
 
@@ -32,6 +33,8 @@ public class HistoryForm {
     public void createPanel() {
     	
     	panel = new JPanel(new BorderLayout());
+		InputNavigation inavi = new InputNavigation(gui);
+		panel.add(inavi.getPanel(), BorderLayout.WEST);
         panel.add(loadImage(img), BorderLayout.NORTH);
         panel.add(loadTextArea(), BorderLayout.SOUTH);
     }

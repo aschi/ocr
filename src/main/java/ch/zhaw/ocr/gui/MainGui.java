@@ -75,8 +75,6 @@ public class MainGui {
 	
 	private JComponent createInputPanel(){
 		InputForm iform = new InputForm(this);
-//		InputNavigation inavi = new InputNavigation(this);
-//		inputPanel.add(inavi.getPanel(), BorderLayout.WEST);
 		inputPanel.add(iform.getPanel(), BorderLayout.CENTER);
 		
 		return inputPanel;
@@ -96,8 +94,6 @@ public class MainGui {
 	public JComponent createHistoryPanel() {
 		
 		hForm = new HistoryForm(this);
-		InputNavigation inavi = new InputNavigation(this);
-		historyPanel.add(inavi.getPanel(), BorderLayout.WEST);
 		historyPanel.add(hForm.getPanel(), BorderLayout.CENTER);
 		
 		return historyPanel;
@@ -107,8 +103,6 @@ public class MainGui {
 	public JComponent createDictionaryPanel() {
 		
 		dForm = new DictionaryForm(this);
-//		InputNavigation inavi = new InputNavigation(this);
-//		dictionaryPanel.add(inavi.getPanel(), BorderLayout.WEST);
 		dictionaryPanel.add(dForm.getPanel(), BorderLayout.CENTER);
 		
 		return dictionaryPanel;

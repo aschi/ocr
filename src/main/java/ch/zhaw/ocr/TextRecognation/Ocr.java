@@ -72,5 +72,9 @@ public class Ocr {
 			return null;
 		}
 	}
+	
+	public Dictionary getDictionary() {
+		return dic;
+	}
 
 }
