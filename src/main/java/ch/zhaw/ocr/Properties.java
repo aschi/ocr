@@ -15,7 +15,7 @@ public final class Properties {
 	 * KNN Configuration
 	 */
 	public static final int knnInputLayerSize = 400;
-	public static final int knnHiddenLayerSize = 50;
+	public static final int knnHiddenLayerSize = 200;
 	
 	public static final List<Character> knnOutputLayer = Arrays.asList('A', 'B',
 			'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O',
