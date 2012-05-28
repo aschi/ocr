@@ -363,5 +363,9 @@ public class Dictionary {
 				+ (System.currentTimeMillis() - t1) + "ms; "
 				+ dictionary.size() + " entries)");
 	}
+	
+	public HashMap<String, Integer> getDictionary() {
+		return dictionary;
+	}
 
 }
