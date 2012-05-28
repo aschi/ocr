@@ -194,6 +194,11 @@ public class MatrixHelper {
 		return rv;
 	}
 	
+	/**
+	 * Create a double vector from a 1 column matrix. Used for fmincg function
+	 * @param m input matrix
+	 * @return output DoubleVector
+	 */
 	public static DoubleVector convertToDoubleVector(Matrix m){
 		if(m.getColumnCount() > 1){
 			throw new IllegalArgumentException("Only vectors (matrix with one column) may be converted");
@@ -208,6 +213,11 @@ public class MatrixHelper {
 		return new DenseDoubleVector(arr);
 	}
 	
+	/**
+	 * Convert a DoubleVector into a matrix. Used to process output of fmincg function
+	 * @param dv input DoubleVector
+	 * @return generated matrix
+	 */
 	public static Matrix convertToMatrix(DoubleVector dv){
 		Matrix m = MatrixFactory.createMatrix(dv.getLength(), 1);
 		
