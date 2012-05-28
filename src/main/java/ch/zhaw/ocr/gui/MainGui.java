@@ -2,19 +2,14 @@ package ch.zhaw.ocr.gui;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
 
-import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 
 import ch.zhaw.ocr.TextRecognation.Ocr;
+import ch.zhaw.ocr.gui.forms.DictionaryForm;
 import ch.zhaw.ocr.gui.forms.HistoryForm;
 import ch.zhaw.ocr.gui.forms.InputForm;
 import ch.zhaw.ocr.gui.forms.NeuronDetail;
@@ -23,39 +18,45 @@ import ch.zhaw.ocr.gui.lists.NeuronList;
 public class MainGui {
 	
 	public final static String KNNPANEL = "Card with KNN Panel";
-	public final static String TEXTPANEL = "Card with Text Panel";
+	public final static String INPUTPANEL = "Card with Text Panel";
 	public final static String HISTORYPANEL = "Card with History Panel";
+	public final static String DICTIONARYPANEL = "Card with Dictionary Panel";
 	
 	private JFrame frame;
+	private JTabbedPane tabbedPane;
 	private JPanel inputPanel;
-	private JPanel neuronPanel;
+	private JPanel knnPanel;
 	private JPanel historyPanel;
+	private JPanel dictionaryPanel;
 	private JPanel cards;
 	private Ocr ocr;
-	private HistoryForm hform;
+	private HistoryForm hForm;
+	private DictionaryForm dForm;
 	
     public MainGui(Ocr ocr){
         this.ocr = ocr;
-        createFrame();
+        createTabbedPane();
     }
 
-	private void createFrame() {
+	private void createTabbedPane() {
 		
 		frame = new JFrame("OCR");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);  //Fullscreen
         
-        neuronPanel = new JPanel(new BorderLayout());
+        knnPanel = new JPanel(new BorderLayout());
         inputPanel = new JPanel(new BorderLayout());
         historyPanel = new JPanel(new BorderLayout());
+        dictionaryPanel = new JPanel(new BorderLayout());
         
         cards = new JPanel(new CardLayout());
-        cards.add(createInputPanel(), TEXTPANEL);
-        cards.add(createNeuronPanel(), KNNPANEL);
-        cards.add(createHistoryPanel(), HISTORYPANEL);
+        cards.add(inputPanel, INPUTPANEL);
+        cards.add(knnPanel, KNNPANEL);
+        cards.add(historyPanel, HISTORYPANEL);
+        cards.add(dictionaryPanel, DICTIONARYPANEL);
         
         frame.setContentPane(cards);
-        createMenuBar();
+        createTabs();
         
         frame.setVisible(true);
 
@@ -74,82 +75,55 @@ public class MainGui {
 	
 	private JComponent createInputPanel(){
 		InputForm iform = new InputForm(this);
-		InputNavigation inavi = new InputNavigation(this);
-		inputPanel.add(inavi.getPanel(), BorderLayout.WEST);
 		inputPanel.add(iform.getPanel(), BorderLayout.CENTER);
 		
 		return inputPanel;
 	}
 	
-	private JComponent createNeuronPanel() {
+	private JComponent createKnnPanel() {
 		
 		NeuronDetail ndet = new NeuronDetail(this);
 		NeuronList nlist = new NeuronList(this);
-		neuronPanel.add(nlist.getPanel(), BorderLayout.WEST);
-		neuronPanel.add(ndet.getPanel(), BorderLayout.CENTER);
+		knnPanel.add(nlist.getPanel(), BorderLayout.WEST);
+		knnPanel.add(ndet.getPanel(), BorderLayout.CENTER);
 		
-		return neuronPanel;
+		return knnPanel;
 		
 	}
 	
 	public JComponent createHistoryPanel() {
 		
-		hform = new HistoryForm(this);
-		InputNavigation inavi = new InputNavigation(this);
-		historyPanel.add(inavi.getPanel(), BorderLayout.WEST);
-		historyPanel.add(hform.getPanel(), BorderLayout.CENTER);
+		hForm = new HistoryForm(this);
+		historyPanel.add(hForm.getPanel(), BorderLayout.CENTER);
 		
 		return historyPanel;
 		
 	}
 	
+	public JComponent createDictionaryPanel() {
+		
+		dForm = new DictionaryForm(this);
+		dictionaryPanel.add(dForm.getPanel(), BorderLayout.CENTER);
+		
+		return dictionaryPanel;
+		
+	}
+	
 	public HistoryForm getHistoryForm() {
-		return hform;
+		return hForm;
 		
 	}
 	
 	
-    private void createMenuBar(){
+    private void createTabs(){
     	
-        JMenuBar menuBar = new JMenuBar();
+		tabbedPane = new JTabbedPane();
+		tabbedPane.addTab( "Input", createInputPanel() );
+		tabbedPane.addTab( "KNN", createKnnPanel() );
+		tabbedPane.addTab( "History", createHistoryPanel() );
+		tabbedPane.addTab( "Dictionary", createDictionaryPanel() );
         
-        frame.setJMenuBar(menuBar);
-        
-        JMenu file = new JMenu("File");
-        JMenu view = new JMenu("View");
-        
-        JMenuItem knn = new JMenuItem("Switch to KNN");
-        JMenuItem text = new JMenuItem("Switch to Text");
-        
-        final JButton switchView = new JButton("Switch to KNN");  
-        
-        switchView.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-				
-				if (switchView.getText() == "Switch to KNN") {
-			
-				selectOverview(KNNPANEL);
-                switchView.setText("Switch to Text");
-                
-			}
-				else if (switchView.getText() == "Switch to Text") {
-					selectOverview(TEXTPANEL);
-					switchView.setText("Switch to KNN");
-				}
-			}
-        	
-        } 
-        )
-        ;
-        
-        
-        
-        menuBar.add(file);
-        menuBar.add(switchView);
-        
-        view.add(knn);
-        view.add(text);
+        frame.add(tabbedPane);
         
     }
 
