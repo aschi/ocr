@@ -276,6 +276,7 @@ public class MatrixHelper {
 			sb.deleteCharAt(sb.length() - 1);
 			bw.write(sb.toString());
 			bw.write(";");
+			bw.flush();
 		}
 	}
 

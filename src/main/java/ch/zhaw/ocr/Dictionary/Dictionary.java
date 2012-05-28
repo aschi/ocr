@@ -25,11 +25,13 @@ public class Dictionary {
 
 	/**
 	 * Constructor for dictionary.
-	 * @param mode defines the creation mode. 
-	 * Implemented Modes:
-	 * - production: Tries to deserialize the dictionary. If not possible, create it from the defined resource folder
-	 * - rebuild: Create the dictionary from resource folder
-	 * - debug: Create an empty dictionary
+	 * 
+	 * @param mode
+	 *            defines the creation mode. Implemented Modes: - production:
+	 *            Tries to deserialize the dictionary. If not possible, create
+	 *            it from the defined resource folder - rebuild: Create the
+	 *            dictionary from resource folder - debug: Create an empty
+	 *            dictionary
 	 * @throws IOException
 	 */
 	public Dictionary(String mode) throws IOException {
@@ -38,14 +40,16 @@ public class Dictionary {
 		if (mode.equals("production")) {
 			File f = new File(Properties.dictionaryMapSerializiationPath);
 			if (f.exists()) {
-					buildDictionaryFromSerializedMap(f);
+				buildDictionaryFromSerializedMap(f);
 			} else {
-				buildDictionaryFromFile(new File(Properties.dictionaryResourceFolder));
+				buildDictionaryFromFile(new File(
+						Properties.dictionaryResourceFolder));
 			}
-		}else if(mode.equals("rebuild")){
-			buildDictionaryFromFile(new File(Properties.dictionaryResourceFolder));
-		}else if(mode.equals("debug")){
-			//create an empty dictionary
+		} else if (mode.equals("rebuild")) {
+			buildDictionaryFromFile(new File(
+					Properties.dictionaryResourceFolder));
+		} else if (mode.equals("debug")) {
+			// create an empty dictionary
 		}
 	}
 
@@ -58,18 +62,18 @@ public class Dictionary {
 	public String correctWord(String word) {
 		String rv = null;
 
-		//cancel dictionary lookup if more then 2 chars are unknown
+		// cancel dictionary lookup if more then 2 chars are unknown
 		int unknownCounter = 0;
-		for(char c : word.toCharArray()){
-			if(c == Properties.unknownChar){
+		for (char c : word.toCharArray()) {
+			if (c == Properties.unknownChar) {
 				unknownCounter++;
 			}
 		}
-		if(unknownCounter>2){
+		if (unknownCounter > 2) {
 			return word;
 		}
-		
-		//dictionary lookup
+
+		// dictionary lookup
 		char firstSignChar = 0;
 		char lastSignChar = 0;
 
@@ -302,36 +306,27 @@ public class Dictionary {
 				+ (System.currentTimeMillis() - t1) + "ms)");
 	}
 
-	public void serializeMap(File f) {
+	public void serializeMap(File f) throws IOException {
 		System.out.println("Serialize map (" + dictionary.size()
 				+ " entries...");
 
 		long t1 = System.currentTimeMillis();
 
-		try {
-			BufferedWriter bw = new BufferedWriter(new FileWriter(f),
-					100 * 1024);
+		BufferedWriter bw = new BufferedWriter(new FileWriter(f), 100 * 1024);
 
-			for (String key : dictionary.keySet()) {
-				bw.write(key + "," + dictionary.get(key) + ";");
-			}
-
-			bw.close();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		for (String key : dictionary.keySet()) {
+			bw.write(key + "," + dictionary.get(key) + ";");
 		}
+
+		bw.close();
+
 		System.out.println("Dictionary serialized... ("
 				+ (System.currentTimeMillis() - t1) + "ms)");
 	}
 
-	public void buildDictionaryFromSerializedMap(File f)
-			throws IOException {
+	public void buildDictionaryFromSerializedMap(File f) throws IOException {
 		System.out.println("Build dictionary from serialized map...");
-		
+
 		long t1 = System.currentTimeMillis();
 
 		BufferedReader input = null;
@@ -363,7 +358,7 @@ public class Dictionary {
 				+ (System.currentTimeMillis() - t1) + "ms; "
 				+ dictionary.size() + " entries)");
 	}
-	
+
 	public HashMap<String, Integer> getDictionary() {
 		return dictionary;
 	}

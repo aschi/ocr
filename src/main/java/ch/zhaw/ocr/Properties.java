@@ -5,17 +5,24 @@ import java.util.List;
 
 public final class Properties {
 	public static final char unknownChar = '~';
+	
+	/*
+	 * History Configuration
+ 	 */
+	public static final String historyResourcefoler = "history";
+	
+	/*
+	 * Dictionary Configuration
+	 */
 	public static final String dictionaryMapSerializiationPath = "res/dictionary.ser";
 	public static final String dictionaryResourceFolder = "res/dictionaryMaterial";
-	public static final String historyResourcefoler = "history";
-	public static final String knnSerializationPath = "res/knn.ser";
-	
+
 	
 	/*
 	 * KNN Configuration
 	 */
 	public static final int knnInputLayerSize = 400;
-	public static final int knnHiddenLayerSize = 200;
+	public static final int knnHiddenLayerSize = 237;
 	
 	public static final List<Character> knnOutputLayer = Arrays.asList('A', 'B',
 			'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O',
@@ -26,4 +33,8 @@ public final class Properties {
 			'9', '.', ',', ':', ';', '?', '!');
 	
 	public static final int knnOutputLayerSize = knnOutputLayer.size();
+	
+	public static final String knnResourcePath = "res/knnMaterial";
+	public static final String knnSerializationPath = "res/knn.ser";
+	
 }

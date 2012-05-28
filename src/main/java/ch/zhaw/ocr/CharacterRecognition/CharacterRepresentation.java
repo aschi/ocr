@@ -22,9 +22,6 @@ public class CharacterRepresentation {
 		
 		fh = (fh == 0) ? 1 : fh;
 		fw = (fw == 0) ? 1 : fw;
-
-		System.out.println(characterM.getHeight());
-		System.out.println(characterM.getWidth());
 		
 		int fieldSize = fh * fw;
 
@@ -35,7 +32,7 @@ public class CharacterRepresentation {
 				int yc = (y >= fh * fieldNo) ? fh * fieldNo - 1 : y;
 				int xc = (x >= fw * fieldNo) ? fw * fieldNo - 1 : x;
 
-				int part = (int) Math.floor(yc / fh) * 5
+				int part = (int) Math.floor(yc / fh) * fieldNo
 						+ (int) Math.floor(xc / fw);
 
 				comparisonVector[0][part] += characterM.getValue(x, y);

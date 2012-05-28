@@ -1,5 +1,7 @@
 package ch.zhaw.ocr.TextRecognation;
 
+import hu.kazocsaba.math.matrix.MatrixFactory;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -16,15 +18,18 @@ import ch.zhaw.ocr.BitmapParser.UnderlineRemover;
 import ch.zhaw.ocr.BitmapParser.WordParser;
 import ch.zhaw.ocr.CharacterRecognition.Character;
 import ch.zhaw.ocr.CharacterRecognition.CharacterComperator;
+import ch.zhaw.ocr.CharacterRecognition.CharacterRepresentation;
 import ch.zhaw.ocr.Dictionary.Dictionary;
+import ch.zhaw.ocr.knn.NeuralNetwork;
+import ch.zhaw.ocr.knn.helper.MatrixHelper;
 
 public class Ocr {
 	
-	private CharacterComperator cc;
+	private NeuralNetwork nn;
 	private Dictionary dic;
 	
-	public Ocr(CharacterComperator cc, Dictionary dic) {
-		this.cc = cc;
+	public Ocr(NeuralNetwork nn, Dictionary dic) {
+		this.nn = nn;
 		this.dic = dic;
 	}
 	
@@ -39,15 +44,16 @@ public class Ocr {
 				new UnderlineRemover(new RowParser(new SimpleBitmapParser()))));
 
 		try {
-			
-			
 			//Word seperating
-			
-			
 			List<ContrastMatrix> matrices = bp.parse(ImageIO.read(f));
 			// character output
 			for (ContrastMatrix cm : matrices) {
-				String c = cc.detectCharacter(new Character(cm));
+				char c = 0;
+				if(cm.getFunctionalChar() != null){
+					c = cm.getFunctionalChar().getCharacter();
+				}else{
+					c = nn.detectCharacter(MatrixFactory.createMatrix(new CharacterRepresentation(cm).getComparisonVector()));
+				}
 				//if the character is a functional character
 				if (cm.getFunctionalChar() != null) {
 					System.out.println("Dictionary Input: "+wordBuffer.toString());
@@ -56,7 +62,7 @@ public class Ocr {
 					textBuffer.append(c);
 					wordBuffer.delete(0, wordBuffer.length());
 				} else {
-					wordBuffer.append(c.equals("") ? Properties.unknownChar : c);
+					wordBuffer.append(c);
 				}
 				
 			}
@@ -65,7 +71,7 @@ public class Ocr {
 				textBuffer.append(dic.correctWord(wordBuffer.toString()));
 			}
 			System.out.println("Einlesen des Textes abgeschlossen...("+ (System.currentTimeMillis()-t1) +"ms)");
-			return textBuffer.toString();
+			return textBuffer.toString().replace(Properties.unknownChar, '_');
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

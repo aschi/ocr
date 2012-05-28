@@ -5,13 +5,8 @@ import hu.kazocsaba.math.matrix.MatrixFactory;
 
 import java.util.List;
 
-import ch.zhaw.ocr.Properties;
 import ch.zhaw.ocr.knn.helper.CostFunctionResult;
 import ch.zhaw.ocr.knn.helper.MatrixHelper;
-import de.jungblut.math.DoubleVector;
-import de.jungblut.math.dense.DenseDoubleVector;
-import de.jungblut.math.minimize.CostFunction;
-import de.jungblut.math.tuple.Tuple;
 
 public class BackPropagation {
 
