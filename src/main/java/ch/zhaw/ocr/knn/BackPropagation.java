@@ -5,8 +5,13 @@ import hu.kazocsaba.math.matrix.MatrixFactory;
 
 import java.util.List;
 
+import ch.zhaw.ocr.Properties;
 import ch.zhaw.ocr.knn.helper.CostFunctionResult;
 import ch.zhaw.ocr.knn.helper.MatrixHelper;
+import de.jungblut.math.DoubleVector;
+import de.jungblut.math.dense.DenseDoubleVector;
+import de.jungblut.math.minimize.CostFunction;
+import de.jungblut.math.tuple.Tuple;
 
 public class BackPropagation {
 
@@ -17,10 +22,15 @@ public class BackPropagation {
 		return MatrixHelper.addScalar(rv, -1 * epsilonInit);
 	}
 
-	public CostFunctionResult nnCostFunction(Matrix theta1, Matrix theta2,
+	public CostFunctionResult nnCostFunction(Matrix mergedThetas, 
 			int inputLayerSize, int hiddenLayerSize, int outputLayerSize,
 			List<Matrix> trainingVectors, List<Integer> expectedResults,
 			double lambda) {
+		
+		Matrix[] thetas = MatrixHelper.unmergeThetas(mergedThetas, inputLayerSize, hiddenLayerSize, outputLayerSize);
+		Matrix theta1 = thetas[0];
+		Matrix theta2 = thetas[1];
+		
 		Matrix theta1Grad = MatrixFactory.createLike(theta1);
 		Matrix theta2Grad = MatrixFactory.createLike(theta2);
 
@@ -110,6 +120,9 @@ public class BackPropagation {
 		double reg = ((double)lambda/(2*trainingVectors.size())) * (MatrixHelper.sum(MatrixHelper.elementMultiplication(tmp1,tmp1)) + MatrixHelper.sum(MatrixHelper.elementMultiplication(tmp2,tmp2)));
 		J += reg;
 		
-		return new CostFunctionResult(J, theta1Grad, theta2Grad);		
+		Matrix mergedThetaGrad = MatrixHelper.mergeThetas(theta1Grad, theta2Grad);
+		
+		return new CostFunctionResult(J, mergedThetaGrad);		
 	}
+	
 }

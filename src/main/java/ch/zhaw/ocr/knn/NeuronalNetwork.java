@@ -44,7 +44,7 @@ public class NeuronalNetwork {
 		}
 		
 		//return char if something is found with emphasis > 0.5
-		if(bigest > 0.5){
+		if(bigest > 0.2){
 			return Properties.knnOutputLayer.get(bigestPos);
 		}else{
 			return Properties.unknownChar;

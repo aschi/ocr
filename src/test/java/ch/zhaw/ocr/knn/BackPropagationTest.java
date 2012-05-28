@@ -11,45 +11,67 @@ import org.junit.Test;
 
 import ch.zhaw.ocr.Properties;
 import ch.zhaw.ocr.knn.helper.CostFunctionResult;
-
-
+import ch.zhaw.ocr.knn.helper.MatrixHelper;
+import de.jungblut.math.DoubleVector;
+import de.jungblut.math.minimize.CostFunction;
+import de.jungblut.math.minimize.Fmincg;
+import de.jungblut.math.tuple.Tuple;
 
 public class BackPropagationTest {
 	private Matrix theta1;
 	private Matrix theta2;
 	private BackPropagation bp;
-	private List<Matrix> input;
+	private List<Matrix> in;
 	private List<Integer> expectedOutput;
-	
+
 	@Before
-	public void setUp(){
+	public void setUp() {
 		bp = new BackPropagation();
-		theta1 = bp.randInitializeWeights(Properties.knnHiddenLayerSize, Properties.knnInputLayerSize);
-		theta2 = bp.randInitializeWeights(Properties.knnOutputLayerSize, Properties.knnHiddenLayerSize);
-		
-		input = new ArrayList<Matrix>();
-		input.add(MatrixFactory.random(1, 400));
-		//input.add(MatrixFactory.random(1, 400));
-		//input.add(MatrixFactory.random(1, 400));
-		
+		theta1 = bp.randInitializeWeights(Properties.knnHiddenLayerSize,
+				Properties.knnInputLayerSize);
+		theta2 = bp.randInitializeWeights(Properties.knnOutputLayerSize,
+				Properties.knnHiddenLayerSize);
+
+		in = new ArrayList<Matrix>();
+		in.add(MatrixFactory.random(1, 400));
+		in.add(MatrixFactory.random(1, 400));
+		in.add(MatrixFactory.random(1, 400));
+
 		expectedOutput = new ArrayList<Integer>();
 		expectedOutput.add(1);
-		//expectedOutput.add(25);
-		//expectedOutput.add(35);
+		expectedOutput.add(25);
+		expectedOutput.add(35);
 	}
 
 	@Test
-	public void backPropagationTest(){
-		CostFunctionResult result = null;
-		for(int i = 0;i < 10;i ++){
-			result = bp.nnCostFunction(theta1, theta2, Properties.knnInputLayerSize, Properties.knnHiddenLayerSize, Properties.knnOutputLayerSize, input, expectedOutput, 1);		
-			theta1 = MatrixFactory.copy(result.getTheta1Grad());
-			theta2 = MatrixFactory.copy(result.getTheta2Grad());
-			System.out.println(result);
-		}
+	public void backPropagationTest() {
+
+		CostFunction inlineFunction = new CostFunction() {
+			@Override
+			public Tuple<Double, DoubleVector> evaluateCost(DoubleVector input) {
+
+				CostFunctionResult rv = bp.nnCostFunction(
+						MatrixHelper.convertToMatrix(input),
+						Properties.knnInputLayerSize,
+						Properties.knnHiddenLayerSize,
+						Properties.knnOutputLayerSize, in, expectedOutput, 1);
+
+				return new Tuple<Double, DoubleVector>(rv.getJ(),
+						MatrixHelper.convertToDoubleVector(rv.getTheta1Grad()));
+			}
+		};
+
+		DoubleVector minimizeFunction = Fmincg.minimizeFunction(inlineFunction,
+				MatrixHelper.convertToDoubleVector(MatrixHelper.mergeThetas(
+						theta1, theta2)), 100, true);
+
+		Matrix[] thetas = MatrixHelper.unmergeThetas(
+				MatrixHelper.convertToMatrix(minimizeFunction),
+				Properties.knnInputLayerSize, Properties.knnHiddenLayerSize,
+				Properties.knnOutputLayerSize);
 		
-		NeuronalNetwork nn = new NeuronalNetwork(theta1, theta2);
-		System.out.println(nn.analyseChar(input.get(0)));
-		
+		NeuronalNetwork nn = new NeuronalNetwork(thetas[0], thetas[1]);
+		System.out.println(nn.analyseChar(in.get(1)));
+
 	}
 }

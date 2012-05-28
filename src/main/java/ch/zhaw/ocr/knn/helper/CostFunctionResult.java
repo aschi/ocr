@@ -4,8 +4,7 @@ import hu.kazocsaba.math.matrix.Matrix;
 
 public class CostFunctionResult {
 	private double J;
-	private Matrix theta1Grad;
-	private Matrix theta2Grad;
+	private Matrix thetaGrad;
 	public double getJ() {
 		return J;
 	}
@@ -13,28 +12,21 @@ public class CostFunctionResult {
 		J = j;
 	}
 	public Matrix getTheta1Grad() {
-		return theta1Grad;
+		return thetaGrad;
 	}
 	public void setTheta1Grad(Matrix theta1Grad) {
-		this.theta1Grad = theta1Grad;
+		this.thetaGrad = theta1Grad;
 	}
-	public Matrix getTheta2Grad() {
-		return theta2Grad;
-	}
-	public void setTheta2Grad(Matrix theta2Grad) {
-		this.theta2Grad = theta2Grad;
-	}
-	public CostFunctionResult(double j, Matrix theta1Grad, Matrix theta2Grad) {
+	
+	public CostFunctionResult(double j, Matrix thetaGrad) {
 		super();
 		J = j;
-		this.theta1Grad = theta1Grad;
-		this.theta2Grad = theta2Grad;
+		this.thetaGrad = thetaGrad;
 	}
 	
 	@Override
 	public String toString() {
-		return "CostFunctionResult [J=" + J + ", theta1Grad=" + theta1Grad
-				+ ", theta2Grad=" + theta2Grad + "]";
+		return "CostFunctionResult [J=" + J + ", thetaGrad=" + thetaGrad +"]";
 	}
 	
 	
