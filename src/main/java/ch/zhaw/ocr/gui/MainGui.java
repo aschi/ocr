@@ -1,7 +1,6 @@
 package ch.zhaw.ocr.gui;
 
 import java.awt.BorderLayout;
-import java.awt.CardLayout;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -28,7 +27,6 @@ public class MainGui {
 	private JPanel knnPanel;
 	private JPanel historyPanel;
 	private JPanel dictionaryPanel;
-	private JPanel cards;
 	private Ocr ocr;
 	private HistoryForm hForm;
 	private DictionaryForm dForm;
@@ -49,24 +47,12 @@ public class MainGui {
         historyPanel = new JPanel(new BorderLayout());
         dictionaryPanel = new JPanel(new BorderLayout());
         
-        cards = new JPanel(new CardLayout());
-        cards.add(createInputPanel(), INPUTPANEL);
-        cards.add(createKnnPanel(), KNNPANEL);
-        cards.add(createHistoryPanel(), HISTORYPANEL);
-        cards.add(createDictionaryPanel(), DICTIONARYPANEL);
-        
-        frame.setContentPane(cards);
         createTabs();
         
         frame.setVisible(true);
 
 		
 	}
-	
-    public void selectOverview(String panelSelection){
-        CardLayout cl = (CardLayout) cards.getLayout();
-        cl.show(cards, panelSelection);
-    }
 
 	
 	public Ocr getOcr(){
