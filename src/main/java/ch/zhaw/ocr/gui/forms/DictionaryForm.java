@@ -8,12 +8,16 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
+import javax.swing.JTable;
 import javax.swing.SpringLayout;
+import javax.swing.table.DefaultTableModel;
+
+import com.sun.org.apache.xerces.internal.impl.dv.ValidatedInfo;
 
 import ch.zhaw.ocr.Dictionary.Dictionary;
 import ch.zhaw.ocr.gui.MainGui;
@@ -26,11 +30,14 @@ public class DictionaryForm {
 	private JPanel panel;
 	private JPanel areaPanel;
 	
-	private JTextArea wordsText;
+	private JTable wordsText;
+	private DefaultTableModel model;
 	
 	private JButton nextButton;
 	
 	private Set<String> strings;
+	Vector<Vector<String>> cols;
+	Vector<String> colTitles;
 	
 	private MainGui gui;	
 	private Dictionary dic;
@@ -53,8 +60,8 @@ public class DictionaryForm {
     	panel.add(getAbcPanel(), BorderLayout.NORTH);
         areaPanel = new JPanel(new SpringLayout());
         
-        wordsText = new JTextArea(20,70);
-        wordsText.setText(getDicEntries("a"));
+        wordsText = new JTable(20,70);
+        wordsText.setModel(model);
         
         JScrollPane scrollArea = new JScrollPane (wordsText);
         areaPanel.add(scrollArea);
@@ -68,8 +75,12 @@ public class DictionaryForm {
     	
     }
     
-    private String getDicEntries(String charString) {
-    	String entries = "";
+    private Vector<Vector<String>> getDicEntries(String charString) {
+    	cols = new Vector<Vector<String>>();
+    	colTitles = new Vector<String>();
+    	colTitles.add(charString);
+    	colTitles.add("Häufigkeit");
+    	
     	indexOfChar = 0;
     	strings = new TreeSet<String>();
     	for (String dicEntry : dic.getDictionary().keySet()) {
@@ -84,7 +95,10 @@ public class DictionaryForm {
     	
     	int i = 0;
     	for (String s : strings) {
-    		entries += s + " (" + dic.getDictionary().get(s) + ") \n";
+    		Vector<String> col = new Vector<String>();
+    		col.add(s);
+    		col.add(dic.getDictionary().get(s) + "");
+    		cols.add(col);
     		i ++;
     		if (i >= SHOWENTRIES) {
     			break;
@@ -98,17 +112,19 @@ public class DictionaryForm {
     	}
     	
     	
-    	return entries;
+    	return cols;
     }
     
-    private String getMoreDicEntries() {
-    	String newText = "";
+    private Vector<Vector<String>> getMoreDicEntries() {
     	
     	int i = 0;
     	boolean hasMore = false;
     	for (String s : strings) {
     		if (i > indexOfChar) {
-    			newText += s + " (" + dic.getDictionary().get(s) + ") \n";
+    			Vector<String> col = new Vector<String>();
+    			col.add(s);
+    			col.add(dic.getDictionary().get(s) + "");
+    			cols.add(col);
     		}
     		i ++;
     		
@@ -124,7 +140,7 @@ public class DictionaryForm {
     		nextButton.setVisible(false);
     	}
     	
-    	return newText;
+    	return cols;
     }
     
     private JPanel getAbcPanel() {
@@ -170,7 +186,8 @@ public class DictionaryForm {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			wordsText.setText(getDicEntries(charString));
+
+			model.setDataVector(colTitles, getDicEntries(charString));
 			
 		}
     	
@@ -180,10 +197,13 @@ public class DictionaryForm {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			wordsText.setText(wordsText.getText() + getMoreDicEntries());
+			model.setDataVector(colTitles, getMoreDicEntries());
 			
 		}
     	
     }
 
 }
+
+
+
