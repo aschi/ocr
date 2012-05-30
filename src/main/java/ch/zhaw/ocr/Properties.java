@@ -22,7 +22,7 @@ public final class Properties {
 	 * KNN Configuration
 	 */
 	public static final int knnInputLayerSize = 400;
-	public static final int knnHiddenLayerSize = 237;
+	public static final int knnHiddenLayerSize = 350;
 	
 	public static final List<Character> knnOutputLayer = Arrays.asList('A', 'B',
 			'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O',

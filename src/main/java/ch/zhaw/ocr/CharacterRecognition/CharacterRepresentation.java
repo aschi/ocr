@@ -45,6 +45,80 @@ public class CharacterRepresentation {
 
 	}
 
+	
+	/*
+	public CharacterRepresentation(ContrastMatrix characterM) {
+		this.characterM = characterM;
+
+		if (characterM.getFunctionalChar() != null) {
+			//handle functional characters
+			for(int i = 0;i < comparisonVector.length;i++){
+				comparisonVector[0][i] = characterM.getFunctionalChar().getCharacter();
+			}
+		} else {
+			//default character preprocessing
+			characterM.trim();
+
+			int fh = (int) Math.round(((double) characterM.getHeight())
+					/ (double) 5);
+			int fw = (int) Math.round(((double) characterM.getWidth())
+					/ (double) 5);
+
+			int mid = characterM.getHeight() / 2;
+
+			boolean emptyRow;
+
+			int part = 0;
+
+			if (fh != 0 && fw != 0) {
+				for (int y = 0; y < characterM.getHeight(); y++) {
+					emptyRow = true;
+					for (int x = 0; x < characterM.getWidth(); x++) {
+						if (characterM.getValue(x, y) == 1) {
+							emptyRow = false;
+						}
+
+						// correct "overflowing" pixels (will be in the
+						// "last part")
+						int yc = (y >= fh * 5) ? fh * 5 - 1 : y;
+						int xc = (x >= fw * 5) ? fw * 5 - 1 : x;
+
+						part = (int) Math.floor(yc / fh) * 5
+								+ (int) Math.floor(xc / fw);
+
+						comparisonVector[0][part] += characterM.getValue(x, y);
+
+						// top / bottom half
+						if (y < mid) {
+							comparisonVector[0][25] += characterM.getValue(x, y);
+						} else {
+							comparisonVector[0][26] += characterM.getValue(x, y);
+						}
+					}
+
+					if (emptyRow) {
+						comparisonVector[0][28] = 1;
+					}
+				}
+
+				// scale parts to 255
+				for (int i = 0; i < 25; i++) {
+					comparisonVector[0][i] = comparisonVector[0][i] = comparisonVector[0][i] / (fh*fw);
+				}
+
+				// scale top / bottom to 25
+				comparisonVector[0][25] = (comparisonVector[0][25])/ ((characterM.getHeight() * characterM.getWidth()) / 2);
+				comparisonVector[0][26] = (comparisonVector[0][26])/ ((characterM.getHeight() * characterM.getWidth()) / 2);
+
+				comparisonVector[0][27] = ((characterM.getHeight() > characterM.getWidth()) 
+								? ((double) characterM.getWidth()) / ((double) characterM.getHeight())
+								: ((double) characterM.getHeight())	/ ((double) characterM.getWidth()));
+
+			}
+		}
+
+	}
+		*/
 	public ContrastMatrix getMatrix() {
 		return characterM;
 	}
