@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -15,9 +16,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SpringLayout;
-import javax.swing.table.DefaultTableModel;
-
-import com.sun.org.apache.xerces.internal.impl.dv.ValidatedInfo;
 
 import ch.zhaw.ocr.Dictionary.Dictionary;
 import ch.zhaw.ocr.gui.MainGui;
@@ -31,12 +29,12 @@ public class DictionaryForm {
 	private JPanel areaPanel;
 	
 	private JTable wordsText;
-	private DefaultTableModel model;
+	private ReadOnlyTableModel model;
 	
 	private JButton nextButton;
 	
 	private Set<String> strings;
-	Vector<Vector<String>> cols;
+	List<String[]> rows;
 	Vector<String> colTitles;
 	
 	private MainGui gui;	
@@ -60,8 +58,10 @@ public class DictionaryForm {
     	panel.add(getAbcPanel(), BorderLayout.NORTH);
         areaPanel = new JPanel(new SpringLayout());
         
-        wordsText = new JTable(20,70);
-        wordsText.setModel(model);
+        model = new ReadOnlyTableModel(new String[]{"Wort", "Häufigkeit"}, 0);
+        
+        wordsText = new JTable(model);
+        //wordsText.setModel(model);
         
         JScrollPane scrollArea = new JScrollPane (wordsText);
         areaPanel.add(scrollArea);
@@ -75,19 +75,24 @@ public class DictionaryForm {
     	
     }
     
-    private Vector<Vector<String>> getDicEntries(String charString) {
-    	cols = new Vector<Vector<String>>();
-    	colTitles = new Vector<String>();
-    	colTitles.add(charString);
-    	colTitles.add("Häufigkeit");
+    private void clearTableEntries(){
+    	while(model.getRowCount() > 0){
+    		model.removeRow(0);
+    	}
+    }
+    
+    private List<String[]> getDicEntries(String charString) {
+    	rows = new LinkedList<String[]>();
     	
     	indexOfChar = 0;
+    	
     	strings = new TreeSet<String>();
-    	for (String dicEntry : dic.getDictionary().keySet()) {
-    		if (dicEntry.startsWith(charString)) {
-    			strings.add(dicEntry);
-    		}
-    	}
+	    for (String dicEntry : dic.getDictionary().keySet()) {
+	    	if (dicEntry.startsWith(charString)) {
+	    		strings.add(dicEntry);
+	    	}
+	    }
+    	
     	
     	if (SHOWENTRIES <= strings.size()) {
     		indexOfChar = SHOWENTRIES;
@@ -95,10 +100,12 @@ public class DictionaryForm {
     	
     	int i = 0;
     	for (String s : strings) {
-    		Vector<String> col = new Vector<String>();
-    		col.add(s);
-    		col.add(dic.getDictionary().get(s) + "");
-    		cols.add(col);
+    		String[] row = new String[2];
+    		row[0] = s;
+    		row[1] = dic.getDictionary().get(s) + "";
+    		
+    		rows.add(row);
+    		
     		i ++;
     		if (i >= SHOWENTRIES) {
     			break;
@@ -112,19 +119,20 @@ public class DictionaryForm {
     	}
     	
     	
-    	return cols;
+    	return rows;
     }
     
-    private Vector<Vector<String>> getMoreDicEntries() {
+    private List<String[]> getMoreDicEntries() {
     	
     	int i = 0;
     	boolean hasMore = false;
     	for (String s : strings) {
     		if (i > indexOfChar) {
-    			Vector<String> col = new Vector<String>();
-    			col.add(s);
-    			col.add(dic.getDictionary().get(s) + "");
-    			cols.add(col);
+    			String[] row = new String[2];
+        		row[0] = s;
+        		row[1] = dic.getDictionary().get(s) + "";
+        		
+        		rows.add(row);
     		}
     		i ++;
     		
@@ -140,7 +148,7 @@ public class DictionaryForm {
     		nextButton.setVisible(false);
     	}
     	
-    	return cols;
+    	return rows;
     }
     
     private JPanel getAbcPanel() {
@@ -186,9 +194,11 @@ public class DictionaryForm {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-
-			model.setDataVector(colTitles, getDicEntries(charString));
-			
+			clearTableEntries();
+			for(String[] row : getDicEntries(charString)){
+				model.addRow(row);
+			}
+			//model.setDataVector(colTitles, getDicEntries(charString));
 		}
     	
     }
@@ -197,8 +207,10 @@ public class DictionaryForm {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			model.setDataVector(colTitles, getMoreDicEntries());
-			
+			clearTableEntries();
+			for(String[] row : getMoreDicEntries()){
+				model.addRow(row);
+			}
 		}
     	
     }
