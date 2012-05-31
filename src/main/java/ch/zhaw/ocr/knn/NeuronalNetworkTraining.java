@@ -97,7 +97,7 @@ public class NeuronalNetworkTraining {
 						MatrixHelper.convertToMatrix(input),
 						Properties.knnInputLayerSize,
 						Properties.knnHiddenLayerSize,
-						Properties.knnOutputLayerSize, in, expectedOutput, 1);
+						Properties.knnOutputLayerSize, in, expectedOutput, Properties.knnLambda);
 
 				return new Tuple<Double, DoubleVector>(rv.getJ(),
 						MatrixHelper.convertToDoubleVector(rv.getTheta1Grad()));
@@ -107,7 +107,7 @@ public class NeuronalNetworkTraining {
 		// minimize function using the Fmincg implementation of thomas jungblut
 		DoubleVector minimizeFunction = Fmincg.minimizeFunction(inlineFunction,
 				MatrixHelper.convertToDoubleVector(MatrixHelper.mergeThetas(
-						theta1, theta2)), 500, true);
+						theta1, theta2)), Properties.knnMaxIterationCount, true);
 
 		// read thetas
 		Matrix[] thetas = MatrixHelper.unmergeThetas(

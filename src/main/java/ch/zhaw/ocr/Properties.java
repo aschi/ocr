@@ -22,7 +22,7 @@ public final class Properties {
 	 * KNN Configuration
 	 */
 	public static final int knnInputLayerSize = 400;
-	public static final int knnHiddenLayerSize = 350;
+	public static final int knnHiddenLayerSize = 250;
 	
 	public static final List<Character> knnOutputLayer = Arrays.asList('A', 'B',
 			'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O',
@@ -33,6 +33,9 @@ public final class Properties {
 			'9', '.', ',', ':', ';', '?', '!');
 	
 	public static final int knnOutputLayerSize = knnOutputLayer.size();
+	
+	public static final double knnLambda = 0;
+	public static final int knnMaxIterationCount = 100;
 	
 	public static final String knnResourcePath = "res/knnMaterial";
 	public static final String knnSerializationPath = "res/knn.ser";

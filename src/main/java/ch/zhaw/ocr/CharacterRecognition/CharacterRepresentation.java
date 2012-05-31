@@ -16,7 +16,8 @@ public class CharacterRepresentation {
 	
 	  	
 	public CharacterRepresentation(ContrastMatrix characterM) {
-	 
+		characterM.trim();
+		
 		int fh = (int) Math.round(((double) characterM.getHeight())
 				/ (double) fieldNo);
 		int fw = (int) Math.round(((double) characterM.getWidth())
@@ -48,6 +49,8 @@ public class CharacterRepresentation {
 	}
 	/*
 	public CharacterRepresentation(ContrastMatrix characterM) {
+		characterM.trim();
+		
 		int fh = (int) Math.floor(((double) characterM.getHeight())
 				/ (double) fieldNo);
 		
@@ -57,10 +60,31 @@ public class CharacterRepresentation {
 		int hRes = characterM.getHeight()-(fh*fieldNo);
 		int wRes = characterM.getWidth() -(fw*fieldNo);
 		
+		int[][] widths= new int[fieldNo][fieldNo];
+		int[][] heights= new int[fieldNo][fieldNo];
+		
+		for(int x = 0;x < fieldNo;x++){
+			for(int y = 0;y < fieldNo;y++){
+				if(wRes > 0){
+					widths[x][y] = fw+1;
+					wRes--;
+				}else{
+					widths[x][y] = fw;
+				}
+				if(hRes > 0){
+					heights[x][y] = fh+1;
+					hRes--;
+				}else{
+					heights[x][y] = fh;
+				}
+			}
+		}
+		
+		
 		for(int row = 0; row < fieldNo;row++){
 			for(int col = 0; col < fieldNo;col++){
 				int part = (row*fieldNo) + col;
-				
+			
 				for(int x = (col*fw)+((wRes-(col+1))>0 ? col : 0); x < ((((col+1)*fw) + ((wRes-(col+1))>0 ? 1 : 0)));x++){
 					for(int y = (row*fh)+((hRes-(row+1))>0 ? row : 0); y < ((((row+1)*fh) + ((hRes-(row+1))>0 ? 1 : 0)));y++){
 						comparisonVector[0][part] += characterM.getValue(x, y);
@@ -68,11 +92,15 @@ public class CharacterRepresentation {
 					
 				}
 				
+				for(int x = 0;x < wRes;x++){
+					
+				}
+				
 			}
 		}
 		
 	}
-	*/ 
+	*/
 	
 	public ContrastMatrix getMatrix() {
 		return characterM;
