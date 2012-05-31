@@ -74,6 +74,7 @@ public class NeuronalNetworkTraining {
 								.equals("png")) {
 					
 					for (ContrastMatrix cm : bmp.parse(ImageIO.read(f))) {
+						cm.trim();
 						in.add(MatrixFactory
 								.createMatrix(new CharacterRepresentation(cm)
 										.getComparisonVector()));

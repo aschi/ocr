@@ -49,6 +49,8 @@ public class BackPropagationTest {
 		try {
 			int i = 0;
 			for(ContrastMatrix cm : bp.parse(ImageIO.read(new File("img/sans_learning.png")))){
+				cm.trim();
+				System.out.println(new CharacterRepresentation(cm).getComparisonVector());
 				in.add(MatrixFactory.createMatrix(new CharacterRepresentation(cm).getComparisonVector()));
 				expectedOutput.add(i);
 				i++;
