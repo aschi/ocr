@@ -66,9 +66,13 @@ public class NeuralNetwork {
 			}
 		}
 		
-
 		System.out.println("Pos: " + bigestPos + " Char: " + Properties.knnOutputLayer.get(bigestPos) + " Emphasis: "+ bigest);
-		return Properties.knnOutputLayer.get(bigestPos);
+		if(bigest < 0.5){
+			return Properties.unknownChar;
+		}else{
+			return Properties.knnOutputLayer.get(bigestPos);	
+		}
+		
 	}
 	
 	/**
