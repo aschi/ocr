@@ -72,7 +72,6 @@ public class NeuralNetwork {
 		}else{
 			return Properties.knnOutputLayer.get(bigestPos);	
 		}
-		
 	}
 	
 	/**

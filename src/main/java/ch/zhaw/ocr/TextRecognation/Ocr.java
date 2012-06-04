@@ -53,9 +53,12 @@ public class Ocr {
 				}
 				//if the character is a functional character
 				if (cm.getFunctionalChar() != null) {
+					String correctedWord = dic.correctWord(wordBuffer.toString());
+					
 					consoleText.append("Dictionary Input: "+wordBuffer.toString() + "\n");
-					consoleText.append("Dictionary Output: "+dic.correctWord(wordBuffer.toString()) + "\n");
-					consoleText.append(dic.correctWord(wordBuffer.toString()) + "\n");
+					consoleText.append("Dictionary Output: "+ correctedWord + "\n");
+					
+					textBuffer.append(correctedWord);
 					textBuffer.append(c);
 					wordBuffer.delete(0, wordBuffer.length());
 				} else {
