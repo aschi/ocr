@@ -226,7 +226,7 @@ public class DictionaryForm {
     	
     	resultField.setEditable(false);
     	
-    	JButton correctButton = new JButton("Korrigieren");
+    	JButton correctButton = new JButton("Correct");
     	
     	correctButton.addActionListener(new ActionListener() {
 			@Override

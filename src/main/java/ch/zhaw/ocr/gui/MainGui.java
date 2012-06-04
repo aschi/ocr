@@ -7,8 +7,6 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 import ch.zhaw.ocr.TextRecognation.Ocr;
 import ch.zhaw.ocr.gui.forms.DictionaryForm;
@@ -136,7 +134,7 @@ public class MainGui {
     	
 		tabbedPane = new JTabbedPane();
 		tabbedPane.addTab( "Input", createInputPanel() );
-		tabbedPane.addTab( "KNN - Console", createKnnPanel() );
+		tabbedPane.addTab( "KNN Console", createKnnPanel() );
 		tabbedPane.addTab( "History", createHistoryPanel() );
 		tabbedPane.addTab( "Dictionary", createDictionaryPanel() );
         
