@@ -15,6 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
 import ch.zhaw.ocr.Dictionary.Dictionary;
@@ -41,6 +42,9 @@ public class DictionaryForm {
 	private Dictionary dic;
 	private List<String> charStrings;
 	private int indexOfChar = -1;
+	
+	private JTextField correctField;
+	private JTextField resultField;
 	
     public DictionaryForm(MainGui gui) {
         this.gui = gui;
@@ -72,7 +76,7 @@ public class DictionaryForm {
         
         SpringUtilities.makeCompactGrid(areaPanel, 1, 1, 10, 10, 10, 20);
     	panel.add(areaPanel, BorderLayout.CENTER);
-    	
+    	panel.add(createLookupPanel(), BorderLayout.SOUTH);
     }
     
     private void clearTableEntries(){
@@ -181,8 +185,7 @@ public class DictionaryForm {
     	return buttonList;
     }
     
-    public class AbcButtonListener implements ActionListener {
-    	
+    private class AbcButtonListener implements ActionListener {
     	int alphabetNumber;
     	String charString;
     	
@@ -203,7 +206,7 @@ public class DictionaryForm {
     	
     }
     
-    public class NextButtonListener implements ActionListener {
+    private class NextButtonListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -213,6 +216,33 @@ public class DictionaryForm {
 			}
 		}
     	
+    }
+    
+    private JPanel createLookupPanel(){
+    	JPanel lookupPanel = new JPanel(new SpringLayout());
+    	
+    	correctField = new JTextField("");
+    	resultField = new JTextField("");
+    	
+    	resultField.setEditable(false);
+    	
+    	JButton correctButton = new JButton("Korrigieren");
+    	
+    	correctButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				resultField.setText(dic.correctWord(correctField.getText()));
+			}
+		});
+
+    	lookupPanel.add(correctField);
+    	lookupPanel.add(correctButton);
+    	lookupPanel.add(resultField);
+    	
+    	
+    	SpringUtilities.makeCompactGrid(lookupPanel, 1, 3, 5, 5, 5, 5);
+    	
+    	return lookupPanel;
     }
 
 }
