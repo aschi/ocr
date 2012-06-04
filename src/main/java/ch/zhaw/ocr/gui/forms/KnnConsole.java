@@ -31,7 +31,7 @@ public class KnnConsole {
 			
 			JPanel nPanel = new JPanel(new SpringLayout());
 			
-			JLabel titleLabel = new JLabel("Knn details of image-analyse");
+			JLabel titleLabel = new JLabel("details of image analysis");
 			
 			nPanel.add(titleLabel);
 			
