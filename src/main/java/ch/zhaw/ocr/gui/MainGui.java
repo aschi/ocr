@@ -8,11 +8,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
-import ch.zhaw.ocr.TextRecognation.Ocr;
 import ch.zhaw.ocr.gui.forms.DictionaryForm;
 import ch.zhaw.ocr.gui.forms.HistoryForm;
 import ch.zhaw.ocr.gui.forms.InputForm;
 import ch.zhaw.ocr.gui.forms.KnnConsole;
+import ch.zhaw.ocr.textRecognition.Ocr;
 
 public class MainGui {
 	

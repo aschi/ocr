@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ch.zhaw.ocr.Properties;
+import ch.zhaw.ocr.dictionary.Dictionary;
 
 public class DictionaryTest {
 

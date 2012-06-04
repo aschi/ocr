@@ -3,10 +3,10 @@ package ch.zhaw.ocr;
 import java.io.File;
 import java.io.IOException;
 
-import ch.zhaw.ocr.Dictionary.Dictionary;
-import ch.zhaw.ocr.TextRecognation.Ocr;
+import ch.zhaw.ocr.dictionary.Dictionary;
 import ch.zhaw.ocr.gui.MainGui;
-import ch.zhaw.ocr.knn.NeuralNetwork;
+import ch.zhaw.ocr.nn.NeuralNetwork;
+import ch.zhaw.ocr.textRecognition.Ocr;
 
 public class Starter {
 

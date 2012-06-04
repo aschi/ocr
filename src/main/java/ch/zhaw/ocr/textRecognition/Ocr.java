@@ -1,4 +1,4 @@
-package ch.zhaw.ocr.TextRecognation;
+package ch.zhaw.ocr.textRecognition;
 
 import hu.kazocsaba.math.matrix.MatrixFactory;
 
@@ -9,16 +9,16 @@ import java.util.List;
 import javax.imageio.ImageIO;
 
 import ch.zhaw.ocr.Properties;
-import ch.zhaw.ocr.BitmapParser.BitmapParser;
-import ch.zhaw.ocr.BitmapParser.CharacterParser;
-import ch.zhaw.ocr.BitmapParser.ContrastMatrix;
-import ch.zhaw.ocr.BitmapParser.RowParser;
-import ch.zhaw.ocr.BitmapParser.SimpleBitmapParser;
-import ch.zhaw.ocr.BitmapParser.UnderlineRemover;
-import ch.zhaw.ocr.BitmapParser.WordParser;
-import ch.zhaw.ocr.CharacterRecognition.CharacterRepresentation;
-import ch.zhaw.ocr.Dictionary.Dictionary;
-import ch.zhaw.ocr.knn.NeuralNetwork;
+import ch.zhaw.ocr.bitmapParser.BitmapParser;
+import ch.zhaw.ocr.bitmapParser.CharacterParser;
+import ch.zhaw.ocr.bitmapParser.ContrastMatrix;
+import ch.zhaw.ocr.bitmapParser.RowParser;
+import ch.zhaw.ocr.bitmapParser.SimpleBitmapParser;
+import ch.zhaw.ocr.bitmapParser.UnderlineRemover;
+import ch.zhaw.ocr.bitmapParser.WordParser;
+import ch.zhaw.ocr.dictionary.Dictionary;
+import ch.zhaw.ocr.nn.CharacterRepresentation;
+import ch.zhaw.ocr.nn.NeuralNetwork;
 
 public class Ocr {
 	

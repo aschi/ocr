@@ -5,6 +5,9 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import ch.zhaw.ocr.bitmapParser.ContrastMatrix;
+import ch.zhaw.ocr.bitmapParser.FunctionalCharacter;
+
 public class ContrastMatrixTest {
 	ContrastMatrix exampleMatrix;
 	

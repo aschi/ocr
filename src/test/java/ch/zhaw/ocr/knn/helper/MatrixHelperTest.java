@@ -7,6 +7,8 @@ import hu.kazocsaba.math.matrix.MatrixFactory;
 
 import org.junit.Test;
 
+import ch.zhaw.ocr.nn.helper.MatrixHelper;
+
 public class MatrixHelperTest {
 
 	@Test

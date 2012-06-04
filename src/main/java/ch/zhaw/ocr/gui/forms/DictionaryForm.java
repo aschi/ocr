@@ -18,7 +18,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
-import ch.zhaw.ocr.Dictionary.Dictionary;
+import ch.zhaw.ocr.dictionary.Dictionary;
 import ch.zhaw.ocr.gui.MainGui;
 
 public class DictionaryForm {
@@ -37,8 +37,7 @@ public class DictionaryForm {
 	private Set<String> strings;
 	List<String[]> rows;
 	Vector<String> colTitles;
-	
-	private MainGui gui;	
+
 	private Dictionary dic;
 	private List<String> charStrings;
 	private int indexOfChar = -1;
@@ -47,9 +46,9 @@ public class DictionaryForm {
 	private JTextField resultField;
 	
     public DictionaryForm(MainGui gui) {
-        this.gui = gui;
-        nextButton = new JButton("Show next entries");
         this.dic = gui.getOcr().getDictionary();
+
+    	nextButton = new JButton("Show next entries");
     	charStrings = new ArrayList<String>(Arrays.asList("a", "b", "c", "d",
 				"e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p",
 				"q", "r", "s", "t", "u", "v", "w", "x", "y", "z"));
@@ -186,12 +185,10 @@ public class DictionaryForm {
     }
     
     private class AbcButtonListener implements ActionListener {
-    	int alphabetNumber;
     	String charString;
     	
     	public AbcButtonListener(int alphabetNumber) {
     		super();
-    		this.alphabetNumber = alphabetNumber;
     		charString = charStrings.get(alphabetNumber);
     	}
 

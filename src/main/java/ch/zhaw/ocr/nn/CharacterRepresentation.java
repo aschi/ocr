@@ -1,7 +1,7 @@
-package ch.zhaw.ocr.CharacterRecognition;
+package ch.zhaw.ocr.nn;
 
 import ch.zhaw.ocr.Properties;
-import ch.zhaw.ocr.BitmapParser.ContrastMatrix;
+import ch.zhaw.ocr.bitmapParser.ContrastMatrix;
 
 public class CharacterRepresentation {
 	private ContrastMatrix characterM;

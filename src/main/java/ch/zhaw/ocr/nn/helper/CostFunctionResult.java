@@ -1,4 +1,4 @@
-package ch.zhaw.ocr.knn.helper;
+package ch.zhaw.ocr.nn.helper;
 
 import hu.kazocsaba.math.matrix.Matrix;
 

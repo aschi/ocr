@@ -1,4 +1,4 @@
-package ch.zhaw.ocr.BitmapParser;
+package ch.zhaw.ocr.bitmapParser;
 
 public enum FunctionalCharacter {
 	space			(' '),

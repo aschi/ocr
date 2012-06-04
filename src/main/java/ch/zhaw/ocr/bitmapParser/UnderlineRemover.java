@@ -1,4 +1,4 @@
-package ch.zhaw.ocr.BitmapParser;
+package ch.zhaw.ocr.bitmapParser;
 
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;

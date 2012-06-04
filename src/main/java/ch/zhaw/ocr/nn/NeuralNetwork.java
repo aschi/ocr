@@ -1,4 +1,4 @@
-package ch.zhaw.ocr.knn;
+package ch.zhaw.ocr.nn;
 
 import hu.kazocsaba.math.matrix.Matrix;
 import hu.kazocsaba.math.matrix.MatrixFactory;
@@ -7,7 +7,7 @@ import java.io.File;
 import java.io.IOException;
 
 import ch.zhaw.ocr.Properties;
-import ch.zhaw.ocr.knn.helper.MatrixHelper;
+import ch.zhaw.ocr.nn.helper.MatrixHelper;
 
 public class NeuralNetwork {
 	private Matrix theta1;

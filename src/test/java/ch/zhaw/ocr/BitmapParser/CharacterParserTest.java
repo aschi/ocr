@@ -11,6 +11,10 @@ import org.jmock.integration.junit4.JUnit4Mockery;
 import org.junit.Before;
 import org.junit.Test;
 
+import ch.zhaw.ocr.bitmapParser.BitmapParser;
+import ch.zhaw.ocr.bitmapParser.CharacterParser;
+import ch.zhaw.ocr.bitmapParser.ContrastMatrix;
+
 public class CharacterParserTest {
 	private ContrastMatrix inputMatrix;
 	private List<ContrastMatrix> expectedResultList;

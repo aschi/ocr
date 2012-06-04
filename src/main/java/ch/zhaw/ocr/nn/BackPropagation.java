@@ -1,12 +1,12 @@
-package ch.zhaw.ocr.knn;
+package ch.zhaw.ocr.nn;
 
 import hu.kazocsaba.math.matrix.Matrix;
 import hu.kazocsaba.math.matrix.MatrixFactory;
 
 import java.util.List;
 
-import ch.zhaw.ocr.knn.helper.CostFunctionResult;
-import ch.zhaw.ocr.knn.helper.MatrixHelper;
+import ch.zhaw.ocr.nn.helper.CostFunctionResult;
+import ch.zhaw.ocr.nn.helper.MatrixHelper;
 
 public class BackPropagation {
 

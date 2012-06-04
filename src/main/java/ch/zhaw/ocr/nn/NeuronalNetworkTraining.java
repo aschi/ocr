@@ -1,4 +1,4 @@
-package ch.zhaw.ocr.knn;
+package ch.zhaw.ocr.nn;
 
 import hu.kazocsaba.math.matrix.Matrix;
 import hu.kazocsaba.math.matrix.MatrixFactory;
@@ -11,13 +11,12 @@ import java.util.List;
 import javax.imageio.ImageIO;
 
 import ch.zhaw.ocr.Properties;
-import ch.zhaw.ocr.BitmapParser.BitmapParser;
-import ch.zhaw.ocr.BitmapParser.CharacterParser;
-import ch.zhaw.ocr.BitmapParser.ContrastMatrix;
-import ch.zhaw.ocr.BitmapParser.SimpleBitmapParser;
-import ch.zhaw.ocr.CharacterRecognition.CharacterRepresentation;
-import ch.zhaw.ocr.knn.helper.CostFunctionResult;
-import ch.zhaw.ocr.knn.helper.MatrixHelper;
+import ch.zhaw.ocr.bitmapParser.BitmapParser;
+import ch.zhaw.ocr.bitmapParser.CharacterParser;
+import ch.zhaw.ocr.bitmapParser.ContrastMatrix;
+import ch.zhaw.ocr.bitmapParser.SimpleBitmapParser;
+import ch.zhaw.ocr.nn.helper.CostFunctionResult;
+import ch.zhaw.ocr.nn.helper.MatrixHelper;
 import de.jungblut.math.DoubleVector;
 import de.jungblut.math.minimize.CostFunction;
 import de.jungblut.math.minimize.Fmincg;

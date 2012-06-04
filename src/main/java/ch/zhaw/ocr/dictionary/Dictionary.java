@@ -1,4 +1,4 @@
-package ch.zhaw.ocr.Dictionary;
+package ch.zhaw.ocr.dictionary;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

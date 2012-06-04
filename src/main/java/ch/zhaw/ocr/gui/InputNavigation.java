@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
-import java.io.FilenameFilter;
 import java.io.IOException;
 
 import javax.swing.JComponent;
@@ -20,7 +19,6 @@ import javax.swing.tree.TreePath;
 import ch.zhaw.ocr.Properties;
 import ch.zhaw.ocr.gui.forms.HistoryForm;
 import ch.zhaw.ocr.gui.forms.SpringUtilities;
-import ch.zhaw.ocr.gui.helper.TextFileFilter;
 
 
 public class InputNavigation {
@@ -31,7 +29,6 @@ public class InputNavigation {
 	private JTree tree;
 	private DefaultMutableTreeNode top;
 	private MainGui gui;
-	private HistoryForm form;
 	
     public InputNavigation(MainGui gui) {
         this.gui = gui;        
