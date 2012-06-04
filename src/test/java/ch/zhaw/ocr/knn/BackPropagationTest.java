@@ -100,9 +100,9 @@ public class BackPropagationTest {
 				Properties.knnOutputLayerSize);
 
 		NeuralNetwork nn = new NeuralNetwork(thetas[0], thetas[1]);
-		System.out.println(nn.detectCharacter(in.get(10)));
-		System.out.println(nn.detectCharacter(in.get(25)));
-		System.out.println(nn.detectCharacter(in.get(45)));
-		System.out.println(nn.detectCharacter(in.get(72)));
+		System.out.println(nn.detectCharacter(in.get(10), new StringBuffer()));
+		System.out.println(nn.detectCharacter(in.get(25), new StringBuffer()));
+		System.out.println(nn.detectCharacter(in.get(45), new StringBuffer()));
+		System.out.println(nn.detectCharacter(in.get(72), new StringBuffer()));
 	}
 }

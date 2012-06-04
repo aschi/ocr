@@ -80,8 +80,9 @@ public class InputForm {
 			        if (returnVal == JFileChooser.APPROVE_OPTION ) {
 			        	File file = fc.getSelectedFile();
 			            imagePath.setText(file.getPath());
-			            
-			            analysedText.setText(gui.getOcr().parseImage(file));
+			            gui.setConsoleText(new StringBuffer());
+			            analysedText.setText(gui.getOcr().parseImage(file, gui.getConsoleText()));
+			            gui.getKnnPanel().setConsoleText(gui.getConsoleText());
 			        } 
 				}
 				

@@ -10,16 +10,16 @@ import javax.swing.SpringLayout;
 import ch.zhaw.ocr.gui.MainGui;
 import ch.zhaw.ocr.gui.forms.SpringUtilities;
 
-public class NeuronList{
+public class KnnConsoleList{
 	private JPanel panel;
 	private MainGui gui;
     
-    public NeuronList(MainGui gui) {
+    public KnnConsoleList(MainGui gui) {
         this.gui = gui;
         createPanel();
     }
 	
-	public NeuronList() {
+	public KnnConsoleList() {
 		createPanel();
 	}
 	
@@ -37,9 +37,9 @@ public class NeuronList{
 		
 		JPanel nPanel = new JPanel(new SpringLayout());
 		
-		JLabel listNeuron = new JLabel("List of existing Neurons:");
+		JLabel titleLabel = new JLabel("Knn details of image-analyse");
 		
-		nPanel.add(listNeuron);
+		nPanel.add(titleLabel);
 		
         SpringUtilities.makeCompactGrid(nPanel, 1, 1, 10, 10, 10, 20);
         

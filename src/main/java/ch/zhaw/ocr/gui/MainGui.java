@@ -7,13 +7,15 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import ch.zhaw.ocr.TextRecognation.Ocr;
 import ch.zhaw.ocr.gui.forms.DictionaryForm;
 import ch.zhaw.ocr.gui.forms.HistoryForm;
 import ch.zhaw.ocr.gui.forms.InputForm;
-import ch.zhaw.ocr.gui.forms.NeuronDetail;
-import ch.zhaw.ocr.gui.lists.NeuronList;
+import ch.zhaw.ocr.gui.forms.KnnConsole;
+import ch.zhaw.ocr.gui.lists.KnnConsoleList;
 
 public class MainGui {
 	
@@ -32,9 +34,12 @@ public class MainGui {
 	private Ocr ocr;
 	private HistoryForm hForm;
 	private DictionaryForm dForm;
+	private KnnConsole knnConsole;
+	private StringBuffer consoleText;
 	
     public MainGui(Ocr ocr){
         this.ocr = ocr;
+        consoleText = new StringBuffer();
         createTabbedPane();
     }
 
@@ -73,6 +78,14 @@ public class MainGui {
 		return ocr;
 	}
 	
+	public StringBuffer getConsoleText() {
+		return consoleText;
+	}
+	
+	public void setConsoleText(StringBuffer consoleText) {
+		this.consoleText = consoleText;
+	}
+	
 	private JComponent createInputPanel(){
 		InputForm iform = new InputForm(this);
 		inputPanel.add(iform.getPanel(), BorderLayout.CENTER);
@@ -82,10 +95,10 @@ public class MainGui {
 	
 	private JComponent createKnnPanel() {
 		
-		NeuronDetail ndet = new NeuronDetail(this);
-		NeuronList nlist = new NeuronList(this);
+		knnConsole = new KnnConsole(this);
+		KnnConsoleList nlist = new KnnConsoleList(this);
 		knnPanel.add(nlist.getPanel(), BorderLayout.WEST);
-		knnPanel.add(ndet.getPanel(), BorderLayout.CENTER);
+		knnPanel.add(knnConsole.getPanel(), BorderLayout.CENTER);
 		
 		return knnPanel;
 		
@@ -114,12 +127,16 @@ public class MainGui {
 		
 	}
 	
+	public KnnConsole getKnnPanel() {
+		return knnConsole;
+	}
+	
 	
     private void createTabs(){
     	
 		tabbedPane = new JTabbedPane();
 		tabbedPane.addTab( "Input", createInputPanel() );
-		tabbedPane.addTab( "KNN", createKnnPanel() );
+		tabbedPane.addTab( "KNN - Console", createKnnPanel() );
 		tabbedPane.addTab( "History", createHistoryPanel() );
 		tabbedPane.addTab( "Dictionary", createDictionaryPanel() );
         

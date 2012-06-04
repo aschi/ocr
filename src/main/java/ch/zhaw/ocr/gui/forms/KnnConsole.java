@@ -10,19 +10,19 @@ import javax.swing.SpringLayout;
 
 import ch.zhaw.ocr.gui.MainGui;
 
-public class NeuronDetail {
+public class KnnConsole {
 	
 	private JPanel panel;
-	private JTextArea neuronText;
+	private JTextArea consoleText;
 	private MainGui gui;
 	
         
-    public NeuronDetail(MainGui gui) {
+    public KnnConsole(MainGui gui) {
         this.gui = gui;
         createPanel();
     }
 	
-	public NeuronDetail() {
+	public KnnConsole() {
 		createPanel();
 	}
 	
@@ -41,8 +41,9 @@ public class NeuronDetail {
 		
         JPanel nPanel = new JPanel(new SpringLayout());
         
-        neuronText = new JTextArea(20,70);
-        JScrollPane scrollAnalysed = new JScrollPane (neuronText);
+        consoleText = new JTextArea(20,70);
+        JScrollPane scrollAnalysed = new JScrollPane (consoleText);
+        consoleText.setText(gui.getConsoleText().toString());
         
         nPanel.add(scrollAnalysed);
                 
@@ -51,8 +52,12 @@ public class NeuronDetail {
         return nPanel;
 	}	
 	
+	public void setConsoleText(StringBuffer sb) {
+		consoleText.setText(sb.toString());
+	}
+	
 	public JTextArea getNeuronText(){
-		return neuronText;
+		return consoleText;
 	}
 
 }

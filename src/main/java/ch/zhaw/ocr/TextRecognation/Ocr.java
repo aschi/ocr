@@ -16,12 +16,9 @@ import ch.zhaw.ocr.BitmapParser.RowParser;
 import ch.zhaw.ocr.BitmapParser.SimpleBitmapParser;
 import ch.zhaw.ocr.BitmapParser.UnderlineRemover;
 import ch.zhaw.ocr.BitmapParser.WordParser;
-import ch.zhaw.ocr.CharacterRecognition.Character;
-import ch.zhaw.ocr.CharacterRecognition.CharacterComperator;
 import ch.zhaw.ocr.CharacterRecognition.CharacterRepresentation;
 import ch.zhaw.ocr.Dictionary.Dictionary;
 import ch.zhaw.ocr.knn.NeuralNetwork;
-import ch.zhaw.ocr.knn.helper.MatrixHelper;
 
 public class Ocr {
 	
@@ -33,7 +30,7 @@ public class Ocr {
 		this.dic = dic;
 	}
 	
-	public String parseImage(File f) {
+	public String parseImage(File f, StringBuffer consoleText) {
 		long t1 = System.currentTimeMillis();
 		
 		StringBuffer textBuffer = new StringBuffer();
@@ -52,13 +49,13 @@ public class Ocr {
 				if(cm.getFunctionalChar() != null){
 					c = cm.getFunctionalChar().getCharacter();
 				}else{
-					c = nn.detectCharacter(MatrixFactory.createMatrix(new CharacterRepresentation(cm).getComparisonVector()));
+					c = nn.detectCharacter(MatrixFactory.createMatrix(new CharacterRepresentation(cm).getComparisonVector()), consoleText);
 				}
 				//if the character is a functional character
 				if (cm.getFunctionalChar() != null) {
-					System.out.println("Dictionary Input: "+wordBuffer.toString());
-					System.out.println("Dictionary Output: "+dic.correctWord(wordBuffer.toString()));
-					textBuffer.append(dic.correctWord(wordBuffer.toString()));
+					consoleText.append("Dictionary Input: "+wordBuffer.toString() + "\n");
+					consoleText.append("Dictionary Output: "+dic.correctWord(wordBuffer.toString()) + "\n");
+					consoleText.append(dic.correctWord(wordBuffer.toString()) + "\n");
 					textBuffer.append(c);
 					wordBuffer.delete(0, wordBuffer.length());
 				} else {
@@ -70,7 +67,8 @@ public class Ocr {
 			if (wordBuffer.length() > 0) {
 				textBuffer.append(dic.correctWord(wordBuffer.toString()));
 			}
-			System.out.println("Einlesen des Textes abgeschlossen...("+ (System.currentTimeMillis()-t1) +"ms)");
+			consoleText.append("Einlesen des Textes abgeschlossen...("+ (System.currentTimeMillis()-t1) +"ms)");
+			
 			return textBuffer.toString().replace(Properties.unknownChar, '_');
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

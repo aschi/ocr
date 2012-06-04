@@ -44,7 +44,7 @@ public class NeuralNetwork {
 	 * @param input
 	 * @return character
 	 */
-	public char detectCharacter(Matrix input) {
+	public char detectCharacter(Matrix input, StringBuffer consoleText) {
 		double bigest = 0;
 		int bigestPos = 0;
 		
@@ -66,7 +66,7 @@ public class NeuralNetwork {
 			}
 		}
 		
-		System.out.println("Pos: " + bigestPos + " Char: " + Properties.knnOutputLayer.get(bigestPos) + " Emphasis: "+ bigest);
+		consoleText.append("Pos: " + bigestPos + " Char: " + Properties.knnOutputLayer.get(bigestPos) + " Emphasis: "+ bigest + "\n");
 		if(bigest < 0.5){
 			return Properties.unknownChar;
 		}else{
