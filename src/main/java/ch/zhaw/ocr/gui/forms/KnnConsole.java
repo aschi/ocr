@@ -3,6 +3,7 @@ package ch.zhaw.ocr.gui.forms;
 import java.awt.BorderLayout;
 
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -24,6 +25,21 @@ public class KnnConsole {
 	
 	public KnnConsole() {
 		createPanel();
+	}
+	
+	public void generateTextArea() {
+			
+			JPanel nPanel = new JPanel(new SpringLayout());
+			
+			JLabel titleLabel = new JLabel("Knn details of image-analyse");
+			
+			nPanel.add(titleLabel);
+			
+	        SpringUtilities.makeCompactGrid(nPanel, 1, 1, 10, 10, 10, 20);
+	        
+
+	        panel.add(nPanel, BorderLayout.NORTH);
+	        
 	}
 	
 	

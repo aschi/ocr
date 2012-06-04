@@ -13,7 +13,6 @@ import ch.zhaw.ocr.gui.forms.DictionaryForm;
 import ch.zhaw.ocr.gui.forms.HistoryForm;
 import ch.zhaw.ocr.gui.forms.InputForm;
 import ch.zhaw.ocr.gui.forms.KnnConsole;
-import ch.zhaw.ocr.gui.lists.KnnConsoleList;
 
 public class MainGui {
 	
@@ -93,9 +92,9 @@ public class MainGui {
 	
 	private JComponent createKnnPanel() {
 		
+		
 		knnConsole = new KnnConsole(this);
-		KnnConsoleList nlist = new KnnConsoleList(this);
-		knnPanel.add(nlist.getPanel(), BorderLayout.WEST);
+		knnConsole.generateTextArea();
 		knnPanel.add(knnConsole.getPanel(), BorderLayout.CENTER);
 		
 		return knnPanel;
