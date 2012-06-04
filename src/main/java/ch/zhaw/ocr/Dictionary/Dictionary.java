@@ -3,10 +3,12 @@ package ch.zhaw.ocr.Dictionary;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -312,8 +314,8 @@ public class Dictionary {
 
 		long t1 = System.currentTimeMillis();
 
-		BufferedWriter bw = new BufferedWriter(new FileWriter(f), 100 * 1024);
-
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(f), "UTF-8"), 100 * 1024);
+		
 		for (String key : dictionary.keySet()) {
 			bw.write(key + "," + dictionary.get(key) + ";");
 		}
@@ -331,7 +333,8 @@ public class Dictionary {
 
 		BufferedReader input = null;
 		try {
-			input = new BufferedReader(new FileReader(f));
+			input = new BufferedReader(new InputStreamReader(new FileInputStream(f), "UTF-8"));
+
 			String line = null; // not declared within while loop
 			while ((line = input.readLine()) != null) {
 				for (String entry : line.split(";")) {

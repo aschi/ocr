@@ -3,7 +3,6 @@ package ch.zhaw.ocr;
 import java.io.File;
 import java.io.IOException;
 
-import ch.zhaw.ocr.CharacterRecognition.CharacterComperator;
 import ch.zhaw.ocr.Dictionary.Dictionary;
 import ch.zhaw.ocr.TextRecognation.Ocr;
 import ch.zhaw.ocr.gui.MainGui;
