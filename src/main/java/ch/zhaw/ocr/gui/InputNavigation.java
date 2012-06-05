@@ -53,8 +53,12 @@ public class InputNavigation {
 
 	public void loadImageTree() {
 
-		top = new DefaultMutableTreeNode("List of used Images:");
-		tree = new JTree(top);
+		if (top == null) {
+			top = new DefaultMutableTreeNode("List of used Images:");
+		}
+		if (tree == null) {
+			tree = new JTree(top);
+		}
 		getFileFromDir();
 
 		tree.scrollPathToVisible(new TreePath(top.getLastLeaf().getPath()));

@@ -119,6 +119,7 @@ public class InputForm {
     	int i = 2;
     	while (newHistoryFile.exists()) {
     		newHistoryFile = new File("history/" + i + imgFile.getName());
+    		i++;
     	}
     	BufferedImage img = ImageIO.read(imgFile);
     	String imgEnding = newHistoryFile.getAbsolutePath().substring(newHistoryFile.getAbsolutePath().lastIndexOf(".") + 1, newHistoryFile.getAbsolutePath().length());
@@ -129,6 +130,7 @@ public class InputForm {
     	writer.setOutput(ios);
 
     	writer.write(img);
+    	ios.close();
     	
     	String path = newHistoryFile.getAbsolutePath().substring(0, newHistoryFile.getAbsolutePath().lastIndexOf(".")) + ".txt";
     	
