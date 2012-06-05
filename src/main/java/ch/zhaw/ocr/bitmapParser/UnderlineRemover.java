@@ -60,7 +60,7 @@ public class UnderlineRemover extends BitmapParserDecorator {
 					int yEnd = -1;
 					int height = m.getHeight();
 					for (int y = 0; y < m.getHeight(); y++) {
-						for (int x = 0; x <= m.getWidth() - height; x++) {
+						for (int x = 0; x < m.getWidth() - height; x++) {
 							
 							int xEnd = x + height;
 							
@@ -69,7 +69,7 @@ public class UnderlineRemover extends BitmapParserDecorator {
 								yEnd = y;
 								//Check how long the underline is
 								boolean isStillUnderlined = true;
-								for (int xUnderline = xEnd; isStillUnderlined; xUnderline ++) {
+								for (int xUnderline = xEnd; isStillUnderlined && xUnderline < m.getWidth(); xUnderline ++) {
 									if (m.getValue(xUnderline, y) != 1) {
 										isStillUnderlined = false;
 									} else {
@@ -117,7 +117,7 @@ public class UnderlineRemover extends BitmapParserDecorator {
 	
 	private void removeUnderline(ContrastMatrix m, int xStart, int xEnd, int yStart, int yEnd) {
 		
-		for (int x = xStart; x < xEnd; x++) {
+		for (int x = xStart; x <= xEnd; x++) {
 			
 			//in case the Underline is the last line, we just have to check the line yStart-1
 			if (m.getHeight() < (yEnd + 1)) {
@@ -128,7 +128,7 @@ public class UnderlineRemover extends BitmapParserDecorator {
 				}
 			} else {	
 				// Otherwise we also have to check the line yEnd + 1
-				if (m.getValue(x, yStart -1) != 1 && m.getValue(xStart, yEnd + 1) != 1) {
+				if ((yStart > 0 && m.getValue(x, yStart -1) != 1) && (yEnd < m.getHeight() && m.getValue(xStart, yEnd + 1) != 1)) {
 					for (int y = yStart; y <= yEnd; y++) {
 						m.setValue(x, y, 0);
 					}

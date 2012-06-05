@@ -1,4 +1,4 @@
-package ch.zhaw.ocr.BitmapParser;
+package ch.zhaw.ocr.bitmapParser;
 
 import static org.junit.Assert.*;
 
@@ -11,13 +11,8 @@ import org.jmock.integration.junit4.JUnit4Mockery;
 import org.junit.Before;
 import org.junit.Test;
 
-import ch.zhaw.ocr.bitmapParser.BitmapParser;
-import ch.zhaw.ocr.bitmapParser.ContrastMatrix;
-import ch.zhaw.ocr.bitmapParser.FunctionalCharacter;
-import ch.zhaw.ocr.bitmapParser.RowParser;
-
-public class RowParserTest {
-
+public class UnderlineRemoverTest {
+	
 	private ContrastMatrix inputMatrix;
 	private List<ContrastMatrix> expectedResultList;
 	
@@ -28,39 +23,54 @@ public class RowParserTest {
 	public void setUp() throws Exception {
 		context = new JUnit4Mockery();
 				
-		inputMatrix = new ContrastMatrix(10, 20);
+		inputMatrix = new ContrastMatrix(30, 10);
 		
 		fillRow(inputMatrix, 0);
 		fillRow(inputMatrix, 1);
 		fillRow(inputMatrix, 2);
+		fillRow(inputMatrix, 3);
+		fillRow(inputMatrix, 4);
+		fillRow(inputMatrix, 5);
 		
-		fillRow(inputMatrix, 6);
 		fillRow(inputMatrix, 7);
 		fillRow(inputMatrix, 8);
-		fillRow(inputMatrix, 9);
-		fillRow(inputMatrix, 10);
+		
+		fillCol(inputMatrix, 5);
+		fillCol(inputMatrix, 6);
+		fillCol(inputMatrix, 7);
 	
-		fillRow(inputMatrix, 16);
-		fillRow(inputMatrix, 17);
-		fillRow(inputMatrix, 18);
-		fillRow(inputMatrix, 19);
+		fillCol(inputMatrix, 11);
+		fillCol(inputMatrix, 12);
+		
+
+		fillCol(inputMatrix, 18);
+		fillCol(inputMatrix, 19);
+		fillCol(inputMatrix, 20);
+		fillCol(inputMatrix, 21);
 		
 		//set up desired result		
 		expectedResultList= new LinkedList<ContrastMatrix>();
-		ContrastMatrix cm = new ContrastMatrix(10, 3);
-		cm.invertMatrix();
-		expectedResultList.add(cm);
-		expectedResultList.add(new ContrastMatrix(FunctionalCharacter.carriageReturn));
+		ContrastMatrix cm = new ContrastMatrix(30, 10);
+				
+		fillRow(cm, 0);
+		fillRow(cm, 1);
+		fillRow(cm, 2);
+		fillRow(cm, 3);
+		fillRow(cm, 4);
+		fillRow(cm, 5);
+	
+		fillCol(cm, 5);
+		fillCol(cm, 6);
+		fillCol(cm, 7);
+	
+		fillCol(cm, 11);
+		fillCol(cm, 12);
+
+		fillCol(cm, 18);
+		fillCol(cm, 19);
+		fillCol(cm, 20);
+		fillCol(cm, 21);
 		
-		
-		cm = new ContrastMatrix(10, 5);
-		cm.invertMatrix();
-		expectedResultList.add(cm);
-		expectedResultList.add(new ContrastMatrix(FunctionalCharacter.carriageReturn));
-		
-		
-		cm = new ContrastMatrix(10, 4);
-		cm.invertMatrix();
 		expectedResultList.add(cm);
 		
 	}
@@ -68,6 +78,12 @@ public class RowParserTest {
 	private void fillRow(ContrastMatrix cm, int rowNo){
 		for(int x = 0;x < cm.getWidth();x++){
 				cm.setValue(x, rowNo, 1);
+		}
+	}
+	
+	private void fillCol(ContrastMatrix cm, int colNo){
+		for(int y = 0;y < cm.getContrastMatrix()[0].length;y++){
+				cm.setValue(colNo, y, 1);
 		}
 	}
 
@@ -85,7 +101,7 @@ public class RowParserTest {
 	    }});
 
 		
-		BitmapParser instance = new RowParser(bp);
+		BitmapParser instance = new UnderlineRemover(bp);
 		List<ContrastMatrix> parsedList = instance.parse(null);
 		for (ContrastMatrix m : expectedResultList) {
 			System.out.println(m);
@@ -96,6 +112,5 @@ public class RowParserTest {
 		}
 		assertTrue(parsedList.equals(expectedResultList));
 	}
-	
 
 }

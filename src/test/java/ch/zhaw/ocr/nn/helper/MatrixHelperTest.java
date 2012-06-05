@@ -1,4 +1,4 @@
-package ch.zhaw.ocr.knn.helper;
+package ch.zhaw.ocr.nn.helper;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;

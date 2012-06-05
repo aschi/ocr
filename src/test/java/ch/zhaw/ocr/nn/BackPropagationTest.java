@@ -1,4 +1,4 @@
-package ch.zhaw.ocr.knn;
+package ch.zhaw.ocr.nn;
 
 import hu.kazocsaba.math.matrix.Matrix;
 import hu.kazocsaba.math.matrix.MatrixFactory;

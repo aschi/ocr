@@ -10,4 +10,4 @@ nbproject
 .project
 .metadata/
 .settings/
-*.ser
+dictionary.ser
