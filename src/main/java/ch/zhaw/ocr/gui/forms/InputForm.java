@@ -115,10 +115,10 @@ public class InputForm {
 
 	private void saveForHistory(File imgFile, String text) throws IOException {
 		
-    	File newHistoryFile = new File("history/" + "1" + imgFile.getName());
-    	int i = 2;
+    	File newHistoryFile = new File("history/" + imgFile.getName());
+    	int i = 1;
     	while (newHistoryFile.exists()) {
-    		newHistoryFile = new File("history/" + i + imgFile.getName());
+    		newHistoryFile = new File("history/" + imgFile.getName().substring(0,imgFile.getName().lastIndexOf(".")) + "_ " + i + imgFile.getName().substring(imgFile.getName().lastIndexOf(".")));
     		i++;
     	}
     	BufferedImage img = ImageIO.read(imgFile);

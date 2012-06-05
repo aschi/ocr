@@ -8,19 +8,15 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTree;
-import javax.swing.SpringLayout;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
 import ch.zhaw.ocr.Properties;
-import ch.zhaw.ocr.gui.forms.HistoryForm;
-import ch.zhaw.ocr.gui.forms.SpringUtilities;
 
 public class InputNavigation {
 
@@ -53,16 +49,20 @@ public class InputNavigation {
 
 	public void loadImageTree() {
 
-		if (top == null) {
 			top = new DefaultMutableTreeNode("List of used Images:");
-		}
 		if (tree == null) {
 			tree = new JTree(top);
+		} else {
+			((DefaultTreeModel)tree.getModel()).setRoot(null);
+			((DefaultTreeModel)tree.getModel()).reload();
+			((DefaultTreeModel)tree.getModel()).setRoot(top);
 		}
 		getFileFromDir();
 
 		tree.scrollPathToVisible(new TreePath(top.getLastLeaf().getPath()));
 		addListener();
+
+		((DefaultTreeModel)tree.getModel()).reload();
 	}
 
 	private void addListener() {
