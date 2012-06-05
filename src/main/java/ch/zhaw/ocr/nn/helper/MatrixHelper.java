@@ -74,6 +74,12 @@ public class MatrixHelper {
 		return MatrixHelper.elementMultiplication(sig, ones.minus(sig));
 	}
 
+	/**
+	 * Add 1 to a vector (similar to [1 m] or [1;m]
+	 * @param vector input vector
+	 * @param horizontalVertical declare wheter [1 m] or [1;m] should be applied. "horizontal" => [1 m]; "vertical => [1;m]
+	 * @return new vector with added one
+	 */
 	public static Matrix add1ToVector(Matrix vector, String horizontalVertical) {
 		vector = MatrixFactory.copy(vector);
 		if (horizontalVertical.equals("horizontal")) {
@@ -95,6 +101,11 @@ public class MatrixHelper {
 		}
 	}
 
+	/**
+	 * Uses natural logarithm on all matrix elements
+	 * @param m input matrix
+	 * @return copy of the input matrix where natural logarithm has been applied on all elements
+	 */
 	public static Matrix log(Matrix m) {
 		m = MatrixFactory.copy(m);
 		for (int col = 0; col < m.getColumnCount(); col++) {
@@ -105,6 +116,12 @@ public class MatrixHelper {
 		return m;
 	}
 
+	/**
+	 * Add a scalar to all values of a matrix
+	 * @param m input matrix
+	 * @param scalar scalar to be added
+	 * @return copy of input matrix + scalar
+	 */
 	public static Matrix addScalar(Matrix m, double scalar) {
 		m = MatrixFactory.copy(m);
 		for (int col = 0; col < m.getColumnCount(); col++) {
@@ -118,8 +135,8 @@ public class MatrixHelper {
 	/**
 	 * Add up all elements of a given matrix
 	 * 
-	 * @param m
-	 * @return
+	 * @param m matrix to be summed up
+	 * @return sum of all matrix values
 	 */
 	public static double sum(Matrix m) {
 		double rv = 0;
@@ -134,8 +151,8 @@ public class MatrixHelper {
 	/**
 	 * Get the max element of a matrix
 	 * 
-	 * @param m
-	 * @return
+	 * @param m matrix to be analysed
+	 * @return max element of the matrix
 	 */
 	public static double max(Matrix m) {
 		double max = 0;
@@ -150,11 +167,11 @@ public class MatrixHelper {
 	}
 
 	/**
-	 * Merge thetas into one vector. Equivalent to [theta1(:);theta2(:)]
+	 * Merge thetas into one vector. Equivalent to octave code [theta1(:);theta2(:)]
 	 * 
-	 * @param theta1
-	 * @param theta2
-	 * @return
+	 * @param theta1 inputmatrix theta1
+	 * @param theta2 inputmatrix theta2
+	 * @return vector containing all values of theta 1 + theta 2
 	 */
 	public static Matrix mergeThetas(Matrix theta1, Matrix theta2) {
 		int len = (theta1.getColumnCount() * theta1.getRowCount())
@@ -185,10 +202,13 @@ public class MatrixHelper {
 	/**
 	 * Generate theta1 + theta2 from a given merged vector
 	 * 
-	 * @param mergedThetas
-	 * @param inputLayerSize
-	 * @param hiddenLayerSize
-	 * @param outputLayerSize
+	 * theta1 = matrix with dimensions (hiddenLayerSize, inputLayerSize+1)
+	 * theta2 = matrix with dimensions (outputLayerSize, hiddenLayerSize+1
+	 * 
+	 * @param mergedThetas vector containing all values for theta 1 + theta 2
+	 * @param inputLayerSize number of neurons in the input layer
+	 * @param hiddenLayerSize number of neurons in the hidden layer
+	 * @param outputLayerSize numer of neurons in the output layer
 	 * @return an array containing theta1 (unmergeThetas[0]) and theta2
 	 *         (unmergeThetas[1])
 	 */
@@ -262,6 +282,20 @@ public class MatrixHelper {
 		return m;
 	}
 
+	/**
+	 * Serialize Matrix into a textfile.
+	 * Colums are seperated by , rows by ;
+	 * 
+	 * 		(n11 n12 n13 n14)
+	 * m = 	(n21 n22 n23 n24)
+	 * 		(n31 n32 n33 n34)
+	 * 
+	 * will be stored like: n11,n12,n13,n14;n21,n22,n23,n24;n31,n32,n33,n34
+	 * 
+	 * @param m matrix to be serialized
+	 * @param f target file
+	 * @throws IOException
+	 */
 	public static void serializeMatrix(Matrix m, File f) throws IOException {
 		BufferedWriter bw = new BufferedWriter(new FileWriter(f));
 		StringBuffer sb = new StringBuffer();
@@ -279,6 +313,21 @@ public class MatrixHelper {
 		}
 	}
 
+	/**
+	 * Deserialize Matrix from textfile
+	 * 
+	 * n11,n12,n13,n14;n21,n22,n23,n24;n31,n32,n33,n34
+	 * 
+	 * will be converted in to a matrix like 
+	 * 
+	 * 		(n11 n12 n13 n14)
+	 * m = 	(n21 n22 n23 n24)
+	 * 		(n31 n32 n33 n34)
+	 * 
+	 * @param f file containing a serialized matrix (created using the MatrixHelper.serializeMatrix() function)
+	 * @return Matrix containing the values of the textfile
+	 * @throws IOException
+	 */
 	public static Matrix deserializeMatrix(File f) throws IOException {
 		BufferedReader input = null;
 		Matrix m = null;
@@ -304,5 +353,27 @@ public class MatrixHelper {
 			}
 		}
 		return m;
+	}
+
+	
+	/**
+	 * Checks if 2 matrices have 1. the same dimensions and 2. have the same values in all fields
+	 * @param m1 input matrix1
+	 * @param m2 input matrix2
+	 * @return true if both matrices are the same / false if not
+	 */
+	public static boolean matrixEquals(Matrix m1, Matrix m2){
+		if(m1.getRowCount()!=m2.getRowCount() || m1.getColumnCount()!=m2.getColumnCount()){
+			return false;
+		}else{
+			for(int row = 0;row < m1.getRowCount();row++){
+				for(int col = 0; col < m1.getColumnCount();col++){
+					if(m1.get(row, col) != m2.get(row, col)){
+						return false;
+					}
+				}
+			}
+		}
+		return true;
 	}
 }
