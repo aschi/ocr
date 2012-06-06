@@ -67,7 +67,7 @@ public class NeuralNetwork {
 		}
 		
 		consoleText.append("Pos: " + bigestPos + " Char: " + Properties.knnOutputLayer.get(bigestPos) + " Emphasis: "+ bigest + "\n");
-		if(bigest < 0.5){
+		if(bigest < 0.2){
 			return Properties.unknownChar;
 		}else{
 			return Properties.knnOutputLayer.get(bigestPos);	
