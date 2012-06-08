@@ -71,10 +71,15 @@ public class DictionaryForm {
         
     	
     	nextButton.addActionListener(new NextButtonListener());
-    	panel.add(nextButton, BorderLayout.SOUTH);
-        
+    	
+    	JPanel centerPanel = new JPanel(new BorderLayout());
+    	
+    	centerPanel.add(nextButton, BorderLayout.SOUTH);
         SpringUtilities.makeCompactGrid(areaPanel, 1, 1, 10, 10, 10, 20);
-    	panel.add(areaPanel, BorderLayout.CENTER);
+        centerPanel.add(areaPanel, BorderLayout.CENTER);
+        
+    	panel.add(centerPanel, BorderLayout.CENTER);
+    	
     	panel.add(createLookupPanel(), BorderLayout.SOUTH);
     }
     

@@ -34,7 +34,6 @@ public final class Properties {
 	
 	public static final int knnOutputLayerSize = knnOutputLayer.size();
 	
-	public static final double knnLambda = 0;
 	public static final int knnMaxIterationCount = 500;
 	
 	public static final String knnResourcePath = "res/knnMaterial";

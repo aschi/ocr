@@ -85,7 +85,7 @@ public class BackPropagationTest {
 						MatrixHelper.convertToMatrix(input),
 						Properties.knnInputLayerSize,
 						Properties.knnHiddenLayerSize,
-						Properties.knnOutputLayerSize, in, expectedOutput, 1);
+						Properties.knnOutputLayerSize, in, expectedOutput);
 
 				return new Tuple<Double, DoubleVector>(rv.getJ(),
 						MatrixHelper.convertToDoubleVector(rv.getTheta1Grad()));

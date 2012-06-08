@@ -19,8 +19,7 @@ public class BackPropagation {
 
 	public CostFunctionResult nnCostFunction(Matrix mergedThetas, 
 			int inputLayerSize, int hiddenLayerSize, int outputLayerSize,
-			List<Matrix> trainingVectors, List<Integer> expectedResults,
-			double lambda) {
+			List<Matrix> trainingVectors, List<Integer> expectedResults) {
 		
 		Matrix[] thetas = MatrixHelper.unmergeThetas(mergedThetas, inputLayerSize, hiddenLayerSize, outputLayerSize);
 		Matrix theta1 = thetas[0];
@@ -81,39 +80,11 @@ public class BackPropagation {
 
 		double J = ((double)s/trainingVectors.size());
 		
-		
 		//Theta1_grad = Theta1_grad ./ m;
 		//Theta2_grad = Theta2_grad ./ m;
 		double factor = ((double)1/trainingVectors.size());
 		theta1Grad = theta1Grad.times(factor);
 		theta2Grad = theta2Grad.times(factor);
-
-		Matrix tmp1;
-		Matrix tmp2;
-		
-		
-		//Theta1_grad(:,2:end) = Theta1_grad(:,2:end) + ((lambda/m) * Theta1(:,2:end) );		
-		tmp1 = theta1Grad.getSubmatrix(1, theta1Grad.getRowCount()-1, 0, theta1Grad.getColumnCount()-1);
-		tmp2 = theta1.getSubmatrix(1, theta1.getRowCount()-1, 0, theta1.getColumnCount()-1);		
-		tmp1.add(tmp2.times(((double)lambda/trainingVectors.size())));
-		
-		theta1Grad.setSubmatrix(tmp1, 1, 0);
-		
-
-		//Theta2_grad(:,2:end) = Theta2_grad(:,2:end) + ((lambda/m) * Theta2(:,2:end) );
-		tmp1 = theta2Grad.getSubmatrix(1, theta2Grad.getRowCount()-1, 0, theta2Grad.getColumnCount()-1);
-		tmp2 = theta2.getSubmatrix(1, theta2.getRowCount()-1, 0, theta2.getColumnCount()-1);		
-		tmp1.add(tmp2.times(((double)lambda/trainingVectors.size())));
-		
-		theta2Grad.setSubmatrix(tmp1, 1, 0);
-		
-		
-		//drop bias terms
-		tmp1 = theta1.getSubmatrix(0, theta1.getRowCount()-1, 1, theta1.getColumnCount()-1);	
-		tmp2 = theta2.getSubmatrix(0, theta2.getRowCount()-1, 1, theta2.getColumnCount()-1);	
-		
-		double reg = ((double)lambda/(2*trainingVectors.size())) * (MatrixHelper.sum(MatrixHelper.elementMultiplication(tmp1,tmp1)) + MatrixHelper.sum(MatrixHelper.elementMultiplication(tmp2,tmp2)));
-		J += reg;
 		
 		Matrix mergedThetaGrad = MatrixHelper.mergeThetas(theta1Grad, theta2Grad);
 		

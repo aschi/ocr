@@ -1,4 +1,4 @@
-package ch.zhaw.ocr.gui;
+package ch.zhaw.ocr.gui.forms;
 
 import java.awt.BorderLayout;
 import java.awt.event.MouseAdapter;
@@ -17,8 +17,9 @@ import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
 import ch.zhaw.ocr.Properties;
+import ch.zhaw.ocr.gui.MainGui;
 
-public class InputNavigation {
+public class HistoryNavigation {
 
 	// protected static final String HISTORYPANEL = null;
 
@@ -27,12 +28,12 @@ public class InputNavigation {
 	private DefaultMutableTreeNode top;
 	private MainGui gui;
 
-	public InputNavigation(MainGui gui) {
+	public HistoryNavigation(MainGui gui) {
 		this.gui = gui;
 		createPanel();
 	}
 
-	public InputNavigation() {
+	public HistoryNavigation() {
 		createPanel();
 	}
 

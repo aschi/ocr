@@ -96,7 +96,7 @@ public class NeuronalNetworkTraining {
 						MatrixHelper.convertToMatrix(input),
 						Properties.knnInputLayerSize,
 						Properties.knnHiddenLayerSize,
-						Properties.knnOutputLayerSize, in, expectedOutput, Properties.knnLambda);
+						Properties.knnOutputLayerSize, in, expectedOutput);
 
 				return new Tuple<Double, DoubleVector>(rv.getJ(),
 						MatrixHelper.convertToDoubleVector(rv.getTheta1Grad()));

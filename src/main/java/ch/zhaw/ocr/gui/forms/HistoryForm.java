@@ -1,7 +1,6 @@
 package ch.zhaw.ocr.gui.forms;
 
 import java.awt.BorderLayout;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -12,7 +11,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import ch.zhaw.ocr.gui.InputNavigation;
 import ch.zhaw.ocr.gui.MainGui;
 import ch.zhaw.ocr.gui.helper.TextFileHandler;
 
@@ -24,7 +22,7 @@ public class HistoryForm {
 	private JLabel imgLabel;
 	private MainGui gui;
 	private ImageIcon img;
-	private InputNavigation inavi;
+	private HistoryNavigation inavi;
 
 	public HistoryForm(MainGui gui) {
 		this.gui = gui;
@@ -39,13 +37,16 @@ public class HistoryForm {
 
 		panel = new JPanel(new BorderLayout());
 		loadImage(null);
-		inavi = new InputNavigation(gui);
+		inavi = new HistoryNavigation(gui);
 		panel.add(inavi.getPanel(), BorderLayout.WEST);
-		panel.add(imgPanel, BorderLayout.CENTER);
-		panel.add(loadTextArea(), BorderLayout.SOUTH);
+		
+		JPanel centerPanel = new JPanel(new BorderLayout());
+		centerPanel.add(imgPanel, BorderLayout.CENTER);
+		centerPanel.add(loadTextArea(), BorderLayout.SOUTH);
+		panel.add(centerPanel, BorderLayout.CENTER);
 	}
 	
-	public InputNavigation getInputNavitation() {
+	public HistoryNavigation getInputNavitation() {
 		return inavi;
 	}
 
