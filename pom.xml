@@ -13,7 +13,48 @@
   <properties>
     <slf4j.version>1.5.11</slf4j.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <version.maven-jar-plugin>2.4</version.maven-jar-plugin>
+    <version.maven-dependency-plugin>2.4</version.maven-dependency-plugin>
   </properties>
+
+  <build>
+	<!-- JAR -->
+	<plugins>
+	<plugin>
+	  <groupId>org.apache.maven.plugins</groupId>
+	  <artifactId>maven-jar-plugin</artifactId>
+	  <version>${version.maven-jar-plugin}</version>
+	  <configuration>
+	    <finalname>${project.artifactId}</finalname>
+	    <archive>
+	      <manifest>
+		<mainclass>ch.zhaw.ocr.Starter</mainclass>
+		<addclasspath>true</addclasspath>
+	      </manifest>
+	    </archive>
+	  </configuration>
+	</plugin>
+
+	<plugin>
+	  <groupId>org.apache.maven.plugins</groupId>
+	  <artifactId>maven-dependency-plugin</artifactId>
+	  <version>${version.maven-dependency-plugin}</version>
+	  <configuration>
+	    <outputDirectory>${project.build.directory}/classes</outputDirectory>
+	  </configuration>
+	  <executions>
+	    <execution>
+	      <id>unpack-dependencies</id>
+	      <phase>prepare-package</phase>
+	      <goals>
+		<goal>unpack-dependencies</goal>
+	      </goals>
+	    </execution>
+	  </executions>
+	</plugin>
+	</plugins>
+  </build>
+
 
   <dependencies>
 	<dependency>
@@ -68,4 +109,6 @@
     	</dependency>
     	
   </dependencies>
+
+
 </project>
