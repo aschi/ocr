@@ -1,9 +1,9 @@
 package ch.zhaw.ocr.bitmapParser;
 
 /**
- * ContrastMatrix
+ * ContrastMatrix. Used to store contrast data (a 2 dimensional array of 0 and 1 values)
  * 
- * @author adrian
+ * @author Corinne Zeugin, Priscilla Schneider, Adrian Schmid
  * 
  */
 public class ContrastMatrix {

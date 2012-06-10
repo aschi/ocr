@@ -2,6 +2,11 @@ package ch.zhaw.ocr.nn.helper;
 
 import hu.kazocsaba.math.matrix.Matrix;
 
+/**
+ * CostFunctionResult used as return value of our cost function
+ * @author Corinne Zeugin, Priscilla Schneider, Adrian Schmid
+ *
+ */
 public class CostFunctionResult {
 	private double J;
 	private Matrix thetaGrad;
@@ -27,7 +32,5 @@ public class CostFunctionResult {
 	@Override
 	public String toString() {
 		return "CostFunctionResult [J=" + J + ", thetaGrad=" + thetaGrad +"]";
-	}
-	
-	
+	}	
 }

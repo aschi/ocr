@@ -4,7 +4,11 @@ import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 import java.util.List;
 
-
+/**
+ * SimpleBitmapParser parses a given image, enhances the contrast and returns a ContrastMatix
+ * @author Corinne Zeugin, Priscilla Schneider, Adrian Schmid
+ *
+ */
 public class SimpleBitmapParser implements BitmapParser{
 	private List<ContrastMatrix> matrices;
 		

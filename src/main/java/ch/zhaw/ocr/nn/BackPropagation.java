@@ -8,8 +8,19 @@ import java.util.List;
 import ch.zhaw.ocr.nn.helper.CostFunctionResult;
 import ch.zhaw.ocr.nn.helper.MatrixHelper;
 
+/**
+ * Class Backpropagation contains as well the cost function of our neural network as a method to randomly initialise theta matrices
+ * @author Corinne Zeugin, Priscilla Schneider, Adrian Schmid
+ *
+ */
 public class BackPropagation {
 
+	/**
+	 * Randomly initialise a theta matrix
+	 * @param lOutSize output layer size
+	 * @param lInSize input layer size
+	 * @return randomly initialised matrix
+	 */
 	public Matrix randInitializeWeights(int lOutSize, int lInSize) {
 		double epsilonInit = 0.12;
 		Matrix rv = MatrixFactory.random(lOutSize, lInSize + 1);
@@ -17,9 +28,23 @@ public class BackPropagation {
 		return MatrixHelper.addScalar(rv, -1 * epsilonInit);
 	}
 
+	/**
+	 * nnCostFunction. Used to traing a neural network using a BackPropagation algorithm
+	 * @param mergedThetas a vector containing theta values
+	 * @param inputLayerSize size of the neural network input layer
+	 * @param hiddenLayerSize size of the neural network hidden layer
+	 * @param outputLayerSize size of the neural network output layer
+	 * @param trainingVectors List of input vectors. Must be aligned with expectedResults
+	 * @param expectedResults List of target output vectors. Must be aligned with trainingVectors 
+	 * @return CostFunction result containing the costs and a list of partial devirates of the theta matrices
+	 */
 	public CostFunctionResult nnCostFunction(Matrix mergedThetas, 
 			int inputLayerSize, int hiddenLayerSize, int outputLayerSize,
 			List<Matrix> trainingVectors, List<Integer> expectedResults) {
+		
+		if(trainingVectors.size() != expectedResults.size()){
+			throw new IllegalArgumentException("trainingVectors and expectedResults must have the same size!");
+		}
 		
 		Matrix[] thetas = MatrixHelper.unmergeThetas(mergedThetas, inputLayerSize, hiddenLayerSize, outputLayerSize);
 		Matrix theta1 = thetas[0];

@@ -82,7 +82,6 @@ public class HistoryNavigation {
 								if ((k.substring(k.lastIndexOf(0) + 1,
 										k.lastIndexOf('.')) + ".txt").equals(st
 										.substring(st.lastIndexOf('/') + 1))) {
-									gui.selectOverview(gui.HISTORYPANEL);
 									try {
 										gui.getHistoryForm().setText(st);
 										;

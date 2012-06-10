@@ -6,10 +6,10 @@ import java.util.List;
 
 
 /**
- * Separates text-rows
+ * RowParser is used to separate text rows:
  * 1. Search for empty pixel-rows
  * 2. Group "not" empty pixel-rows
- * @author adrian
+ * @author Corinne Zeugin, Priscilla Schneider, Adrian Schmid
  *
  */
 public class RowParser extends BitmapParserDecorator {

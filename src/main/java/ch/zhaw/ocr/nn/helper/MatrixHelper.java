@@ -13,6 +13,10 @@ import java.io.IOException;
 import de.jungblut.math.DoubleVector;
 import de.jungblut.math.dense.DenseDoubleVector;
 
+/**
+ * Various functions used when working with matrices
+ * @author Corinne Zeugin, Priscilla Schneider, Adrian Schmid
+ */
 public class MatrixHelper {
 
 	/**

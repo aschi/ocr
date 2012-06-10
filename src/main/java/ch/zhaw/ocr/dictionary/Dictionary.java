@@ -13,10 +13,15 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import ch.zhaw.ocr.Properties;
 
+/**
+ * A simple dictionary based on the ideas of Peter Norwig
+ * @author Corinne Zeugin, Priscilla Schneider, Adrian Schmid
+ */
 public class Dictionary {
 	// HashMap representing the dictionary
 	// Key: Word (String)
@@ -56,10 +61,9 @@ public class Dictionary {
 	}
 
 	/**
-	 * This method
-	 * 
-	 * @param word
-	 * @return
+	 * This method is used to correct a word
+	 * @param word input word
+	 * @return corrected version of the word
 	 */
 	public String correctWord(String word) {
 		String rv = null;
@@ -167,14 +171,7 @@ public class Dictionary {
 		return bestWord;
 	}
 
-	/**
-	 * 
-	 * @param input
-	 * @param hasCapitalLetter
-	 * @param firstSignChar
-	 * @param lastSignChar
-	 * @return
-	 */
+
 	private String restoreOriginalWordSetting(String input,
 			boolean hasCapitalLetter, char firstSignChar, char lastSignChar) {
 		/*
@@ -308,7 +305,12 @@ public class Dictionary {
 				+ (System.currentTimeMillis() - t1) + "ms)");
 	}
 
-	public void serializeMap(File f) throws IOException {
+	/**
+	 * Serializes the dictionary into a single text file
+	 * @param f text file
+	 * @throws IOException
+	 */
+	public void serializeDictionary(File f) throws IOException {
 		System.out.println("Serialize map (" + dictionary.size()
 				+ " entries...");
 
@@ -326,6 +328,11 @@ public class Dictionary {
 				+ (System.currentTimeMillis() - t1) + "ms)");
 	}
 
+	/**
+	 * Build a dictionary from a given file. Only works if file was created using the "serializeDictionary" method
+	 * @param f file
+	 * @throws IOException
+	 */
 	public void buildDictionaryFromSerializedMap(File f) throws IOException {
 		System.out.println("Build dictionary from serialized map...");
 
@@ -362,7 +369,11 @@ public class Dictionary {
 				+ dictionary.size() + " entries)");
 	}
 
-	public HashMap<String, Integer> getDictionary() {
+	/**
+	 * Return the map (representing the dictionary)
+	 * @return Dictionary
+	 */
+	public Map<String, Integer> getDictionary() {
 		return dictionary;
 	}
 

@@ -3,6 +3,11 @@ package ch.zhaw.ocr.nn;
 import ch.zhaw.ocr.Properties;
 import ch.zhaw.ocr.bitmapParser.ContrastMatrix;
 
+/**
+ * CharacterRepresentation. Used to create valid input vectors for our neural network
+ * @author Corinne Zeugin, Priscilla Schneider, Adrian Schmid
+ *
+ */
 public class CharacterRepresentation {
 	private ContrastMatrix characterM;
 	private double[][] comparisonVector = new double[1][Properties.knnInputLayerSize];
@@ -47,65 +52,19 @@ public class CharacterRepresentation {
 		}
 
 	}
-	/*
-	public CharacterRepresentation(ContrastMatrix characterM) {
-		characterM.trim();
-		
-		int fh = (int) Math.floor(((double) characterM.getHeight())
-				/ (double) fieldNo);
-		
-		int fw = (int) Math.floor(((double) characterM.getWidth())
-				/ (double) fieldNo);
-		
-		int hRes = characterM.getHeight()-(fh*fieldNo);
-		int wRes = characterM.getWidth() -(fw*fieldNo);
-		
-		int[][] widths= new int[fieldNo][fieldNo];
-		int[][] heights= new int[fieldNo][fieldNo];
-		
-		for(int x = 0;x < fieldNo;x++){
-			for(int y = 0;y < fieldNo;y++){
-				if(wRes > 0){
-					widths[x][y] = fw+1;
-					wRes--;
-				}else{
-					widths[x][y] = fw;
-				}
-				if(hRes > 0){
-					heights[x][y] = fh+1;
-					hRes--;
-				}else{
-					heights[x][y] = fh;
-				}
-			}
-		}
-		
-		
-		for(int row = 0; row < fieldNo;row++){
-			for(int col = 0; col < fieldNo;col++){
-				int part = (row*fieldNo) + col;
-			
-				for(int x = (col*fw)+((wRes-(col+1))>0 ? col : 0); x < ((((col+1)*fw) + ((wRes-(col+1))>0 ? 1 : 0)));x++){
-					for(int y = (row*fh)+((hRes-(row+1))>0 ? row : 0); y < ((((row+1)*fh) + ((hRes-(row+1))>0 ? 1 : 0)));y++){
-						comparisonVector[0][part] += characterM.getValue(x, y);
-					}
-					
-				}
-				
-				for(int x = 0;x < wRes;x++){
-					
-				}
-				
-			}
-		}
-		
-	}
-	*/
 	
+	/**
+	 * Get contrast matrix
+	 * @return contrast matrix
+	 */
 	public ContrastMatrix getMatrix() {
 		return characterM;
 	}
 
+	/**
+	 * Get comparison vector (input vector of neural network)
+	 * @return comparison vector
+	 */
 	public double[][] getComparisonVector() {
 		return comparisonVector;
 	}

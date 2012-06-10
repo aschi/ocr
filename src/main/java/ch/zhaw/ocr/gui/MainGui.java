@@ -1,7 +1,6 @@
 package ch.zhaw.ocr.gui;
 
 import java.awt.BorderLayout;
-import java.awt.CardLayout;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -11,29 +10,30 @@ import javax.swing.JTabbedPane;
 import ch.zhaw.ocr.gui.forms.DictionaryForm;
 import ch.zhaw.ocr.gui.forms.HistoryForm;
 import ch.zhaw.ocr.gui.forms.InputForm;
-import ch.zhaw.ocr.gui.forms.KnnConsole;
+import ch.zhaw.ocr.gui.forms.NnConsole;
 import ch.zhaw.ocr.textRecognition.Ocr;
 
+/**
+ * MainGui creates the UI Window / manages functionality (OCR)
+ * @author Corinne Zeugin, Priscilla Schneider, Adrian Schmid
+ */
 public class MainGui {
-	
-	public final static String KNNPANEL = "Card with KNN Panel";
-	public final static String INPUTPANEL = "Card with Text Panel";
-	public final static String HISTORYPANEL = "Card with History Panel";
-	public final static String DICTIONARYPANEL = "Card with Dictionary Panel";
-	
 	private JFrame frame;
 	private JTabbedPane tabbedPane;
 	private JPanel inputPanel;
 	private JPanel knnPanel;
 	private JPanel historyPanel;
 	private JPanel dictionaryPanel;
-	private JPanel cards;
 	private Ocr ocr;
 	private HistoryForm hForm;
 	private DictionaryForm dForm;
-	private KnnConsole knnConsole;
+	private NnConsole nnConsole;
 	private StringBuffer consoleText;
 	
+	/**
+	 * Constructor for MainGui. Needs an ocr instance to be created.
+	 * @param ocr OCR Instance to be used.
+	 */
     public MainGui(Ocr ocr){
         this.ocr = ocr;
         consoleText = new StringBuffer();
@@ -41,7 +41,6 @@ public class MainGui {
     }
 
 	private void createTabbedPane() {
-		
 		frame = new JFrame("OCR");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);  //Fullscreen
@@ -51,34 +50,31 @@ public class MainGui {
         historyPanel = new JPanel(new BorderLayout());
         dictionaryPanel = new JPanel(new BorderLayout());
         
-        cards = new JPanel(new CardLayout());
-        cards.add(inputPanel, INPUTPANEL);
-        cards.add(knnPanel, KNNPANEL);
-        cards.add(historyPanel, HISTORYPANEL);
-        cards.add(dictionaryPanel, DICTIONARYPANEL);
-        
-        frame.setContentPane(cards);
         createTabs();
         
         frame.setVisible(true);
-
-		
 	}
-	
-    public void selectOverview(String panelSelection){
-        CardLayout cl = (CardLayout) cards.getLayout();
-        cl.show(cards, panelSelection);
-    }
-
-	
+		
+	/**
+	 * Get OCR instance
+	 * @return ocr
+	 */
 	public Ocr getOcr(){
 		return ocr;
 	}
 	
+	/**
+	 * Get console text instance
+	 * @return console text
+	 */
 	public StringBuffer getConsoleText() {
 		return consoleText;
 	}
 	
+	/**
+	 * Set conosle text
+	 * @param new consoleText
+	 */
 	public void setConsoleText(StringBuffer consoleText) {
 		this.consoleText = consoleText;
 	}
@@ -91,54 +87,52 @@ public class MainGui {
 	}
 	
 	private JComponent createKnnPanel() {
-		
-		
-		knnConsole = new KnnConsole(this);
-		knnConsole.generateTextArea();
-		knnPanel.add(knnConsole.getPanel(), BorderLayout.CENTER);
+		nnConsole = new NnConsole(this);
+		nnConsole.generateTextArea();
+		knnPanel.add(nnConsole.getPanel(), BorderLayout.CENTER);
 		
 		return knnPanel;
-		
 	}
 	
-	public JComponent createHistoryPanel() {
-		
+	private JComponent createHistoryPanel() {
 		hForm = new HistoryForm(this);
 		historyPanel.add(hForm.getPanel(), BorderLayout.CENTER);
 		
 		return historyPanel;
-		
 	}
 	
-	public JComponent createDictionaryPanel() {
-		
+	private JComponent createDictionaryPanel() {
 		dForm = new DictionaryForm(this);
 		dictionaryPanel.add(dForm.getPanel(), BorderLayout.CENTER);
 		
 		return dictionaryPanel;
-		
 	}
 	
+	/**
+	 * Get history form
+	 * @return history form
+	 */
 	public HistoryForm getHistoryForm() {
 		return hForm;
 		
 	}
 	
-	public KnnConsole getKnnPanel() {
-		return knnConsole;
+	/**
+	 * Get NeuralNetwork Console instance
+	 * @return nn console
+	 */
+	public NnConsole getKnnPanel() {
+		return nnConsole;
 	}
 	
 	
     private void createTabs(){
-    	
 		tabbedPane = new JTabbedPane();
 		tabbedPane.addTab( "Input", createInputPanel() );
 		tabbedPane.addTab( "KNN Console", createKnnPanel() );
 		tabbedPane.addTab( "History", createHistoryPanel() );
 		tabbedPane.addTab( "Dictionary", createDictionaryPanel() );
         
-        frame.add(tabbedPane);
-        
+        frame.add(tabbedPane);   
     }
-
 }

@@ -1,5 +1,10 @@
 package ch.zhaw.ocr.bitmapParser;
 
+/**
+ * Enum FunctionalCharacter used to represent functional characters (space & carriageReturn)
+ * @author Corinne Zeugin, Priscilla Schneider, Adrian Schmid
+ *
+ */
 public enum FunctionalCharacter {
 	space			(' '),
 	carriageReturn	('\n');

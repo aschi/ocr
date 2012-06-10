@@ -9,6 +9,10 @@ import java.io.IOException;
 import ch.zhaw.ocr.Properties;
 import ch.zhaw.ocr.nn.helper.MatrixHelper;
 
+/**
+ * Class representing the used NeuralNetwork. Consists of two theta matrices.
+ * @author Corinne Zeugin, Priscilla Schneider, Adrian Schmid
+ */
 public class NeuralNetwork {
 	private Matrix theta1;
 	private Matrix theta2;
@@ -105,19 +109,36 @@ public class NeuralNetwork {
 		NeuronalNetworkTraining nnt = new NeuronalNetworkTraining(resourceFolder);
 		nnt.trainNetwork(this, "random");
 	}
-
+	
+	
+	/**
+	 * Get theta matrix 1
+	 * @return theta 1
+	 */
 	public Matrix getTheta1() {
 		return theta1;
 	}
 
+	/**
+	 * Set theta matrix 1
+	 * @param theta1 new theta 1
+	 */
 	public void setTheta1(Matrix theta1) {
 		this.theta1 = theta1;
 	}
 
+	/**
+	 * Get theta matrix 2
+	 * @return theta 2
+	 */
 	public Matrix getTheta2() {
 		return theta2;
 	}
 
+	/**
+	 * Set theta matrix 2
+	 * @param theta2 new theta 2
+	 */
 	public void setTheta2(Matrix theta2) {
 		this.theta2 = theta2;
 	}

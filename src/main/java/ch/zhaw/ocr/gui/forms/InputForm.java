@@ -26,6 +26,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
+import ch.zhaw.ocr.Properties;
 import ch.zhaw.ocr.gui.MainGui;
 import ch.zhaw.ocr.gui.helper.ImageFileFilter;
 import ch.zhaw.ocr.gui.helper.TextFileFilter;
@@ -114,6 +115,11 @@ public class InputForm {
 	}
 
 	private void saveForHistory(File imgFile, String text) throws IOException {
+		File historyFolder = new File(Properties.historyResourcefoler);
+		if(!historyFolder.exists()){
+			historyFolder.mkdir();
+		}
+		
 		
     	File newHistoryFile = new File("history/" + imgFile.getName());
     	int i = 1;
@@ -126,6 +132,7 @@ public class InputForm {
     	Iterator<ImageWriter> writers = ImageIO.getImageWritersByFormatName(imgEnding);
     	ImageWriter writer = writers.next();
 
+    	
     	ImageOutputStream ios = ImageIO.createImageOutputStream(newHistoryFile);
     	writer.setOutput(ios);
 

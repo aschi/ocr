@@ -22,6 +22,10 @@ import de.jungblut.math.minimize.CostFunction;
 import de.jungblut.math.minimize.Fmincg;
 import de.jungblut.math.tuple.Tuple;
 
+/**
+ * NeuralNetwork training used to train a neural network
+ * @author Corinne Zeugin, Priscilla Schneider, Adrian Schmid
+ */
 public class NeuronalNetworkTraining {
 	private BackPropagation bp;
 	private List<Matrix> in;
@@ -30,6 +34,10 @@ public class NeuronalNetworkTraining {
 	private Matrix theta2;
 	private File resourceFolder;
 
+	/**
+	 * Create a neural network training instance.
+	 * @param resourceFolder resource folder used by this instance
+	 */
 	public NeuronalNetworkTraining(File resourceFolder) {
 		this.resourceFolder = resourceFolder;
 		bp = new BackPropagation();

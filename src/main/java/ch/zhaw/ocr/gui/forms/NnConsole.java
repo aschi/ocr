@@ -11,24 +11,23 @@ import javax.swing.SpringLayout;
 
 import ch.zhaw.ocr.gui.MainGui;
 
-public class KnnConsole {
+/**
+ * Neural Network Console
+ * @author Corinne Zeugin, Priscilla Schneider, Adrian Schmid
+ */
+public class NnConsole {
 	
 	private JPanel panel;
 	private JTextArea consoleText;
 	private MainGui gui;
 	
         
-    public KnnConsole(MainGui gui) {
+    public NnConsole(MainGui gui) {
         this.gui = gui;
         createPanel();
     }
 	
-	public KnnConsole() {
-		createPanel();
-	}
-	
-	public void generateTextArea() {
-			
+	public void generateTextArea() {			
 			JPanel nPanel = new JPanel(new SpringLayout());
 			
 			JLabel titleLabel = new JLabel("details of image analysis");
@@ -36,10 +35,8 @@ public class KnnConsole {
 			nPanel.add(titleLabel);
 			
 	        SpringUtilities.makeCompactGrid(nPanel, 1, 1, 10, 10, 10, 20);
-	        
 
-	        panel.add(nPanel, BorderLayout.NORTH);
-	        
+	        panel.add(nPanel, BorderLayout.NORTH);       
 	}
 	
 	
@@ -75,5 +72,4 @@ public class KnnConsole {
 	public JTextArea getNeuronText(){
 		return consoleText;
 	}
-
 }

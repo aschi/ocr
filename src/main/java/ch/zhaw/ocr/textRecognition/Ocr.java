@@ -20,16 +20,31 @@ import ch.zhaw.ocr.dictionary.Dictionary;
 import ch.zhaw.ocr.nn.CharacterRepresentation;
 import ch.zhaw.ocr.nn.NeuralNetwork;
 
+/**
+ * Class OCR. Combines TextParsing, Neural Network and Dictionary
+ * @author Corinne Zeugin, Priscilla Schneider, Adrian Schmid
+ */
 public class Ocr {
 	
 	private NeuralNetwork nn;
 	private Dictionary dic;
 	
+	/**
+	 * Initialise OCR
+	 * @param nn NeuralNetwork instance to be used
+	 * @param dic Dictionary instance to be used
+	 */
 	public Ocr(NeuralNetwork nn, Dictionary dic) {
 		this.nn = nn;
 		this.dic = dic;
 	}
 	
+	/**
+	 * Parse a given image and return the parsed text as string
+	 * @param f input image
+	 * @param consoleText a string buffer used to display a nn console in our UI.
+	 * @return parsed text
+	 */
 	public String parseImage(File f, StringBuffer consoleText) {
 		long t1 = System.currentTimeMillis();
 		
@@ -80,6 +95,10 @@ public class Ocr {
 		}
 	}
 	
+	/**
+	 * Get the dictionary
+	 * @return dictionary
+	 */
 	public Dictionary getDictionary() {
 		return dic;
 	}

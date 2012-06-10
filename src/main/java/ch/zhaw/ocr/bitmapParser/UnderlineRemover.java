@@ -4,6 +4,10 @@ import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * UnderlineRemover. Removes underlines from a list of given ContrastMatrices
+ * @author Corinne Zeugin, Priscilla Schneider, Adrian Schmid
+ */
 public class UnderlineRemover extends BitmapParserDecorator {
 
 	public UnderlineRemover(BitmapParser bp) {

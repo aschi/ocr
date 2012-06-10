@@ -8,6 +8,12 @@ import ch.zhaw.ocr.gui.MainGui;
 import ch.zhaw.ocr.nn.NeuralNetwork;
 import ch.zhaw.ocr.textRecognition.Ocr;
 
+/**
+ * Main class used to start the ocr software. Initialises dictionary, neural network and starts the gui.
+ * Contains a shutdown hook to save dictionary and knn data
+ * @author Corinne Zeugin, Priscilla Schneider, Adrian Schmid
+ *
+ */
 public class Starter {
 
 	private static Dictionary dict = null;
@@ -15,42 +21,30 @@ public class Starter {
 	private static Ocr ocr = null;
 
 	public static void main(String[] args) {
-//		Thread t = new Thread(new Runnable() {
-//			public void run() {
 				try {
 					dict = new Dictionary("production");
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
+					System.out.println("Error while loading dictionary");
 					e.printStackTrace();
 				}
-//			}
-//		});
-		
 
-//		Thread t2 = new Thread(new Runnable() {
-//			public void run() {
 				try {
 					nn = new NeuralNetwork("production");
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
+					System.out.println("Error while loading neuronal network");
 					e.printStackTrace();
 				}
 				
 				ocr = new Ocr(nn, dict);
 
 				new MainGui(ocr);
-//			}
-//		});
-//		t2.run();d
-//		t.run();
 
 		Runtime.getRuntime().addShutdownHook(new Thread() {
 			public void run() {
 				try {
-					dict.serializeMap(new File(Properties.dictionaryMapSerializiationPath));
+					dict.serializeDictionary(new File(Properties.dictionaryMapSerializiationPath));
 					nn.saveNeuronalNetwork(new File(Properties.knnSerializationPath));
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					System.out.println("Error while saving the ocr");
 					e.printStackTrace();
 				}

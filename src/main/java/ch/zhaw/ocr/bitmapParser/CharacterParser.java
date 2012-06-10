@@ -5,6 +5,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 
+/**
+ * CharacterParser. Used to split contrast matrices by identifying empty columns.
+ * @author Corinne Zeugin, Priscilla Schneider, Adrian Schmid
+ */
 public class CharacterParser extends BitmapParserDecorator {
 
 	public CharacterParser(BitmapParser bp) {
@@ -12,6 +16,11 @@ public class CharacterParser extends BitmapParserDecorator {
 		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * Splits characters by identifying empty columns
+	 * @param image BufferedImage
+	 * @return List of contrast matrices representing characters
+	 */
 	@Override
 	public List<ContrastMatrix> parse(BufferedImage image) {
 		List<ContrastMatrix> matrices = super.parse(image);

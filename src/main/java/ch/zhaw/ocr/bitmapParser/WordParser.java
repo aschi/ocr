@@ -4,6 +4,10 @@ import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * WordParser. Seperates words in a text-line. Returns a list of ContrastMatrices representing words.
+ * @author Corinne Zeugin, Priscilla Schneider, Adrian Schmid
+ */
 public class WordParser extends BitmapParserDecorator {
 
 	public WordParser(BitmapParser bp) {

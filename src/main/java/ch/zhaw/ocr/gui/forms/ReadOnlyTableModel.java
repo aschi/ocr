@@ -3,8 +3,8 @@ package ch.zhaw.ocr.gui.forms;
 import javax.swing.table.DefaultTableModel;
 
 /**
- * Klasse wird verwendet um ReadOnly JTables darzustellen. Wird für alle Listenansichten verwendet.
- * @author adrian
+ * Class used to display read only tables.
+ * @author Corinne Zeugin, Priscilla Schneider, Adrian Schmid
  */
 public class ReadOnlyTableModel extends DefaultTableModel {
 	public ReadOnlyTableModel(){
@@ -17,7 +17,7 @@ public class ReadOnlyTableModel extends DefaultTableModel {
 	}
 	
 	/**
-	 * Gibt unabhängig von den Paramtern false (= nicht editierbar) zurück
+	 * Returns false for any input (= not editable)
 	 * @param row
 	 * @param column
 	 */

@@ -3,6 +3,10 @@ package ch.zhaw.ocr;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Global configuration of the OCR software 
+ * @author Corinne Zeugin, Priscilla Schneider, Adrian Schmid
+ */
 public final class Properties {
 	public static final char unknownChar = '~';
 	
