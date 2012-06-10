@@ -13,7 +13,7 @@ import ch.zhaw.ocr.gui.MainGui;
 import ch.zhaw.ocr.gui.helper.SpringUtilities;
 
 /**
- * Neural Network Console
+ * Neural Network Console offers an overview about the work of the neuronal network
  * @author Corinne Zeugin, Priscilla Schneider, Adrian Schmid
  */
 public class NnConsoleTab {
@@ -22,12 +22,19 @@ public class NnConsoleTab {
 	private JTextArea consoleText;
 	private MainGui gui;
 	
-        
+      
+	/**
+	 * Constructor
+	 * @param gui main gui
+	 */
     public NnConsoleTab(MainGui gui) {
         this.gui = gui;
         createPanel();
     }
 	
+    /**
+     * generates the textarea which is showed on the tab 
+     */
 	public void generateTextArea() {			
 			JPanel nPanel = new JPanel(new SpringLayout());
 			
@@ -47,6 +54,10 @@ public class NnConsoleTab {
 		
 	}
 	
+	/**
+	 * returns the main-nnconsole-tab-panel
+	 * @return JPanel
+	 */
 	public JPanel getPanel(){
 		return panel;
 	}
@@ -66,10 +77,18 @@ public class NnConsoleTab {
         return nPanel;
 	}	
 	
+	/**
+	 * sets the text which is showed in the teextarea
+	 * @param sb StringBuffer
+	 */
 	public void setConsoleText(StringBuffer sb) {
 		consoleText.setText(sb.toString());
 	}
 	
+	/**
+	 * returns the textarea which is showed in the tab
+	 * @return JTextArea
+	 */
 	public JTextArea getNeuronText(){
 		return consoleText;
 	}

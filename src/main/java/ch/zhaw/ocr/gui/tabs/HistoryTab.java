@@ -14,6 +14,11 @@ import javax.swing.JTextArea;
 import ch.zhaw.ocr.gui.MainGui;
 import ch.zhaw.ocr.gui.helper.TextFileHandler;
 
+/**
+ * HistoryTab offers an UI to show a history of analysed images
+ * @author Corinne Zeugin, Priscilla Schneider, Adrian Schmid
+ * 
+ */
 public class HistoryTab {
 	private JTextArea historyText;
 	private JPanel panel;
@@ -23,11 +28,18 @@ public class HistoryTab {
 	private ImageIcon img;
 	private HistoryNavigation inavi;
 
+	/**
+	 * Constructor
+	 * @param gui main gui
+	 */
 	public HistoryTab(MainGui gui) {
 		this.gui = gui;
 		createPanel();
 	}
 
+	/**
+	 * creates the main panel of the history tab with all elements
+	 */
 	public void createPanel() {
 
 		panel = new JPanel(new BorderLayout());
@@ -41,10 +53,18 @@ public class HistoryTab {
 		panel.add(centerPanel, BorderLayout.CENTER);
 	}
 	
+	/**
+	 * returns the inputnavigation (JTree with all analysed images)
+	 * @return HistoryNavigation
+	 */
 	public HistoryNavigation getInputNavitation() {
 		return inavi;
 	}
 
+	/**
+	 * loads the image into the label and shows it on the top of the tab
+	 * @param img
+	 */
 	public void loadImage(BufferedImage img) {
 
 		if (img == null) {
@@ -66,10 +86,19 @@ public class HistoryTab {
 
 	}
 
+	/**
+	 * sets the image
+	 * @param img BufferedImage
+	 */
 	public void setImg(BufferedImage img) {
 		this.img = new ImageIcon(img);
 	}
 
+	/**
+	 * sets the text of the choosen analysed image which has to be showned on the tab
+	 * @param datei filename as String
+	 * @throws IOException when there was a problem while reading the file
+	 */
 	public void setText(String datei) throws IOException {
 
 		historyText.setText(TextFileHandler.readTextFile(datei));
@@ -86,6 +115,10 @@ public class HistoryTab {
 		return areaPanel;
 	}
 
+	/**
+	 * returns the main-history-tab-panel
+	 * @return JPanel
+	 */
 	public JPanel getPanel() {
 		return panel;
 	}

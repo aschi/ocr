@@ -19,21 +19,30 @@ import javax.swing.tree.TreePath;
 import ch.zhaw.ocr.Properties;
 import ch.zhaw.ocr.gui.MainGui;
 
-
+/**
+ * HistoryNavigation offers a navigation over analysed images. its used from HistoryTab
+ * Handels the navigation over the analysed images with a JTree
+ * @author Corinne Zeugin, Priscilla Schneider, Adrian Schmid
+ */
 public class HistoryNavigation {
-
-	// protected static final String HISTORYPANEL = null;
 
 	private JPanel panel;
 	private JTree tree;
 	private DefaultMutableTreeNode top;
 	private MainGui gui;
 
+	/**
+	 * Constructor
+	 * @param gui main gui
+	 */
 	public HistoryNavigation(MainGui gui) {
 		this.gui = gui;
 		createPanel();
 	}
 
+	/**
+	 * default constructor
+	 */
 	public HistoryNavigation() {
 		createPanel();
 	}
@@ -45,10 +54,17 @@ public class HistoryNavigation {
 		panel.add(tree, BorderLayout.CENTER);
 	}
 
+	/**
+	 * returns the Jtree-Panel
+	 * @return
+	 */
 	public JPanel getPanel() {
 		return panel;
 	}
 
+	/**
+	 * Loads all analysed images for the JTree
+	 */
 	public void loadImageTree() {
 
 			top = new DefaultMutableTreeNode("List of used Images:");

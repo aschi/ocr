@@ -150,6 +150,10 @@ public class InputTab {
     	
     }
 
+	/**
+	 * returns the main-input-tab-panel
+	 * @return JPanel
+	 */
 	public JPanel getPanel() {
 		return panel;
 	}

@@ -24,8 +24,9 @@ import ch.zhaw.ocr.gui.helper.ReadOnlyTableModel;
 import ch.zhaw.ocr.gui.helper.SpringUtilities;
 
 /**
- * 
- * @author adrian
+ * DictionaryTab offerrs an UI for an overview about all words in the dictionary and
+ * also offers the opportunity to change words
+ * @author Corinne Zeugin, Priscilla Schneider, Adrian Schmid
  *
  */
 public class DictionaryTab {	
@@ -50,6 +51,10 @@ public class DictionaryTab {
 	private JTextField correctField;
 	private JTextField resultField;
 	
+	/**
+	 * Constructor
+	 * @param gui main gui
+	 */
     public DictionaryTab(MainGui gui) {
         this.dic = gui.getOcr().getDictionary();
 
@@ -60,6 +65,9 @@ public class DictionaryTab {
         createPanel();
     }
     
+    /**
+     * this method creates the dictionary-tab-main-panel with all elements (textarea, JTree, Button)
+     */
     public void createPanel() {
     	
     	panel = new JPanel(new BorderLayout());
@@ -178,7 +186,10 @@ public class DictionaryTab {
     	return abcPanel;
     }
     
-
+    /**
+     * Returns the main-dictionary-tab-panel
+     * @return JPanel
+     */
     public JPanel getPanel() {
     	return panel;
     }
