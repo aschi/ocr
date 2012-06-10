@@ -1,13 +1,11 @@
 package ch.zhaw.ocr.nn.helper;
 
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 import hu.kazocsaba.math.matrix.Matrix;
 import hu.kazocsaba.math.matrix.MatrixFactory;
 
 import org.junit.Test;
 
-import ch.zhaw.ocr.nn.helper.MatrixHelper;
 import de.jungblut.math.DoubleVector;
 import de.jungblut.math.dense.DenseDoubleVector;
 
@@ -49,47 +47,83 @@ public class MatrixHelperTest {
 	
 	@Test
 	public void unmergeThetasTest(){
-		fail("Not yet implemented");
+		Matrix m = MatrixFactory.createMatrix(new double[][]{{1},{4},{2},{5},{3},{6},{4},{1},{5},{2},{6},{3}});
+		
+		Matrix expected1 = MatrixFactory.createMatrix(new double[][]{{1,2,3},{4,5,6}});
+		Matrix expected2 = MatrixFactory.createMatrix(new double[][]{{4,5,6},{1,2,3}});
+		
+		Matrix[] result = MatrixHelper.unmergeThetas(m, 2, 2, 2);
+
+		boolean equals = true;
+		if(!MatrixHelper.matrixEquals(result[0], expected1)){
+			equals = false;
+		}
+		if(!MatrixHelper.matrixEquals(result[1], expected2)){
+			equals = false;
+		}
+		assertTrue(equals);
 	}
 	
 	@Test
 	public void mergeThetasTest(){
-		fail("Not yet implemented");
+		Matrix m1 = MatrixFactory.createMatrix(new double[][]{{1,2,3},{4,5,6}});
+		Matrix m2 = MatrixFactory.createMatrix(new double[][]{{4,5,6},{1,2,3}});
+		
+		Matrix expected = MatrixFactory.createMatrix(new double[][]{{1},{4},{2},{5},{3},{6},{4},{1},{5},{2},{6},{3}});
+		
+		assertTrue(MatrixHelper.matrixEquals(MatrixHelper.mergeThetas(m1, m2), expected));
 	}
 	
 	@Test
 	public void maxTest(){
-		fail("Not yet implemented");
+		Matrix m1 = MatrixFactory.createMatrix(new double[][]{{1,2,3}});
+		assertTrue(MatrixHelper.max(m1) == 3);
 	}
 	
 	@Test
 	public void sumTest(){
-		fail("Not yet implemented");
+		Matrix m1 = MatrixFactory.createMatrix(new double[][]{{1,2,3}});
+		assertTrue(MatrixHelper.sum(m1) == 6);
 	}
 	
 	@Test
 	public void addScalarTest(){
-		fail("Not yet implemented");
+		Matrix m1 = MatrixFactory.createMatrix(new double[][]{{1,2,3}});
+		Matrix expected = MatrixFactory.createMatrix(new double[][]{{2,3,4}});
+		assertTrue(MatrixHelper.matrixEquals(MatrixHelper.addScalar(m1, 1), expected));
 	}
 	
 	@Test
 	public void logTest(){
-		fail("Not yet implemented");
+		Matrix m1 = MatrixFactory.createMatrix(new double[][]{{1,2,3}});
+		Matrix expected = MatrixFactory.createMatrix(new double[][]{{Math.log(1),Math.log(2),Math.log(3)}});
+		assertTrue(MatrixHelper.matrixEquals(MatrixHelper.log(m1), expected));
 	}
 	
 	@Test
 	public void add1ToVectorVerticalTest(){
-		fail("Not yet implemented");
+		Matrix m1 = MatrixFactory.createMatrix(new double[][]{{1},{2},{3}});
+		Matrix expected = MatrixFactory.createMatrix(new double[][]{{1},{1},{2},{3}});
+		
+		assertTrue(MatrixHelper.matrixEquals(expected, MatrixHelper.add1ToVector(m1, "vertical")));
 	}
 	
 	@Test
 	public void add1ToVectorHorizontalTest(){
-		fail("Not yet implemented");
+		Matrix m1 = MatrixFactory.createMatrix(new double[][]{{1,2,3}});
+		Matrix expected = MatrixFactory.createMatrix(new double[][]{{1,1,2,3}});
+		
+		assertTrue(MatrixHelper.matrixEquals(expected, MatrixHelper.add1ToVector(m1, "horizontal")));
 	}
 	
 	@Test
 	public void elementMultiplicationTest(){
-		fail("Not yet implemented");
+		Matrix m1 = MatrixFactory.createMatrix(new double[][]{{1,2,3},{3,4,5}});
+		Matrix m2 = MatrixFactory.createMatrix(new double[][]{{1,2,3},{3,4,5}});
+			
+		Matrix expected = MatrixFactory.createMatrix(new double[][]{{1,4,9},{9,16,25}});
+		
+		assertTrue(MatrixHelper.matrixEquals(MatrixHelper.elementMultiplication(m1, m2), expected));
 	}
 	
 	@Test

@@ -33,6 +33,10 @@ import ch.zhaw.ocr.gui.helper.SpringUtilities;
 import ch.zhaw.ocr.gui.helper.TextFileFilter;
 import ch.zhaw.ocr.gui.helper.TextFileHandler;
 
+/**
+ * InputTab. Offers a UI to parse an image and display the result. 
+ * @author Corinne Zeugin, Priscilla Schneider, Adrian Schmid
+ */
 public class InputTab {
 
 	final JFileChooser fc = new JFileChooser();
@@ -48,12 +52,6 @@ public class InputTab {
 	public InputTab(MainGui gui) {
 		this.gui = gui;
 		createPanel();
-	}
-
-	public InputTab() {
-
-		createPanel();
-
 	}
 
 	private void createPanel() {

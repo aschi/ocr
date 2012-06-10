@@ -6,6 +6,7 @@ import javax.swing.table.DefaultTableModel;
  * Class used to display read only tables.
  * @author Corinne Zeugin, Priscilla Schneider, Adrian Schmid
  */
+@SuppressWarnings("serial")
 public class ReadOnlyTableModel extends DefaultTableModel {
 	public ReadOnlyTableModel(){
 		super();		

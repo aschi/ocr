@@ -15,7 +15,6 @@ import ch.zhaw.ocr.gui.MainGui;
 import ch.zhaw.ocr.gui.helper.TextFileHandler;
 
 public class HistoryTab {
-
 	private JTextArea historyText;
 	private JPanel panel;
 	private JPanel imgPanel;
@@ -26,10 +25,6 @@ public class HistoryTab {
 
 	public HistoryTab(MainGui gui) {
 		this.gui = gui;
-		createPanel();
-	}
-
-	public HistoryTab() {
 		createPanel();
 	}
 
@@ -62,7 +57,7 @@ public class HistoryTab {
 		}
 		if (imgLabel == null) {
 			imgLabel = new JLabel(this.img);
-			imgPanel.add(imgLabel);
+			imgPanel.add(new JScrollPane(imgLabel));
 		}
 		imgLabel.setIcon(this.img);
 		
