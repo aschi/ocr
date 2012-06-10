@@ -1,4 +1,4 @@
-package ch.zhaw.ocr.gui.forms;
+package ch.zhaw.ocr.gui.tabs;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -20,11 +20,16 @@ import javax.swing.SpringLayout;
 
 import ch.zhaw.ocr.dictionary.Dictionary;
 import ch.zhaw.ocr.gui.MainGui;
+import ch.zhaw.ocr.gui.helper.ReadOnlyTableModel;
+import ch.zhaw.ocr.gui.helper.SpringUtilities;
 
-public class DictionaryForm {
-	
+/**
+ * 
+ * @author adrian
+ *
+ */
+public class DictionaryTab {	
 	private final static int SHOWENTRIES = 500;
-
 
 	private JPanel panel;
 	private JPanel areaPanel;
@@ -45,7 +50,7 @@ public class DictionaryForm {
 	private JTextField correctField;
 	private JTextField resultField;
 	
-    public DictionaryForm(MainGui gui) {
+    public DictionaryTab(MainGui gui) {
         this.dic = gui.getOcr().getDictionary();
 
     	nextButton = new JButton("Show next entries");

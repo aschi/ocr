@@ -1,4 +1,4 @@
-package ch.zhaw.ocr.gui.forms;
+package ch.zhaw.ocr.gui.tabs;
 
 import java.awt.BorderLayout;
 import java.awt.image.BufferedImage;
@@ -14,7 +14,7 @@ import javax.swing.JTextArea;
 import ch.zhaw.ocr.gui.MainGui;
 import ch.zhaw.ocr.gui.helper.TextFileHandler;
 
-public class HistoryForm {
+public class HistoryTab {
 
 	private JTextArea historyText;
 	private JPanel panel;
@@ -24,12 +24,12 @@ public class HistoryForm {
 	private ImageIcon img;
 	private HistoryNavigation inavi;
 
-	public HistoryForm(MainGui gui) {
+	public HistoryTab(MainGui gui) {
 		this.gui = gui;
 		createPanel();
 	}
 
-	public HistoryForm() {
+	public HistoryTab() {
 		createPanel();
 	}
 

@@ -1,4 +1,4 @@
-package ch.zhaw.ocr.gui.forms;
+package ch.zhaw.ocr.gui.tabs;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -29,10 +29,11 @@ import javax.swing.SpringLayout;
 import ch.zhaw.ocr.Properties;
 import ch.zhaw.ocr.gui.MainGui;
 import ch.zhaw.ocr.gui.helper.ImageFileFilter;
+import ch.zhaw.ocr.gui.helper.SpringUtilities;
 import ch.zhaw.ocr.gui.helper.TextFileFilter;
 import ch.zhaw.ocr.gui.helper.TextFileHandler;
 
-public class InputForm {
+public class InputTab {
 
 	final JFileChooser fc = new JFileChooser();
 
@@ -44,12 +45,12 @@ public class InputForm {
 	private MainGui gui;
 	private JPanel panel;
 
-	public InputForm(MainGui gui) {
+	public InputTab(MainGui gui) {
 		this.gui = gui;
 		createPanel();
 	}
 
-	public InputForm() {
+	public InputTab() {
 
 		createPanel();
 

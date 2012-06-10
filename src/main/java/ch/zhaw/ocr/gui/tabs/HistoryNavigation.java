@@ -1,4 +1,4 @@
-package ch.zhaw.ocr.gui.forms;
+package ch.zhaw.ocr.gui.tabs;
 
 import java.awt.BorderLayout;
 import java.awt.event.MouseAdapter;
@@ -18,6 +18,7 @@ import javax.swing.tree.TreePath;
 
 import ch.zhaw.ocr.Properties;
 import ch.zhaw.ocr.gui.MainGui;
+
 
 public class HistoryNavigation {
 

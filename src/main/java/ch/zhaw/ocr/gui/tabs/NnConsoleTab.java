@@ -1,4 +1,4 @@
-package ch.zhaw.ocr.gui.forms;
+package ch.zhaw.ocr.gui.tabs;
 
 import java.awt.BorderLayout;
 
@@ -10,19 +10,20 @@ import javax.swing.JTextArea;
 import javax.swing.SpringLayout;
 
 import ch.zhaw.ocr.gui.MainGui;
+import ch.zhaw.ocr.gui.helper.SpringUtilities;
 
 /**
  * Neural Network Console
  * @author Corinne Zeugin, Priscilla Schneider, Adrian Schmid
  */
-public class NnConsole {
+public class NnConsoleTab {
 	
 	private JPanel panel;
 	private JTextArea consoleText;
 	private MainGui gui;
 	
         
-    public NnConsole(MainGui gui) {
+    public NnConsoleTab(MainGui gui) {
         this.gui = gui;
         createPanel();
     }

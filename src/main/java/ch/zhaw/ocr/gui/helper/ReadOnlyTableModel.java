@@ -1,4 +1,4 @@
-package ch.zhaw.ocr.gui.forms;
+package ch.zhaw.ocr.gui.helper;
 
 import javax.swing.table.DefaultTableModel;
 

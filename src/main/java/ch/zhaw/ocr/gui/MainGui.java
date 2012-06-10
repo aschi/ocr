@@ -7,10 +7,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
-import ch.zhaw.ocr.gui.forms.DictionaryForm;
-import ch.zhaw.ocr.gui.forms.HistoryForm;
-import ch.zhaw.ocr.gui.forms.InputForm;
-import ch.zhaw.ocr.gui.forms.NnConsole;
+import ch.zhaw.ocr.gui.tabs.DictionaryTab;
+import ch.zhaw.ocr.gui.tabs.HistoryTab;
+import ch.zhaw.ocr.gui.tabs.InputTab;
+import ch.zhaw.ocr.gui.tabs.NnConsoleTab;
 import ch.zhaw.ocr.textRecognition.Ocr;
 
 /**
@@ -25,9 +25,9 @@ public class MainGui {
 	private JPanel historyPanel;
 	private JPanel dictionaryPanel;
 	private Ocr ocr;
-	private HistoryForm hForm;
-	private DictionaryForm dForm;
-	private NnConsole nnConsole;
+	private HistoryTab hForm;
+	private DictionaryTab dForm;
+	private NnConsoleTab nnConsole;
 	private StringBuffer consoleText;
 	
 	/**
@@ -80,14 +80,14 @@ public class MainGui {
 	}
 	
 	private JComponent createInputPanel(){
-		InputForm iform = new InputForm(this);
+		InputTab iform = new InputTab(this);
 		inputPanel.add(iform.getPanel(), BorderLayout.CENTER);
 		
 		return inputPanel;
 	}
 	
 	private JComponent createKnnPanel() {
-		nnConsole = new NnConsole(this);
+		nnConsole = new NnConsoleTab(this);
 		nnConsole.generateTextArea();
 		knnPanel.add(nnConsole.getPanel(), BorderLayout.CENTER);
 		
@@ -95,14 +95,14 @@ public class MainGui {
 	}
 	
 	private JComponent createHistoryPanel() {
-		hForm = new HistoryForm(this);
+		hForm = new HistoryTab(this);
 		historyPanel.add(hForm.getPanel(), BorderLayout.CENTER);
 		
 		return historyPanel;
 	}
 	
 	private JComponent createDictionaryPanel() {
-		dForm = new DictionaryForm(this);
+		dForm = new DictionaryTab(this);
 		dictionaryPanel.add(dForm.getPanel(), BorderLayout.CENTER);
 		
 		return dictionaryPanel;
@@ -112,7 +112,7 @@ public class MainGui {
 	 * Get history form
 	 * @return history form
 	 */
-	public HistoryForm getHistoryForm() {
+	public HistoryTab getHistoryForm() {
 		return hForm;
 		
 	}
@@ -121,7 +121,7 @@ public class MainGui {
 	 * Get NeuralNetwork Console instance
 	 * @return nn console
 	 */
-	public NnConsole getKnnPanel() {
+	public NnConsoleTab getKnnPanel() {
 		return nnConsole;
 	}
 	
