@@ -26,7 +26,7 @@ import de.jungblut.math.tuple.Tuple;
  * NeuralNetwork training used to train a neural network
  * @author Corinne Zeugin, Priscilla Schneider, Adrian Schmid
  */
-public class NeuronalNetworkTraining {
+public class NeuralNetworkTraining {
 	private BackPropagation bp;
 	private List<Matrix> in;
 	private List<Integer> expectedOutput;
@@ -38,7 +38,7 @@ public class NeuronalNetworkTraining {
 	 * Create a neural network training instance.
 	 * @param resourceFolder resource folder used by this instance
 	 */
-	public NeuronalNetworkTraining(File resourceFolder) {
+	public NeuralNetworkTraining(File resourceFolder) {
 		this.resourceFolder = resourceFolder;
 		bp = new BackPropagation();
 	}

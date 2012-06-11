@@ -106,7 +106,7 @@ public class NeuralNetwork {
 	 * @param resourceFolder
 	 */
 	private void buildNeuronalNetwork(File resourceFolder){
-		NeuronalNetworkTraining nnt = new NeuronalNetworkTraining(resourceFolder);
+		NeuralNetworkTraining nnt = new NeuralNetworkTraining(resourceFolder);
 		nnt.trainNetwork(this, "random");
 	}
 	

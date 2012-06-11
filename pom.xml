@@ -13,48 +13,66 @@
   <properties>
     <slf4j.version>1.5.11</slf4j.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <version.maven-jar-plugin>2.4</version.maven-jar-plugin>
-    <version.maven-dependency-plugin>2.4</version.maven-dependency-plugin>
   </properties>
 
   <build>
-	<!-- JAR -->
+	<defaultGoal>install</defaultGoal>
 	<plugins>
-	<plugin>
-	  <groupId>org.apache.maven.plugins</groupId>
-	  <artifactId>maven-jar-plugin</artifactId>
-	  <version>${version.maven-jar-plugin}</version>
-	  <configuration>
-	    <finalname>${project.artifactId}</finalname>
-	    <archive>
-	      <manifest>
-		<mainclass>ch.zhaw.ocr.Starter</mainclass>
-		<addclasspath>true</addclasspath>
-	      </manifest>
-	    </archive>
-	  </configuration>
-	</plugin>
-
-	<plugin>
-	  <groupId>org.apache.maven.plugins</groupId>
-	  <artifactId>maven-dependency-plugin</artifactId>
-	  <version>${version.maven-dependency-plugin}</version>
-	  <configuration>
-	    <outputDirectory>${project.build.directory}/classes</outputDirectory>
-	  </configuration>
-	  <executions>
-	    <execution>
-	      <id>unpack-dependencies</id>
-	      <phase>prepare-package</phase>
-	      <goals>
-		<goal>unpack-dependencies</goal>
-	      </goals>
-	    </execution>
-	  </executions>
-	</plugin>
+	  <plugin>
+	    <artifactId>maven-compiler-plugin</artifactId>
+	    <version>2.3.2</version>
+	    <configuration>
+	      <source>1.6</source>
+	      <target>1.6</target>
+	    </configuration>
+	  </plugin>
+	  <plugin>
+	    <groupId>org.apache.maven.plugins</groupId>
+	    <artifactId>maven-jar-plugin</artifactId>
+	    <version>2.3.1</version>
+	    <configuration>
+	      <archive>
+		<manifest>
+		  <addClasspath>true</addClasspath>
+		  <mainClass>ch.zhaw.ocr.Starter</mainClass>
+		</manifest>
+	      </archive>
+	    </configuration>
+	  </plugin>
+	  <plugin>
+	    <artifactId>maven-assembly-plugin</artifactId>
+	    <configuration>
+	      <descriptorRefs>
+		<descriptorRef>jar-with-dependencies</descriptorRef>
+	      </descriptorRefs>
+	      <archive>
+		<manifest>
+		  <mainClass>ch.zhaw.ocr.Starter</mainClass>
+		</manifest>
+	      </archive>
+	    </configuration>
+	    <executions>
+	      <execution>
+		<id>make-my-jar-with-dependencies</id>
+		<phase>package</phase>
+		<goals>
+		  <goal>single</goal>
+		</goals>
+	      </execution>
+	    </executions>
+	  </plugin>
 	</plugins>
   </build>
 
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.8.1</version>
+      </plugin>
+    </plugins>
+  </reporting>
 
   <dependencies>
 	<dependency>
@@ -69,12 +87,6 @@
 		<artifactId>jcl-over-slf4j</artifactId>
 		<version>1.5.11</version>
 		<scope>compile</scope>
-	</dependency>
-
-	<dependency>
-		<groupId>org.xerial</groupId>
-		<artifactId>sqlite-jdbc</artifactId>
-		<version>3.6.16</version>
 	</dependency>
 
 	<!-- matrix operations -->
