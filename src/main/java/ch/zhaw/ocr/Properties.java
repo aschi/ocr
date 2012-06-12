@@ -15,11 +15,16 @@ public final class Properties {
  	 */
 	public static final String historyResourcefoler = "history";
 	
+	/**
+	 * FileSeparator
+	 */
+	public static final String fileSeparator = System.getProperty("file.separator");
+	
 	/*
 	 * Dictionary Configuration
 	 */
-	public static final String dictionaryMapSerializiationPath = "res/dictionary.ser";
-	public static final String dictionaryResourceFolder = "res/dictionaryMaterial";
+	public static final String dictionaryMapSerializiationPath = "res" + fileSeparator + "dictionary.ser";
+	public static final String dictionaryResourceFolder = "res" + fileSeparator + "dictionaryMaterial";
 
 	
 	/*
@@ -40,7 +45,7 @@ public final class Properties {
 	
 	public static final int knnMaxIterationCount = 500;
 	
-	public static final String knnResourcePath = "res/knnMaterial";
-	public static final String knnSerializationPath = "res/knn.ser";
+	public static final String knnResourcePath = "res" + fileSeparator + "knnMaterial";
+	public static final String knnSerializationPath = "res" + fileSeparator + "knn.ser";
 	
 }

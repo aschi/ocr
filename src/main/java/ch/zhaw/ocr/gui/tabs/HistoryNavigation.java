@@ -98,7 +98,7 @@ public class HistoryNavigation {
 
 								if ((k.substring(k.lastIndexOf(0) + 1,
 										k.lastIndexOf('.')) + ".txt").equals(st
-										.substring(st.lastIndexOf('/') + 1))) {
+										.substring(st.lastIndexOf(Properties.fileSeparator) + 1))) {
 									try {
 										gui.getHistoryForm().setText(st);
 										;
@@ -108,7 +108,7 @@ public class HistoryNavigation {
 									}
 								} else {
 									if (k.equals((st.substring(st
-											.lastIndexOf('/') + 1)))) {
+											.lastIndexOf(Properties.fileSeparator) + 1)))) {
 										BufferedImage img;
 										try {
 											img = ImageIO.read(new File(st));
