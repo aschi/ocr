@@ -10,9 +10,9 @@ import ch.zhaw.ocr.bitmapParser.ContrastMatrix;
  */
 public class CharacterRepresentation {
 	private ContrastMatrix characterM;
-	private double[][] comparisonVector = new double[1][Properties.knnInputLayerSize];
+	private double[][] comparisonVector = new double[1][Properties.nnInputLayerSize];
 
-	private int fieldNo = (int) Math.sqrt(Properties.knnInputLayerSize);
+	private int fieldNo = (int) Math.sqrt(Properties.nnInputLayerSize);
 
 	/*
 	 * comparisonVector: Split character matrix into 400 parts (20x20)

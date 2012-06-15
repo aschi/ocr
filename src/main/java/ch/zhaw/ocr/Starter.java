@@ -43,7 +43,7 @@ public class Starter {
 			public void run() {
 				try {
 					dict.serializeDictionary(new File(Properties.dictionaryMapSerializiationPath));
-					nn.saveNeuronalNetwork(new File(Properties.knnSerializationPath));
+					nn.saveNeuronalNetwork(new File(Properties.nnSerializationPath));
 				} catch (IOException e) {
 					System.out.println("Error while saving the ocr");
 					e.printStackTrace();

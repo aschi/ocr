@@ -24,6 +24,7 @@ import de.jungblut.math.tuple.Tuple;
 
 /**
  * NeuralNetwork training used to train a neural network
+ * 
  * @author Corinne Zeugin, Priscilla Schneider, Adrian Schmid
  */
 public class NeuralNetworkTraining {
@@ -33,10 +34,12 @@ public class NeuralNetworkTraining {
 	private Matrix theta1;
 	private Matrix theta2;
 	private File resourceFolder;
-
+	
 	/**
 	 * Create a neural network training instance.
-	 * @param resourceFolder resource folder used by this instance
+	 * 
+	 * @param resourceFolder
+	 *            resource folder used by this instance
 	 */
 	public NeuralNetworkTraining(File resourceFolder) {
 		this.resourceFolder = resourceFolder;
@@ -44,20 +47,27 @@ public class NeuralNetworkTraining {
 	}
 
 	/**
-	 * Trains a neural network using the files in the given resourceFolder. These files should contain 1 character for each output neuron
-	 * @param nn neural network to be trained
+	 * Trains a neural network using the files in the given resourceFolder.
+	 * These files should contain 1 character for each output neuron
+	 * 
+	 * @param nn
+	 *            neural network to be trained
 	 * @param thetaMode
 	 *            "random" = create new random thetas.
 	 */
-	public void trainNetwork(NeuralNetwork nn, String thetaMode) {
+	public void trainNetwork(NeuralNetwork nn, String thetaMode,
+			int maxIterationCount) {
 		// initialize thetas
 		if (thetaMode.equals("random") || nn.getTheta1() == null
 				|| nn.getTheta2() == null) {
 			// initialize thetas randomly
-			theta1 = bp.randInitializeWeights(Properties.knnHiddenLayerSize,
-					Properties.knnInputLayerSize);
-			theta2 = bp.randInitializeWeights(Properties.knnOutputLayerSize,
-					Properties.knnHiddenLayerSize);
+			long t1 = System.currentTimeMillis();
+			System.out.println("randomly initialising thetas...");
+			theta1 = bp.randInitializeWeights(Properties.nnHiddenLayerSize,
+					Properties.nnInputLayerSize);
+			theta2 = bp.randInitializeWeights(Properties.nnOutputLayerSize,
+					Properties.nnHiddenLayerSize);
+			System.out.println("thetas initialised...("+(System.currentTimeMillis()-t1)+"ms)");
 		} else {
 			theta1 = nn.getTheta1();
 			theta2 = nn.getTheta2();
@@ -66,35 +76,37 @@ public class NeuralNetworkTraining {
 		// get input from resource folder
 		BitmapParser bmp = new CharacterParser(new SimpleBitmapParser());
 
-		in = new ArrayList<Matrix>();
-		expectedOutput = new ArrayList<Integer>();
+		if (in == null || expectedOutput == null || in.size() == 0) {
 
-		int i = 0;
+			in = new ArrayList<Matrix>();
+			expectedOutput = new ArrayList<Integer>();
 
-		try {
-			for (File f : resourceFolder.listFiles()) {
-				i = 0;
-				if (f.getName().length() > 4
-						&& f.getName().substring(f.getName().length() - 3)
-								.equals("jpg")
-						|| f.getName().substring(f.getName().length() - 3)
-								.equals("png")) {
-					
-					for (ContrastMatrix cm : bmp.parse(ImageIO.read(f))) {
-						cm.trim();
-						in.add(MatrixFactory
-								.createMatrix(new CharacterRepresentation(cm)
-										.getComparisonVector()));
-						expectedOutput.add(i);
-						i++;
+			int i = 0;
+
+			try {
+				for (File f : resourceFolder.listFiles()) {
+					i = 0;
+					if (f.getName().length() > 4
+							&& f.getName().substring(f.getName().length() - 3)
+									.equals("jpg")
+							|| f.getName().substring(f.getName().length() - 3)
+									.equals("png")) {
+
+						for (ContrastMatrix cm : bmp.parse(ImageIO.read(f))) {
+							cm.trim();
+							in.add(MatrixFactory
+									.createMatrix(new CharacterRepresentation(
+											cm).getComparisonVector()));
+							expectedOutput.add(i);
+							i++;
+						}
 					}
 				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
-
 		// declare cost function in an "minimizable" form
 		CostFunction inlineFunction = new CostFunction() {
 			@Override
@@ -102,9 +114,9 @@ public class NeuralNetworkTraining {
 
 				CostFunctionResult rv = bp.nnCostFunction(
 						MatrixHelper.convertToMatrix(input),
-						Properties.knnInputLayerSize,
-						Properties.knnHiddenLayerSize,
-						Properties.knnOutputLayerSize, in, expectedOutput);
+						Properties.nnInputLayerSize,
+						Properties.nnHiddenLayerSize,
+						Properties.nnOutputLayerSize, in, expectedOutput);
 
 				return new Tuple<Double, DoubleVector>(rv.getJ(),
 						MatrixHelper.convertToDoubleVector(rv.getTheta1Grad()));
@@ -114,13 +126,13 @@ public class NeuralNetworkTraining {
 		// minimize function using the Fmincg implementation of thomas jungblut
 		DoubleVector minimizeFunction = Fmincg.minimizeFunction(inlineFunction,
 				MatrixHelper.convertToDoubleVector(MatrixHelper.mergeThetas(
-						theta1, theta2)), Properties.knnMaxIterationCount, true);
+						theta1, theta2)), maxIterationCount, true);
 
 		// read thetas
 		Matrix[] thetas = MatrixHelper.unmergeThetas(
 				MatrixHelper.convertToMatrix(minimizeFunction),
-				Properties.knnInputLayerSize, Properties.knnHiddenLayerSize,
-				Properties.knnOutputLayerSize);
+				Properties.nnInputLayerSize, Properties.nnHiddenLayerSize,
+				Properties.nnOutputLayerSize);
 
 		// write thetas back to the given neuronal network
 		nn.setTheta1(thetas[0]);

@@ -30,10 +30,10 @@ public final class Properties {
 	/*
 	 * KNN Configuration
 	 */
-	public static final int knnInputLayerSize = 400;
-	public static final int knnHiddenLayerSize = 250;
+	public static final int nnInputLayerSize = 400;
+	public static final int nnHiddenLayerSize = 250;
 	
-	public static final List<Character> knnOutputLayer = Arrays.asList('A', 'B',
+	public static final List<Character> nnOutputLayer = Arrays.asList('A', 'B',
 			'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O',
 			'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'Ä', 'Ö',
 			'Ü', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
@@ -41,11 +41,11 @@ public final class Properties {
 			'z', 'ä', 'ö', 'ü', '0', '1', '2', '3', '4', '5', '6', '7', '8',
 			'9', '.', ',', ':', ';', '?', '!');
 	
-	public static final int knnOutputLayerSize = knnOutputLayer.size();
+	public static final int nnOutputLayerSize = nnOutputLayer.size();
 	
-	public static final int knnMaxIterationCount = 500;
+	public static final int nnMaxIterationCount = 500;
 	
-	public static final String knnResourcePath = "res" + fileSeparator + "knnMaterial";
-	public static final String knnSerializationPath = "res" + fileSeparator + "knn.ser";
+	public static final String nnResourcePath = "res" + fileSeparator + "knnMaterial";
+	public static final String nnSerializationPath = "res" + fileSeparator + "knn.ser";
 	
 }

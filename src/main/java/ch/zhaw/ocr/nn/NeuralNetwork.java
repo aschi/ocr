@@ -31,14 +31,14 @@ public class NeuralNetwork {
 	 */
 	public NeuralNetwork(String mode) throws IOException{
 		if(mode.equals("production")){
-			File f = new File(Properties.knnSerializationPath);
+			File f = new File(Properties.nnSerializationPath);
 			if(f.exists()){
 				loadNeuronalNetwork(f);
 			}else{
-				buildNeuronalNetwork(new File(Properties.knnResourcePath));
+				buildNeuronalNetwork(new File(Properties.nnResourcePath));
 			}
 		}else if(mode.equals("rebuild")){
-			buildNeuronalNetwork(new File(Properties.knnResourcePath));
+			buildNeuronalNetwork(new File(Properties.nnResourcePath));
 		}
 	}
 
@@ -70,11 +70,11 @@ public class NeuralNetwork {
 			}
 		}
 		
-		consoleText.append("Pos: " + bigestPos + " Char: " + Properties.knnOutputLayer.get(bigestPos) + " Emphasis: "+ bigest + "\n");
+		consoleText.append("Pos: " + bigestPos + " Char: " + Properties.nnOutputLayer.get(bigestPos) + " Emphasis: "+ bigest + "\n");
 		if(bigest < 0.2){
 			return Properties.unknownChar;
 		}else{
-			return Properties.knnOutputLayer.get(bigestPos);	
+			return Properties.nnOutputLayer.get(bigestPos);	
 		}
 	}
 	
@@ -87,7 +87,7 @@ public class NeuralNetwork {
 	private void loadNeuronalNetwork(File f) throws IOException{
 		Matrix m;
 		m = MatrixHelper.deserializeMatrix(f);
-		Matrix[] thetas = MatrixHelper.unmergeThetas(m, Properties.knnInputLayerSize, Properties.knnHiddenLayerSize, Properties.knnOutputLayerSize);
+		Matrix[] thetas = MatrixHelper.unmergeThetas(m, Properties.nnInputLayerSize, Properties.nnHiddenLayerSize, Properties.nnOutputLayerSize);
 		this.theta1 = thetas[0];
 		this.theta2 = thetas[1];
 	}
@@ -107,7 +107,7 @@ public class NeuralNetwork {
 	 */
 	private void buildNeuronalNetwork(File resourceFolder){
 		NeuralNetworkTraining nnt = new NeuralNetworkTraining(resourceFolder);
-		nnt.trainNetwork(this, "random");
+		nnt.trainNetwork(this, "random", Properties.nnMaxIterationCount);
 	}
 	
 	
