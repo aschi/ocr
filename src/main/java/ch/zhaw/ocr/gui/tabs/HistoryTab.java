@@ -10,8 +10,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.SpringLayout;
 
 import ch.zhaw.ocr.gui.MainGui;
+import ch.zhaw.ocr.gui.helper.SpringUtilities;
 import ch.zhaw.ocr.gui.helper.TextFileHandler;
 
 /**
@@ -22,7 +24,7 @@ import ch.zhaw.ocr.gui.helper.TextFileHandler;
 public class HistoryTab {
 	private JTextArea historyText;
 	private JPanel panel;
-	private JPanel imgPanel;
+	private JComponent imgPanel;
 	private JLabel imgLabel;
 	private MainGui gui;
 	private ImageIcon img;
@@ -47,9 +49,10 @@ public class HistoryTab {
 		inavi = new HistoryNavigation(gui);
 		panel.add(inavi.getPanel(), BorderLayout.WEST);
 		
-		JPanel centerPanel = new JPanel(new BorderLayout());
-		centerPanel.add(imgPanel, BorderLayout.CENTER);
-		centerPanel.add(loadTextArea(), BorderLayout.SOUTH);
+		JPanel centerPanel = new JPanel(new SpringLayout());
+		centerPanel.add(new JScrollPane(imgLabel));
+		centerPanel.add(loadTextArea());
+		SpringUtilities.makeCompactGrid(centerPanel, 2, 1, 10, 10, 10, 20);
 		panel.add(centerPanel, BorderLayout.CENTER);
 	}
 	
@@ -66,23 +69,25 @@ public class HistoryTab {
 	 * @param img
 	 */
 	public void loadImage(BufferedImage img) {
-
+		
 		if (img == null) {
 			this.img = new ImageIcon();
 		} else {
 			this.img = new ImageIcon(img);
 		}
-		if (imgPanel == null) {
-			imgPanel = new JPanel();
-		}
+//		if (imgPanel == null) {
+//			imgPanel = new JScrollPane();
+//		}
 		if (imgLabel == null) {
 			imgLabel = new JLabel(this.img);
-			imgPanel.add(new JScrollPane(imgLabel));
+//			imgPanel.add(imgLabel);
 		}
-		imgLabel.setIcon(this.img);
+		imgLabel.setIcon(this.img);	
 		
-		imgPanel.repaint();
+		imgLabel.repaint();
+//		imgPanel.repaint();
 		panel.repaint();
+		
 
 	}
 
@@ -106,13 +111,12 @@ public class HistoryTab {
 	}
 
 	private JComponent loadTextArea() {
-		JPanel areaPanel = new JPanel();
-		historyText = new JTextArea(20, 70);
+		
+		historyText = new JTextArea();
 		JScrollPane scrollHistory = new JScrollPane(historyText);
 
-		areaPanel.add(scrollHistory);
 
-		return areaPanel;
+		return scrollHistory;
 	}
 
 	/**

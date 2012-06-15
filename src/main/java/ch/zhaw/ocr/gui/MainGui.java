@@ -1,6 +1,7 @@
 package ch.zhaw.ocr.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -42,6 +43,7 @@ public class MainGui {
 
 	private void createTabbedPane() {
 		frame = new JFrame("OCR");
+		frame.setSize(new Dimension(800,600));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);  //Fullscreen
         
